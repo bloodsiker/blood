@@ -1,0 +1,11 @@
+services:
+    game.admin.game:
+        class: GameBundle\Admin\GameAdmin
+        tags:
+          - { name: sonata.admin, manager_type: orm, group: "group.game", label: "group.game_editor" }
+        arguments:
+          - ~
+          - GameBundle\Entity\Game
+          - ~
+        calls:
+          - [ setTranslationDomain, [GameBundle] ]

@@ -1,0 +1,20 @@
+Action: Действия
+Server List: Список cерверов/платформ
+Server Create: Добавить cервер/платформу
+
+form_group:
+    basic: Основные
+    additional: Дополнительные
+
+group:
+    server: Сервера
+    server_editor: Сервера/Платформы
+
+server:
+    fields:
+        name: Название сервара/платформы
+        game: Игра
+        slug: Сегмент URL (slug)
+        is_active: Активно
+        created_at: Дата создания
+        id: ID

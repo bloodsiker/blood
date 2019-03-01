@@ -1,0 +1,20 @@
+Action: Действия
+Game List: Список игр
+Game Create: Добавить игру
+
+form_group:
+    basic: Основные
+    additional: Дополнительные
+
+group:
+    game: Игры
+    game_editor: Игры
+
+game:
+    fields:
+        name: Название игры
+        description: Описание
+        slug: Сегмент URL (slug)
+        is_active: Активно
+        created_at: Дата создания
+        id: ID

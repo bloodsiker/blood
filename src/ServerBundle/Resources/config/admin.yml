@@ -1,0 +1,11 @@
+services:
+    server.admin.server:
+        class: ServerBundle\Admin\ServerAdmin
+        tags:
+          - { name: sonata.admin, manager_type: orm, group: "group.server", label: "group.server_editor" }
+        arguments:
+          - ~
+          - ServerBundle\Entity\Server
+          - ~
+        calls:
+          - [ setTranslationDomain, [ServerBundle] ]

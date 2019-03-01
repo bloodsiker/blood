@@ -1,6 +1,6 @@
 <?php
 
-namespace SeriesBundle\DependencyInjection;
+namespace GameBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -8,9 +8,9 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * Class SeriesExtension
+ * Class GameExtension
  */
-class SeriesExtension extends Extension
+class GameExtension extends Extension
 {
     /**
      * {@inheritdoc}
@@ -21,7 +21,7 @@ class SeriesExtension extends Extension
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-        $loader->load('blocks.yml');
+//        $loader->load('blocks.yml');
 
         if (isset($bundles['SonataAdminBundle'])) {
             $loader->load('admin.yml');

@@ -34,6 +34,14 @@ sonata_admin:
 
     dashboard:
         groups:
+            group.game:
+                label: group.game
+                label_catalogue: GameBundle
+                icon: <i class="fa fa-files-o"></i>
+            group.server:
+                label: group.server
+                label_catalogue: ServerBundle
+                icon: <i class="fa fa-files-o"></i>
             group.media:
                 label: group.media
                 label_catalogue: MediaBundle
@@ -46,10 +54,6 @@ sonata_admin:
                 label: group.genre
                 label_catalogue: GenreBundle
                 icon: <i class="fa fa-object-group"></i>
-            group.series:
-                label: group.series
-                label_catalogue: SeriesBundle
-                icon: <i class="fa fa-list-alt"></i>
             group.share:
                 label: group.share
                 label_catalogue: ShareBundle

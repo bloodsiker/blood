@@ -22,9 +22,8 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: ru
-    locales: [ru, uk]
-    route_locales: ru|ua
-    replacement_locales: [{ from: uk, to: ua }]
+    locales: [ru, en]
+    route_locales: ru|en
 
 framework:
     #esi: ~

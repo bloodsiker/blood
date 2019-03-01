@@ -1,9 +1,0 @@
-services:
-    series.block.series_list:
-        class: "SeriesBundle\\Block\\ListSeriesBlockService"
-        arguments:
-          - series.block.series_list
-          - '@templating'
-          - '@?doctrine'
-        tags:
-          - { name: sonata.block }
