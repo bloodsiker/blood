@@ -1,0 +1,33 @@
+services:
+    sonata.admin.book:
+        class: BookBundle\Admin\BookAdmin
+        tags:
+          - { name: sonata.admin, manager_type: orm, group: "group.book", label: "group.book_editor" }
+        arguments:
+          - ~
+          - BookBundle\Entity\Book
+          - BookBundle:BookAdmin
+        calls:
+          - [ setTranslationDomain, [BookBundle] ]
+
+    sonata.admin.book_has_files:
+        class: "BookBundle\\Admin\\BookHasFileAdmin"
+        tags:
+          - { name: sonata.admin, manager_type: orm, group: 'group.book', label: "group.book_has_file_editor", show_in_dashboard: false }
+        arguments:
+          - ~
+          - "BookBundle\\Entity\\BookHasFile"
+          - ~
+        calls:
+          - [ setTranslationDomain, [BookBundle] ]
+
+    sonata.admin.book_has_related:
+        class: "BookBundle\\Admin\\BookHasRelatedAdmin"
+        tags:
+          - { name: sonata.admin, manager_type: orm, group: 'group.book', label: "group.book_has_related", show_in_dashboard: false }
+        arguments:
+          - ~
+          - "BookBundle\\Entity\\BookHasRelated"
+          - ~
+        calls:
+          - [ setTranslationDomain, [BookBundle] ]

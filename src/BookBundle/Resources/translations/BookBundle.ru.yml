@@ -1,0 +1,58 @@
+Action: Действия
+Book List: Книги
+Book Create: Создать книгу
+
+btn_search_related: Показать релевантные книги по тегам
+not_found: Ничего не найдено...
+no_tags_selected: Нет выбранных тегов в книге...
+
+form_group:
+    basic: Основные
+    additional: Дополнительные
+
+group:
+    book: Книги
+    book_editor: Книги
+    book_file_editor: Файлы книг
+    book_has_file_editor: Файлы для книги
+
+book:
+    fields:
+        id: ID
+        name: Название книги
+        description: Краткое описание
+        slug: Сегмент URL (slug)
+        files: Файлы книги
+        is_active: Активно
+        is_allow_download: Скачивания
+        poster: Изображение книги
+        authors: Автор(ы)
+        series_publishing: Издательская серия
+        series: Авторская серия
+        isbn: ISBN
+        series_number: 'номер # в серии'
+        pages: Страниц
+        year: Год издания
+        restrict_age: Ограничение в возрасте
+        genres: Жанр(ы)
+        tags: Тег(и)
+        download: Скачиваний
+        rating: Рейтинг
+        views: Просмотры
+        book_related: Похожие книги
+        updated_at: Изменена
+        created_at: Создана
+    buttons:
+        link_add: Добавить новый
+
+book_has_file:
+    fields:
+        book: Книга
+        file: Файл
+        type: Тип
+
+book_has_related:
+    fields:
+        book: Книга
+        book_related: Похожая книги
+        order_num: Позиция

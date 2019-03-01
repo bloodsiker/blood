@@ -1,0 +1,25 @@
+<div class="col-cont">
+    <div class="container">
+
+        <div class="section-title clearfix">
+            {% set countBook = author.getBooks().count() %}
+            <h2>Автор: <span>{{ author.name }} - {{ countBook }} {{ book_change_end(countBook) }}</span></h2>
+        </div>
+
+        <div class="movies clearfix grid grid-list">
+
+            {{
+            sonata_block_render(
+                { 'type': 'book.block.list' },
+                {
+                    'items_count' : 15,
+                    'page': app.request.get('page') ? app.request.get('page') : 1,
+                    'author': author,
+                }
+            )
+            }}
+
+        </div>
+    </div>
+
+</div>

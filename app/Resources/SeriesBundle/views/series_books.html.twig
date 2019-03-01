@@ -1,0 +1,26 @@
+<div class="col-cont">
+    <div class="container">
+
+        <div class="section-title clearfix">
+            {% set countBook = series.type == constant('SeriesBundle\\Entity\\Series::TYPE_AUTHOR') ? series.getBooks().count() :
+                series.type == constant('SeriesBundle\\Entity\\Series::TYPE_PUBLISHING') ? series.getBooksPublishing().count() : null %}
+            <h2>Серия: <span>{{ series.title }} - {{ countBook }} {{ book_change_end(countBook) }}</span></h2>
+        </div>
+
+        <div class="movies clearfix grid grid-list">
+
+            {{
+            sonata_block_render(
+                { 'type': 'book.block.list' },
+                {
+                    'items_count' : 20,
+                    'page': app.request.get('page') ? app.request.get('page') : 1,
+                    'series': series,
+                }
+            )
+            }}
+
+        </div>
+    </div>
+
+</div>
