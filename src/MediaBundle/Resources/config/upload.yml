@@ -13,16 +13,6 @@ services:
         calls:
             - [ 'setPrefix', [ '/image/' ]]
 
-    media.upload_namer.video:
-        class: "MediaBundle\\Naming\\MediaNamer"
-        calls:
-            - [ 'setPrefix', [ '/video/' ]]
-
-    media.upload_namer.audio:
-        class: "MediaBundle\\Naming\\MediaNamer"
-        calls:
-            - [ 'setPrefix', [ '/audio/' ]]
-
     media.upload_error_handler:
         class: "MediaBundle\\ErrorHandler\\UploadErrorHandler"
 

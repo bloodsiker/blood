@@ -24,15 +24,15 @@
 
             <div class="movies clearfix grid grid-list">
 
-                {{
-                sonata_block_render(
-                    { 'type': 'book.block.list' },
-                    {
-                        'items_count' : 10,
-                        'page': app.request.get('page') ? app.request.get('page') : 1,
-                    }
-                )
-                }}
+                {#{{#}
+                {#sonata_block_render(#}
+                    {#{ 'type': 'book.block.list' },#}
+                    {#{#}
+                        {#'items_count' : 10,#}
+                        {#'page': app.request.get('page') ? app.request.get('page') : 1,#}
+                    {#}#}
+                {#)#}
+                {#}}#}
             </div>
         </div>
 

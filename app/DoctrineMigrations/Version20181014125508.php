@@ -15,7 +15,7 @@ final class Version20181014125508 extends AbstractMigration
      */
     public function getDescription() : string
     {
-        return "Image, (MediaBundle))";
+        return "Image (MediaBundle))";
     }
 
     public function up(Schema $schema) : void

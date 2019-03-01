@@ -1,15 +1,4 @@
 services:
-    sonata.admin.media_file:
-        class: MediaBundle\Admin\MediaFileAdmin
-        tags:
-          - { name: sonata.admin, manager_type: orm, group: "group.media", label: "group.media_file_editor" }
-        arguments:
-          - ~
-          - MediaBundle\Entity\MediaFile
-          - ~
-        calls:
-          - [ setTranslationDomain, [MediaBundle] ]
-
     sonata.admin.media_image:
         class: MediaBundle\Admin\MediaImageAdmin
         tags:
