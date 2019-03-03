@@ -8,12 +8,13 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\CoreBundle\Form\Type\DateTimePickerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
- * Class AuthorAdmin
+ * Class ItemAdmin
  */
-class AuthorAdmin extends Admin
+class ItemAdmin extends Admin
 {
     protected $datagridValues = [
         '_page'       => 1,
@@ -29,25 +30,20 @@ class AuthorAdmin extends Admin
     {
         $listMapper
             ->add('id', null, [
-                'label' => 'author.fields.id',
+                'label' => 'item.fields.id',
             ])
-            ->add('photo', null, [
-                'label'     => 'author.fields.photo',
+            ->add('image', null, [
+                'label'     => 'item.fields.image',
                 'template'  => 'ShareBundle:Admin:list_fields.html.twig',
             ])
             ->addIdentifier('name', null, [
-                'label' => 'author.fields.name',
+                'label' => 'item.fields.name',
             ])
-            ->add('isAllowDownload', null, [
-                'label' => 'author.fields.is_allow_download',
-                'editable'  => true,
-            ])
-            ->add('isActive', null, [
-                'label' => 'author.fields.is_active',
-                'editable'  => true,
+            ->add('category', null, [
+                'label'     => 'item.fields.category',
             ])
             ->add('createdAt', null, [
-                'label' => 'author.fields.created_at',
+                'label' => 'item.fields.created_at',
                 'pattern' => 'eeee, dd MMMM yyyy, HH:mm',
             ]);
     }
@@ -59,16 +55,13 @@ class AuthorAdmin extends Admin
     {
         $datagridMapper
             ->add('name', null, [
-                'label' => 'author.fields.name',
+                'label' => 'item.fields.name',
             ])
-            ->add('isActive', null, [
-                'label' => 'author.fields.is_active',
-            ])
-            ->add('isAllowDownload', null, [
-                'label' => 'author.fields.is_allow_download',
+            ->add('category', null, [
+                'label' => 'item.fields.category',
             ])
             ->add('createdAt', null, [
-                'label' => 'author.fields.created_at',
+                'label' => 'item.fields.created_at',
             ]);
     }
 
@@ -80,29 +73,30 @@ class AuthorAdmin extends Admin
         $formMapper
             ->with('form_group.basic', ['class' => 'col-md-8', 'name' => false])
                 ->add('name', TextType::class, [
-                    'label' => 'author.fields.name',
+                    'label' => 'item.fields.name',
+                ])
+                ->add('description', TextareaType::class, [
+                    'label' => 'item.fields.description',
+                    'required' => false,
+                    'attr' => ['rows' => 5],
                 ])
                 ->add('slug', TextType::class, [
-                    'label' => 'author.fields.slug',
+                    'label' => 'item.fields.slug',
                     'required' => false,
                     'attr' => ['readonly' => !$this->getSubject()->getId() ? false : true],
                 ])
             ->end()
             ->with('form_group.additional', ['class' => 'col-md-4', 'name' => false])
-                ->add('isActive', null, [
-                    'label' => 'author.fields.is_active',
+                ->add('image', ModelListType::class, [
+                    'label' => 'item.fields.image',
                     'required' => false,
                 ])
-                ->add('isAllowDownload', null, [
-                    'label' => 'author.fields.is_allow_download',
-                    'required' => false,
-                ])
-                ->add('photo', ModelListType::class, [
-                    'label' => 'author.fields.photo',
+                ->add('category', ModelListType::class, [
+                    'label' => 'item.fields.category',
                     'required' => false,
                 ])
                 ->add('createdAt', DateTimePickerType::class, [
-                    'label'     => 'author.fields.created_at',
+                    'label'     => 'item.fields.created_at',
                     'required' => true,
                     'format' => 'YYYY-MM-dd HH:mm',
                     'attr' => ['readonly' => true],

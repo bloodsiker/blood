@@ -8,7 +8,9 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\CoreBundle\Form\Type\DateTimePickerType;
+use Sonata\CoreBundle\Form\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Valid;
 
 /**
  * Class ServerAdmin
@@ -19,7 +21,7 @@ class ServerAdmin extends Admin
         '_page'       => 1,
         '_per_page'   => 25,
         '_sort_by'    => 'id',
-        '_sort_order' => 'ASC',
+        '_sort_order' => 'DESC',
     ];
 
     /**
@@ -72,6 +74,8 @@ class ServerAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $context = $this->getPersistentParameter('context');
+
         $formMapper
             ->with('form_group.basic', ['class' => 'col-md-8', 'name' => false])
                 ->add('name', TextType::class, [
@@ -81,6 +85,18 @@ class ServerAdmin extends Admin
                     'label' => 'server.fields.slug',
                     'required' => false,
                     'attr' => ['readonly' => !$this->getSubject()->getId() ? false : true],
+                ])
+                ->add('serverHasItems', CollectionType::class, [
+                    'label' => 'server.fields.item',
+                    'required' => false,
+                    'constraints' => new Valid(),
+                    'by_reference' => false,
+                ], [
+                    'edit' => 'inline',
+                    'inline' => 'table',
+                    'sortable' => 'orderNum',
+                    'link_parameters' => ['context' => $context],
+                    'admin_code' => 'server.admin.server_has_item',
                 ])
             ->end()
             ->with('form_group.additional', ['class' => 'col-md-4', 'name' => false])

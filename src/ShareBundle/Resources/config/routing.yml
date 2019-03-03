@@ -1,31 +1,31 @@
 # genre ========================================================
-tag_list:
-    path: /tags
-    defaults:
-        _controller: ShareBundle:Tag:list
-
-tag_books:
-    path: /tag/{slug}
-    defaults:
-        _controller: ShareBundle:Tag:tagBook
-    requirements:
-        slug: "([a-zA-Z\\-0-9\\_]+)?"
-
-author_list:
-    path: /authors
-    defaults:
-        _controller: ShareBundle:Author:list
-
-author_list_letter:
-    path: /authors/letter/{letter}
-    defaults:
-        _controller: ShareBundle:Author:list
-    requirements:
-        letter: "([a-zA-Zа-яА-Я]+\\/?)+"
-
-author_books:
-    path: /authors/{slug}
-    defaults:
-        _controller: ShareBundle:Author:authorBook
-    requirements:
-        slug: "([a-zA-Z\\-0-9\\_]+)?"
+#tag_list:
+#    path: /tags
+#    defaults:
+#        _controller: ShareBundle:Tag:list
+#
+#tag_books:
+#    path: /tag/{slug}
+#    defaults:
+#        _controller: ShareBundle:Tag:tagBook
+#    requirements:
+#        slug: "([a-zA-Z\\-0-9\\_]+)?"
+#
+#author_list:
+#    path: /authors
+#    defaults:
+#        _controller: ShareBundle:Author:list
+#
+#author_list_letter:
+#    path: /authors/letter/{letter}
+#    defaults:
+#        _controller: ShareBundle:Author:list
+#    requirements:
+#        letter: "([a-zA-Zа-яА-Я]+\\/?)+"
+#
+#author_books:
+#    path: /authors/{slug}
+#    defaults:
+#        _controller: ShareBundle:Author:authorBook
+#    requirements:
+#        slug: "([a-zA-Z\\-0-9\\_]+)?"

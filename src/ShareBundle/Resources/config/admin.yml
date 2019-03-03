@@ -1,22 +1,22 @@
 services:
-    share.admin.author:
-        class: ShareBundle\Admin\AuthorAdmin
+    share.admin.item:
+        class: ShareBundle\Admin\ItemAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "group.share", label: "group.author_editor" }
+            - { name: sonata.admin, manager_type: orm, group: "group.share", label: "group.item_editor" }
         arguments:
             - ~
-            - ShareBundle\Entity\Author
+            - ShareBundle\Entity\Item
             - ~
         calls:
             - [ setTranslationDomain, [ShareBundle] ]
 
-    share.admin.tag:
-        class: ShareBundle\Admin\TagAdmin
+    share.admin.item_category:
+        class: ShareBundle\Admin\ItemCategoryAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "group.share", label: "group.tag" }
+            - { name: sonata.admin, manager_type: orm, group: "group.share", label: "group.item_category_editor" }
         arguments:
             - ~
-            - ShareBundle\Entity\Tag
+            - ShareBundle\Entity\ItemCategory
             - ~
         calls:
             - [ setTranslationDomain, [ShareBundle] ]

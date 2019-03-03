@@ -32,6 +32,10 @@ class GameAdmin extends Admin
             ->add('id', null, [
                 'label' => 'game.fields.id',
             ])
+            ->add('image', null, [
+                'label'     => 'game.fields.image',
+                'template'  => 'GameBundle:Admin:list_fields.html.twig',
+            ])
             ->addIdentifier('name', null, [
                 'label' => 'game.fields.name',
             ])
@@ -86,6 +90,10 @@ class GameAdmin extends Admin
             ->with('form_group.additional', ['class' => 'col-md-4', 'name' => false])
                 ->add('isActive', null, [
                     'label' => 'game.fields.is_active',
+                    'required' => false,
+                ])
+                ->add('image', ModelListType::class, [
+                    'label' => 'game.fields.image',
                     'required' => false,
                 ])
                 ->add('createdAt', DateTimePickerType::class, [

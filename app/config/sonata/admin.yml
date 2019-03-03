@@ -37,11 +37,11 @@ sonata_admin:
             group.game:
                 label: group.game
                 label_catalogue: GameBundle
-                icon: <i class="fa fa-files-o"></i>
+                icon: <i class="fa fa-gamepad"></i>
             group.server:
                 label: group.server
                 label_catalogue: ServerBundle
-                icon: <i class="fa fa-files-o"></i>
+                icon: <i class="fa fa-braille"></i>
             group.media:
                 label: group.media
                 label_catalogue: MediaBundle
@@ -58,6 +58,9 @@ sonata_admin:
                 label: group.share
                 label_catalogue: ShareBundle
                 icon: <i class="fa fa-text-width"></i>
+                items:
+                    - share.admin.item_category
+                    - share.admin.item
             group.comment:
                 label: group.comment
                 label_catalogue: CommentBundle

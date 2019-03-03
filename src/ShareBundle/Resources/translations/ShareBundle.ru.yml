@@ -1,9 +1,8 @@
 Action: Действия
-Tag List: Теги
-Social List: Социальные сети
-R T F Block List: Текстовые блоки
-Author List: Список авторов
-Author Create: Добавить автора
+Item List: Список итемов
+Item Create: Добавить итем
+Item Category List: Список категорий
+Item Category Create: Добавить категорию
 
 form_group:
     basic: Основные
@@ -11,34 +10,21 @@ form_group:
 
 group:
     share: Справочники
-    tag: Теги
-    social: Социальные сети
-    rtf_block: Текстовые блоки
-    author: Авторы
-    author_editor: Авторы
+    item_editor: Итемы
+    item_category_editor: Категории итемов
 
-tag:
+category:
     fields:
         id: ID
         name: Название
-        meta_title: Meta-Title
-        meta_description: Meta-Description
-        meta_keywords: Meta-Keywords
         slug: Сегмент URL (slug)
-        is_active: Активен
-    block:
-        breadcrumb_item: Теги
-        title:
-            last: Последние новости по запросу «%tag%»
-            all: Все новости по запросу «%tag%»
 
-author:
+item:
     fields:
-        name: ФИО
-        is_active: Активен
-        is_allow_download: Разрешено для скачивания
+        name: Название
         created_at: Дата создания
-        photo: Фото
+        image: Изображение
+        description: Описание
         slug: Сегмент URL (slug)
-        parent: Родительский жанр
+        category: Категория
         id: ID

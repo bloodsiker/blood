@@ -7,13 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Author
+ * Class Item
  *
- * @ORM\Entity(repositoryClass="ShareBundle\Entity\AuthorRepository")
- * @ORM\Table(name="share_authors")
+ * @ORM\Entity()
+ * @ORM\Table(name="share_items")
  * @ORM\HasLifecycleCallbacks
  */
-class Author
+class Item
 {
     /**
      * @var int
@@ -35,9 +35,9 @@ class Author
      * @var \MediaBundle\Entity\MediaImage
      *
      * @ORM\ManyToOne(targetEntity="MediaBundle\Entity\MediaImage")
-     * @ORM\JoinColumn(name="photo_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
-    protected $photo;
+    protected $image;
 
     /**
      * @var string
@@ -47,18 +47,19 @@ class Author
     protected $slug;
 
     /**
-     * @var bool
+     * @var string
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="text", nullable=true)
      */
-    protected $isActive;
+    protected $description;
 
     /**
-     * @var bool
+     * @var \ShareBundle\Entity\ItemCategory
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\ManyToOne(targetEntity="ShareBundle\Entity\ItemCategory")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
-    protected $isAllowDownload;
+    protected $category;
 
     /**
      * @var \DateTime
@@ -68,22 +69,11 @@ class Author
     protected $createdAt;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\ManyToMany(targetEntity="BookBundle\Entity\Book", mappedBy="authors")
-     */
-    protected $books;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->isActive = true;
-        $this->isAllowDownload = true;
         $this->createdAt = new \DateTime('now');
-
-        $this->books = new ArrayCollection();
     }
 
     /**
@@ -130,7 +120,7 @@ class Author
      *
      * @param string $name
      *
-     * @return Author
+     * @return $this
      */
     public function setName($name)
     {
@@ -150,27 +140,27 @@ class Author
     }
 
     /**
-     * Set photo
+     * Set image
      *
-     * @param \MediaBundle\Entity\MediaImage $photo
+     * @param \MediaBundle\Entity\MediaImage $image
      *
      * @return $this
      */
-    public function setPhoto(\MediaBundle\Entity\MediaImage $photo = null)
+    public function setImage(\MediaBundle\Entity\MediaImage $image = null)
     {
-        $this->photo = $photo;
+        $this->image = $image;
 
         return $this;
     }
 
     /**
-     * Get photo
+     * Get image
      *
      * @return \MediaBundle\Entity\MediaImage
      */
-    public function getPhoto()
+    public function getImage()
     {
-        return $this->photo;
+        return $this->image;
     }
 
     /**
@@ -178,7 +168,7 @@ class Author
      *
      * @param string $slug
      *
-     * @return Author
+     * @return $this
      */
     public function setSlug($slug)
     {
@@ -198,60 +188,35 @@ class Author
     }
 
     /**
-     * Set isActive
+     * Set category
      *
-     * @param boolean $isActive
+     * @param \ShareBundle\Entity\ItemCategory $category
      *
-     * @return Author
+     * @return $this
      */
-    public function setIsActive($isActive)
+    public function setCategory(\ShareBundle\Entity\ItemCategory $category = null)
     {
-        $this->isActive = $isActive;
+        $this->category = $category;
 
         return $this;
     }
 
     /**
-     * Get isActive
+     * Get category
      *
-     * @return boolean
+     * @return \ShareBundle\Entity\ItemCategory
      */
-    public function getIsActive()
+    public function getCategory()
     {
-        return $this->isActive;
+        return $this->category;
     }
-
-    /**
-     * Get isAllowDownload
-     *
-     * @return bool
-     */
-    public function isAllowDownload()
-    {
-        return $this->isAllowDownload;
-    }
-
-    /**
-     * Set isAllowDownload
-     *
-     * @param bool $isAllowDownload
-     *
-     * @return Author
-     */
-    public function setIsAllowDownload(bool $isAllowDownload)
-    {
-        $this->isAllowDownload = $isAllowDownload;
-
-        return $this;
-    }
-
 
     /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
      *
-     * @return Author
+     * @return $this
      */
     public function setCreatedAt($createdAt)
     {
@@ -271,36 +236,26 @@ class Author
     }
 
     /**
-     * Add book
+     * Get description
      *
-     * @param \BookBundle\Entity\Book $book
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
      *
      * @return $this
      */
-    public function addBook(\BookBundle\Entity\Book $book)
+    public function setDescription(string $description)
     {
-        $this->books[] = $book;
+        $this->description = $description;
 
         return $this;
-    }
-
-    /**
-     * Remove book
-     *
-     * @param \BookBundle\Entity\Book $book
-     */
-    public function removeBook(\BookBundle\Entity\Book $book)
-    {
-        $this->books->removeElement($book);
-    }
-
-    /**
-     * Get book
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getBooks()
-    {
-        return $this->books;
     }
 }

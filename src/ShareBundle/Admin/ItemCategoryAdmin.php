@@ -6,16 +6,13 @@ use Sonata\AdminBundle\Admin\AbstractAdmin as Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
- * Class TagAdmin
+ * Class ItemCategoryAdmin
  */
-class TagAdmin extends Admin
+class ItemCategoryAdmin extends Admin
 {
     /**
      * @var array
@@ -26,14 +23,6 @@ class TagAdmin extends Admin
     ];
 
     /**
-     * @param RouteCollection $collection
-     */
-    protected function configureRoutes(RouteCollection $collection)
-    {
-        $collection->remove('acl');
-    }
-
-    /**
      * @param FormMapper $formMapper
      */
     protected function configureFormFields(FormMapper $formMapper)
@@ -41,35 +30,17 @@ class TagAdmin extends Admin
         $formMapper
             ->with('share.form_group.basic', ['class' => 'col-md-8', 'label' => false])
                 ->add('name', TextType::class, [
-                    'label' => 'tag.fields.name',
+                    'label' => 'category.fields.name',
                     'required' => true,
-                ])
-                ->add('metaTitle', TextType::class, [
-                    'label' => 'tag.fields.meta_title',
-                    'required' => false,
-                ])
-                ->add('metaDescription', TextareaType::class, [
-                    'label' => 'tag.fields.meta_description',
-                    'required' => false,
-                    'attr' => ['rows' => 5],
-                ])
-                ->add('metaKeywords', TextareaType::class, [
-                    'label' => 'tag.fields.meta_keywords',
-                    'required' => false,
-                    'attr' => ['rows' => 5],
                 ])
             ->end()
             ->with('share.form_group.additional', ['class' => 'col-md-4', 'label' => false])
                 ->add('slug', TextType::class, [
-                    'label' => 'tag.fields.slug',
+                    'label' => 'category.fields.slug',
                     'required' => false,
                     'attr'      => [
                         'readonly'  => $this->getSubject()->getId() > 0,
                     ],
-                ])
-                ->add('isActive', CheckboxType::class, [
-                    'label' => 'tag.fields.is_active',
-                    'required' => false,
                 ])
             ->end()
         ;
@@ -82,13 +53,10 @@ class TagAdmin extends Admin
     {
         $datagridMapper
             ->add('id', null, [
-                'label' => 'tag.fields.id',
+                'label' => 'category.fields.id',
             ])
             ->add('name', null, [
-                'label' => 'tag.fields.name',
-            ])
-            ->add('isActive', null, [
-                'label' => 'tag.fields.is_active',
+                'label' => 'category.fields.name',
             ])
         ;
     }
@@ -100,17 +68,14 @@ class TagAdmin extends Admin
     {
         $listMapper
             ->add('id', null, [
-                'label' => 'tag.fields.id',
-            ])
-            ->add('isActive', null, [
-                'label' => 'tag.fields.is_active',
+                'label' => 'category.fields.id',
             ])
             ->addIdentifier('name', null, [
-                'label' => 'tag.fields.name',
+                'label' => 'category.fields.name',
                 'field' => 'name',
             ])
             ->add('slug', null, [
-                'label' => 'tag.fields.slug',
+                'label' => 'category.fields.slug',
             ])
             ->add('_action', 'actions', [
                 'actions' => ['edit' => []],
@@ -127,7 +92,6 @@ class TagAdmin extends Admin
             ->add('id')
             ->add('name')
             ->add('slug')
-            ->add('isActive')
         ;
     }
 }

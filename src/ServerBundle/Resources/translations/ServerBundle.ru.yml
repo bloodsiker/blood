@@ -17,4 +17,13 @@ server:
         slug: Сегмент URL (slug)
         is_active: Активно
         created_at: Дата создания
+        item: Итемы на сервере/платформе
         id: ID
+
+server_has_item:
+    fields:
+        server: Сервар/Платформа
+        item: Итем
+        available: Количество
+        price: Цена
+        discount: 'Скидка %'
