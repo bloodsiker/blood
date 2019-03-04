@@ -1,0 +1,21 @@
+Action: Действия
+Slider List: Список слайдов
+Slider Create: Добавить слайд
+
+form_group:
+    basic: Основные
+    additional: Дополнительные
+
+group:
+    slider: Слайдер
+    slider_editor: Слайдер
+
+slider:
+    fields:
+        title: Заголовок
+        description: Описание
+        image: Изображение
+        is_active: Активный
+        game: Игра
+        created_at: Дата создания
+        id: ID

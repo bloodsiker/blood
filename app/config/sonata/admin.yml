@@ -46,14 +46,10 @@ sonata_admin:
                 label: group.media
                 label_catalogue: MediaBundle
                 icon: <i class="fa fa-files-o"></i>
-            group.book:
-                label: group.book
-                label_catalogue: BookBundle
-                icon: <i class="fa fa-book"></i>
-            group.genre:
-                label: group.genre
-                label_catalogue: GenreBundle
-                icon: <i class="fa fa-object-group"></i>
+            group.slider:
+                label: group.slider
+                label_catalogue: SliderBundle
+                icon: <i class="fa fa-picture-o"></i>
             group.share:
                 label: group.share
                 label_catalogue: ShareBundle
@@ -61,10 +57,6 @@ sonata_admin:
                 items:
                     - share.admin.item_category
                     - share.admin.item
-            group.comment:
-                label: group.comment
-                label_catalogue: CommentBundle
-                icon: <i class="fa fa-comment"></i>
             group.order:
                 label: group.order
                 label_catalogue: OrderBundle

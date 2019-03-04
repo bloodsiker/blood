@@ -1,0 +1,11 @@
+services:
+    slider.admin.slider:
+        class: SliderBundle\Admin\SliderAdmin
+        tags:
+          - { name: sonata.admin, manager_type: orm, group: "group.slider", label: "group.slider_editor" }
+        arguments:
+          - ~
+          - SliderBundle\Entity\Slider
+          - ~
+        calls:
+          - [ setTranslationDomain, [SliderBundle] ]
