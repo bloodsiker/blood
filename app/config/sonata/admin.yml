@@ -57,6 +57,13 @@ sonata_admin:
                 items:
                     - share.admin.item_category
                     - share.admin.item
+            group.help_center:
+                label: group.help_center
+                label_catalogue: HelpCenterBundle
+                icon: <i class="fa fa-question-circle"></i>
+                items:
+                    - help_center.admin.category
+                    - help_center.admin.article
             group.order:
                 label: group.order
                 label_catalogue: OrderBundle

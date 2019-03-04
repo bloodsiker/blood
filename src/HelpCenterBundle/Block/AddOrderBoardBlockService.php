@@ -1,25 +1,24 @@
 <?php
 
-namespace SliderBundle\Block;
+namespace HelpCenterBundle\Block;
 
-use BookBundle\Entity\Book;
-use CommentBundle\Entity\Comment;
 use Doctrine\ORM\EntityManager;
-use Sonata\BlockBundle\Meta\Metadata;
+use OrderBundle\Entity\OrderBoard;
 use Sonata\BlockBundle\Block\Service\AbstractAdminBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
+use Sonata\BlockBundle\Meta\Metadata;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class AddCommentBlockService
+ * Class AddOrderBoardBlockService
  */
-class AddCommentBlockService extends AbstractAdminBlockService
+class AddOrderBoardBlockService extends AbstractAdminBlockService
 {
-    const FORM_TEMPLATE = 'CommentBundle:Block:comment_form.html.twig';
-    const AJAX_COMMENT_TEMPLATE = 'CommentBundle:Block:ajax_comment.html.twig';
+    const FORM_TEMPLATE = 'OrderBundle:Block:order_board_form.html.twig';
+    const AJAX_ORDER_TEMPLATE = 'OrderBundle:Block:ajax_order_board.html.twig';
 
     /**
      * @var EntityManager
@@ -58,7 +57,7 @@ class AddCommentBlockService extends AbstractAdminBlockService
             $this->getName(),
             (!is_null($code) ? $code : $this->getName()),
             false,
-            'CommentBundle',
+            'OrderBundle',
             ['class' => 'fa fa-code']
         );
     }
@@ -69,7 +68,6 @@ class AddCommentBlockService extends AbstractAdminBlockService
     public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'book'     => null,
             'template' => self::FORM_TEMPLATE,
         ]);
     }
@@ -93,22 +91,17 @@ class AddCommentBlockService extends AbstractAdminBlockService
         $request = $this->request->getCurrentRequest();
 
         if ($request->isXmlHttpRequest() && $request->getMethod() === 'POST') {
-            $book = $this->em->getRepository(Book::class)->find((int) $request->get('bookId'));
+            $order = new OrderBoard();
+            $order->setUserName($request->get('name'));
+            $order->setBookTitle($request->get('book'));
 
-            $comment = new Comment();
-            $comment->setBook($book);
-            $comment->setUserName($request->get('name'));
-            $comment->setUserEmail($request->get('email'));
-            $comment->setComment($request->get('comment'));
-
-            $this->em->persist($comment);
+            $this->em->persist($order);
             $this->em->flush();
         }
 
 
-        return $this->renderResponse($request->isXmlHttpRequest() ? self::AJAX_COMMENT_TEMPLATE : $blockContext->getTemplate(), [
-            'book'      => $blockContext->getSetting('book'),
-            'comment'   => $comment ?? null,
+        return $this->renderResponse($request->isXmlHttpRequest() ? self::AJAX_ORDER_TEMPLATE : $blockContext->getTemplate(), [
+            'order'     => $order ?? null,
             'block'     => $block,
             'settings'  => array_merge($blockContext->getSettings(), $block->getSettings()),
         ], $response);

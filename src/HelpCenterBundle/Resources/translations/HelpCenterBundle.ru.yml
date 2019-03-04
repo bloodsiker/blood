@@ -1,0 +1,30 @@
+Action: Действия
+Help Article List: Список статей
+Help Article Create: Добавить статью
+Help Category List: Список категорий
+Help Category Create: Добавить категорию
+
+form_group:
+    basic: Основные
+    additional: Дополнительные
+
+group:
+    help_center: Help Center
+    help_article_editor: Статьи
+    help_category_editor: Категории
+
+help_article:
+    fields:
+        title: Имя клиента
+        description: E-mail клиента
+        category: Категория
+        game: Игра
+        created_at: Дата создания
+        is_active: Активно
+        id: ID
+
+help_category:
+    fields:
+        id: ID
+        name: Название
+        is_active: Активно

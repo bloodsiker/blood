@@ -1,0 +1,22 @@
+services:
+    help_center.admin.article:
+        class: HelpCenterBundle\Admin\HelpArticleAdmin
+        tags:
+          - { name: sonata.admin, manager_type: orm, group: "group.help_center", label: "group.help_article_editor" }
+        arguments:
+          - ~
+          - HelpCenterBundle\Entity\HelpArticle
+          - ~
+        calls:
+          - [ setTranslationDomain, [HelpCenterBundle] ]
+
+    help_center.admin.category:
+        class: HelpCenterBundle\Admin\HelpCategoryAdmin
+        tags:
+        - { name: sonata.admin, manager_type: orm, group: "group.help_center", label: "group.help_category_editor" }
+        arguments:
+        - ~
+        - HelpCenterBundle\Entity\HelpCategory
+        - ~
+        calls:
+        - [ setTranslationDomain, [HelpCenterBundle] ]

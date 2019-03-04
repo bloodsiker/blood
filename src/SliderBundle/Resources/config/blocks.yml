@@ -7,13 +7,3 @@ services:
           - '@app.entity_manager'
         tags:
           - { name: sonata.block }
-
-    comment.block.add_comment:
-        class: "CommentBundle\\Block\\AddCommentBlockService"
-        arguments:
-          - comment.block.add_comment
-          - '@templating'
-          - '@app.entity_manager'
-          - '@request_stack'
-        tags:
-          - { name: sonata.block }
