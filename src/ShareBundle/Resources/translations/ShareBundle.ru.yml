@@ -3,6 +3,8 @@ Item List: Список итемов
 Item Create: Добавить итем
 Item Category List: Список категорий
 Item Category Create: Добавить категорию
+R T F Block List: Текстовые блоки
+R T F Block Create: Добавить блок
 
 form_group:
     basic: Основные
@@ -12,6 +14,7 @@ group:
     share: Справочники
     item_editor: Итемы
     item_category_editor: Категории итемов
+    rtf_block: Текстовые блоки
 
 category:
     fields:
@@ -28,3 +31,12 @@ item:
         slug: Сегмент URL (slug)
         category: Категория
         id: ID
+
+rtf_block:
+    fields:
+        id: ID
+        alias: Алиас
+        title: Заголовок
+        content: Контент
+        created_at: Создан
+        is_active: Активен

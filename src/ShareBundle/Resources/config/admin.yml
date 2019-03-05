@@ -20,3 +20,14 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [ShareBundle] ]
+
+    share.admin.rtf_block:
+        class: ShareBundle\Admin\RTFBlockAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "group.rtf_block", label: "group.rtf_block"}
+        arguments:
+            - ~
+            - ShareBundle\Entity\RTFBlock
+            - ~
+        calls:
+            - [ setTranslationDomain, [ShareBundle] ]

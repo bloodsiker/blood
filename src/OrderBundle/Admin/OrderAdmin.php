@@ -50,9 +50,6 @@ class OrderAdmin extends Admin
             ->add('id', null, [
                 'label' => 'order.fields.id',
             ])
-            ->add('clientName', null, [
-                'label' => 'order.fields.client_name',
-            ])
             ->add('clientEmail', null, [
                 'label' => 'order.fields.client_email',
             ])
@@ -78,9 +75,6 @@ class OrderAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('clientName', null, [
-                'label' => 'order.fields.client_name',
-            ])
             ->add('clientEmail', null, [
                 'label' => 'order.fields.client_email',
             ])
@@ -110,12 +104,9 @@ class OrderAdmin extends Admin
                     'label' => 'order.fields.status',
                     'choices' => $this->getStatuses(),
                     'required' => true,
-                    'choice_label' => function($status) {
+                    'choice_label' => function ($status) {
                         return strtoupper($status->getName());
                     },
-                ])
-                ->add('clientName', TextType::class, [
-                    'label' => 'order.fields.client_name',
                 ])
                 ->add('clientEmail', TextType::class, [
                     'label' => 'order.fields.client_email',
@@ -147,7 +138,8 @@ class OrderAdmin extends Admin
     /**
      * @return array|object[]|\OrderBundle\Entity\OrderStatus[]
      */
-    private function getStatuses() {
+    private function getStatuses()
+    {
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine.orm.entity_manager');
         $repository = $em->getRepository('OrderBundle:OrderStatus');
 

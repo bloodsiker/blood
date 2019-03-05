@@ -64,6 +64,10 @@ sonata_admin:
                 items:
                     - help_center.admin.category
                     - help_center.admin.article
+            group.rtf_block:
+                label: group.rtf_block
+                label_catalogue: ShareBundle
+                icon: <i class="fa fa-text-width"></i>
             group.order:
                 label: group.order
                 label_catalogue: OrderBundle

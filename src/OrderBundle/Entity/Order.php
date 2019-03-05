@@ -28,13 +28,6 @@ class Order
      *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    protected $clientName;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
     protected $clientEmail;
 
     /**
@@ -86,7 +79,7 @@ class Order
      */
     public function __toString()
     {
-        return (string) $this->clientName;
+        return (string) $this->gameNickName;
     }
 
     /**
@@ -136,37 +129,13 @@ class Order
     /**
      * Set status
      *
-     * @param \OrderBundle\Entity\OrderStatus
+     * @param \OrderBundle\Entity\OrderStatus $status
      *
      * @return $this
      */
     public function setStatus(\OrderBundle\Entity\OrderStatus $status = null)
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get clientName
-     *
-     * @return string
-     */
-    public function getClientName()
-    {
-        return $this->clientName;
-    }
-
-    /**
-     * Set clientName
-     *
-     * @param string $clientName
-     *
-     * @return $this
-     */
-    public function setClientName(string $clientName)
-    {
-        $this->clientName = $clientName;
 
         return $this;
     }
