@@ -83,6 +83,11 @@ class HelpCategoryAdmin extends Admin
                 ->add('name', TextType::class, [
                     'label' => 'help_category.fields.name',
                 ])
+                ->add('slug', TextType::class, [
+                    'label' => 'help_category.fields.slug',
+                    'required' => false,
+                    'attr' => ['readonly' => !$this->getSubject()->getId() ? false : true],
+                ])
             ->end()
             ->with('form_group.additional', ['class' => 'col-md-4', 'name' => false])
                 ->add('isActive', null, [

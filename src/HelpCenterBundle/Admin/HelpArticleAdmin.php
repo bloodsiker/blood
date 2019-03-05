@@ -3,6 +3,7 @@
 namespace HelpCenterBundle\Admin;
 
 use AdminBundle\Admin\BaseAdmin as Admin;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -108,12 +109,14 @@ class HelpArticleAdmin extends Admin
                 ->add('title', TextType::class, [
                     'label' => 'help_article.fields.title',
                 ])
-                ->add('description', TextareaType::class, [
+                ->add('description', CKEditorType::class, [
                     'label' => 'help_article.fields.description',
                     'required' => true,
-                    'attr' => [
-                        'rows' => 5,
-                    ],
+                ])
+                ->add('slug', TextType::class, [
+                    'label' => 'help_article.fields.slug',
+                    'required' => false,
+                    'attr' => ['readonly' => !$this->getSubject()->getId() ? false : true],
                 ])
             ->end()
             ->with('form_group.additional', ['class' => 'col-md-4', 'name' => false])

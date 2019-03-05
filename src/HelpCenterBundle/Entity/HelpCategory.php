@@ -2,6 +2,7 @@
 
 namespace HelpCenterBundle\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,6 +39,13 @@ class HelpCategory
     protected $game;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50, nullable=false)
+     */
+    protected $slug;
+
+    /**
      * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false)
@@ -60,6 +68,25 @@ class HelpCategory
     public function __toString()
     {
         return (string) $this->name;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        if (is_null($this->slug)) {
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->getName());
+        }
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->prePersist();
     }
 
     /**
@@ -94,6 +121,30 @@ class HelpCategory
         $this->name = $status;
 
         return $this;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return $this
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**

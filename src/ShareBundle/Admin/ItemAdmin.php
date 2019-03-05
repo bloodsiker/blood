@@ -3,6 +3,7 @@
 namespace ShareBundle\Admin;
 
 use AdminBundle\Admin\BaseAdmin as Admin;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -75,7 +76,7 @@ class ItemAdmin extends Admin
                 ->add('name', TextType::class, [
                     'label' => 'item.fields.name',
                 ])
-                ->add('description', TextareaType::class, [
+                ->add('description', CKEditorType::class, [
                     'label' => 'item.fields.description',
                     'required' => false,
                     'attr' => ['rows' => 5],

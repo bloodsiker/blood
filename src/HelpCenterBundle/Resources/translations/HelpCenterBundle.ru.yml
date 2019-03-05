@@ -21,6 +21,7 @@ help_article:
         game: Игра
         created_at: Дата создания
         is_active: Активно
+        slug: Сегмент URL (slug)
         id: ID
 
 help_category:
@@ -28,4 +29,5 @@ help_category:
         id: ID
         name: Название
         game: Игра
+        slug: Сегмент URL (slug)
         is_active: Активно

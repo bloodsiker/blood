@@ -83,7 +83,7 @@ class GameAdmin extends Admin
                 ->add('name', TextType::class, [
                     'label' => 'game.fields.name',
                 ])
-                ->add('description', TextareaType::class, [
+                ->add('description', CKEditorType::class, [
                     'label' => 'game.fields.description',
                     'required' => false,
                     'attr' => ['rows' => 5],
