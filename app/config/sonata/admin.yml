@@ -68,6 +68,10 @@ sonata_admin:
                 label: group.rtf_block
                 label_catalogue: ShareBundle
                 icon: <i class="fa fa-text-width"></i>
+            group.menu:
+                label: group.menu
+                label_catalogue: MenuBundle
+                icon: <i class="fa fa-tasks"></i>
             group.order:
                 label: group.order
                 label_catalogue: OrderBundle

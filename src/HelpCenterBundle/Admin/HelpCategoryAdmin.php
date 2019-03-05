@@ -6,6 +6,7 @@ use AdminBundle\Admin\BaseAdmin as Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
@@ -46,6 +47,9 @@ class HelpCategoryAdmin extends Admin
             ->addIdentifier('name', null, [
                 'label' => 'help_category.fields.name',
             ])
+            ->add('game', null, [
+                'label' => 'help_category.fields.game',
+            ])
             ->add('isActive', null, [
                 'label' => 'help_category.fields.is_active',
             ]);
@@ -61,6 +65,9 @@ class HelpCategoryAdmin extends Admin
         $datagridMapper
             ->add('name', null, [
                 'label' => 'help_category.fields.name',
+            ])
+            ->add('game', null, [
+                'label' => 'help_category.fields.game',
             ]);
     }
 
@@ -81,6 +88,13 @@ class HelpCategoryAdmin extends Admin
                 ->add('isActive', null, [
                     'label' => 'help_category.fields.is_active',
                     'required' => false,
+                ])
+                ->add('game', ModelListType::class, [
+                    'label' => 'help_article.fields.game',
+                    'required' => false,
+                    'btn_delete' => false,
+                    'btn_edit' => false,
+                    'btn_add' => false,
                 ])
             ->end();
     }

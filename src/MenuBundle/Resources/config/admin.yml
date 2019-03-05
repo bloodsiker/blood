@@ -1,0 +1,11 @@
+services:
+    menu.admin.menus:
+        class: MenuBundle\Admin\MenuAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'group.menu', label: 'group.menu_editor' }
+        arguments:
+            - ~
+            - MenuBundle\Entity\Menu
+            - MenuBundle:MenuAdmin
+        calls:
+            - [ setTranslationDomain, [MenuBundle] ]

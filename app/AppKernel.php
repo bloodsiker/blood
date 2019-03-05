@@ -68,6 +68,8 @@ class AppKernel extends Kernel
             // Application bundles
             new AppBundle\AppBundle(),
             new PageBundle\PageBundle(),
+            new MenuBundle\MenuBundle(),
+
             new MediaBundle\MediaBundle(),
             new GameBundle\GameBundle(),
             new ServerBundle\ServerBundle(),

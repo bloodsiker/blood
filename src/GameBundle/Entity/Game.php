@@ -62,6 +62,13 @@ class Game
     protected $isActive;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $isHot;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=false)
@@ -234,6 +241,30 @@ class Game
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    /**
+     * Set isHot
+     *
+     * @param boolean $isHot
+     *
+     * @return $this
+     */
+    public function setIsHot($isHot)
+    {
+        $this->isHot = $isHot;
+
+        return $this;
+    }
+
+    /**
+     * Get isHot
+     *
+     * @return boolean
+     */
+    public function getIsHot()
+    {
+        return $this->isHot;
     }
 
 

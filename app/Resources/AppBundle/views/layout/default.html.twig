@@ -33,10 +33,7 @@
 {% block top_nav %}
     <div class="top-nav">
         <div class="top-nav-title">
-            <a href="" class="to-top-link logo-hide" style="display: none"></a>
-            <a class="to-top-link " href=""><span>Новинки книг</span></a>
-            <a class="to-top-link" href=""><span>Жанры</span></a>
-            <a class="to-top-link" href=""><span>Авторы</span></a>
+
         </div>
     </div>
 {% endblock %}
@@ -71,32 +68,6 @@
 {% block content_side %}
     <aside class="col-side">
 
-        {# List genres #}
-        {#{{#}
-        {#sonata_block_render(#}
-            {#{ 'type': 'genre.block.genre_list' },#}
-            {#{ 'list_type' : constant('GenreBundle\\Block\\ListGenreBlockService::LIST_ASIDE') }#}
-        {#)#}
-        {#}}#}
-
-        {# Popular book #}
-        {#{{#}
-        {#sonata_block_render(#}
-            {#{ 'type': 'book.block.list' },#}
-            {#{#}
-                {#'list_type' : constant('BookBundle\\Block\\ListBooksBlockService::POPULAR_LIST'),#}
-                {#'popular' : true,#}
-                {#'items_count': 4,#}
-            {#}#}
-        {#)#}
-        {#}}#}
-
-         {#List tags#}
-        {#{{#}
-        {#sonata_block_render(#}
-            {#{ 'type': 'share.block.tag_list' }#}
-        {#)#}
-        {#}}#}
 
     </aside>
 {% endblock %}

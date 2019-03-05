@@ -43,6 +43,10 @@ class GameAdmin extends Admin
                 'label' => 'game.fields.is_active',
                 'editable'  => true,
             ])
+            ->add('isHot', null, [
+                'label' => 'game.fields.is_hot',
+                'editable'  => true,
+            ])
             ->add('createdAt', null, [
                 'label' => 'game.fields.created_at',
                 'pattern' => 'eeee, dd MMMM yyyy, HH:mm',
@@ -60,6 +64,9 @@ class GameAdmin extends Admin
             ])
             ->add('isActive', null, [
                 'label' => 'game.fields.is_active',
+            ])
+            ->add('isHot', null, [
+                'label' => 'game.fields.is_hot',
             ])
             ->add('createdAt', null, [
                 'label' => 'game.fields.created_at',
@@ -90,6 +97,10 @@ class GameAdmin extends Admin
             ->with('form_group.additional', ['class' => 'col-md-4', 'name' => false])
                 ->add('isActive', null, [
                     'label' => 'game.fields.is_active',
+                    'required' => false,
+                ])
+                ->add('isHot', null, [
+                    'label' => 'game.fields.is_hot',
                     'required' => false,
                 ])
                 ->add('image', ModelListType::class, [

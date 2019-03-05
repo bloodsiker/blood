@@ -1,0 +1,27 @@
+Menu List: Меню
+
+Action: Действие
+
+list_mode: Список
+
+group:
+    menu: Меню
+    menu_editor: Меню
+
+menu:
+    fields:
+        title: Название
+        url: URL
+        type: Тип
+        parent: Родительское меню
+        page: Маршрут страницы
+        page_url: Маршрут или URL
+        is_active: Активно
+        is_blank: Открыть в новом окне
+        created_at: Дата создания
+        order_num: Позиция
+        item_class: CSS класс
+
+    types:
+        header: Header
+        footer: Footer

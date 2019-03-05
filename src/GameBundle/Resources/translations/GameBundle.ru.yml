@@ -16,6 +16,7 @@ game:
         description: Описание
         slug: Сегмент URL (slug)
         is_active: Активно
+        is_hot: Hot
         image: Изображение
         created_at: Дата создания
         id: ID

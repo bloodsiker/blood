@@ -1,0 +1,30 @@
+view_list:
+  path: /games
+  defaults:
+    _controller: GameBundle:Game:list
+
+view_game_server:
+  path: /game/{slug}/{server}
+  defaults:
+    _controller: GameBundle:Game:viewServer
+  requirements:
+    slug: "([a-zA-Z\\-0-9\\_]+)?"
+    server: "([a-zA-Z\\-0-9\\_]+)?"
+
+view_game_server_category:
+  path: /game/{slug}/{server}/{category}
+  defaults:
+    _controller: GameBundle:Game:viewServerCategory
+  requirements:
+    slug: "([a-zA-Z\\-0-9\\_]+)?"
+    server: "([a-zA-Z\\-0-9\\_]+)?"
+    category: "([a-zA-Z\\-0-9\\_]+)?"
+
+view_game:
+  path: /game/{slug}{category}
+  defaults:
+    _controller: GameBundle:Game:view
+    category: null
+  requirements:
+    slug: "((?!_\\[a-zA-Z\\-0-9]+)([a-zA-Z\\-0-9]+\\/?))+"
+    category: "([a-zA-Z\\-0-9\\_]+)?"

@@ -1,0 +1,36 @@
+services:
+    menu.menu_builder:
+        class: "MenuBundle\\Menu\\Builder"
+        arguments:
+            - "@knp_menu.factory"
+            - "@request_stack"
+            - "@menu.entity_manager"
+
+    menu.header_menu:
+        class: "Knp\\Menu\\MenuItem"
+        factory: ["@menu.menu_builder", headerMenu]
+        arguments: ["@request_stack"]
+        tags:
+            - { name: knp_menu.menu, alias: header }
+
+    menu.footer_menu:
+        class: "Knp\\Menu\\MenuItem"
+        factory: ["@menu.menu_builder", footerMenu]
+        arguments: ["@request_stack"]
+        tags:
+            - { name: knp_menu.menu, alias: footer }
+
+    menu.entity_manager:
+        class: "Doctrine\\ORM\\EntityManager"
+        factory: ["@doctrine", getManager]
+        public: false
+
+    menu.repository.abstract:
+        factory: [ "@menu.entity_manager", "getRepository" ]
+        abstract: true
+
+    menu.repository.menu:
+        class: "MenuBundle\\Entity\\MenuRepository"
+        parent: menu.repository.abstract
+        arguments:
+            - 'MenuBundle:Menu'

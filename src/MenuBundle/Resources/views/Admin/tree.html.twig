@@ -1,0 +1,96 @@
+{% extends 'MenuBundle:Admin:list.html.twig' %}
+
+{% import _self as tree %}
+{% macro menuUrl(menu) %}
+    {% set url = menu.getUrl() %}
+    {% if menu.page %}
+        {% set url = menu.page.getUrl() %}
+
+        {% if menu.category %}
+            {% if menu.category.parent %}
+                {% set url = path(menu.page.routeName, {'subcategory': menu.category.slug, 'category': menu.category.parent.slug}) %}
+            {% else %}
+                {% set url = path(menu.page.routeName, {'category': menu.category.slug}) %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    {{ url|default('#') }}
+{% endmacro %}
+
+
+{% macro catTree(menus, admin, parent, field_description) %}
+    {% import _self as self %}
+    {% set orderGroupsKeys = ['order_num', 'do_first', 'move_up', 'move_down', 'do_last'] %}
+    <ul{% if parent %} class="page-tree"{% endif %}>
+        {% for menu in menus if not menu.parent or not parent %}
+            {% set object = menu %}
+            <li>
+                <div class="page-tree__item" style="padding: 0px 3px 4px 5px;">
+                    {% if menu.parent %}
+                        <i class="fa fa-caret-right"></i>
+                    {% endif %}
+
+                    <a href="{{ admin.generateObjectUrl('edit', menu) }}" class="page-tree__item__edit">
+                        {% if menu.category and not menu.translate.title %}
+                            <b>{{ menu.category.translate.title }}</b>
+                        {% else %}
+                            <b>{{ menu.translate.title }}</b>
+                        {% endif %}
+                    </a>
+
+                    <div class="tree-actions" style="margin-bottom: 8px;">
+                        <i class="text-muted">{{ self.menuUrl(menu) }}</i>
+                        {% if field_description._action is defined %}
+                            <div class="btn-group pull-right">
+                                {% for action_name, actions in field_description._action.options.actions %}
+                                    {% include actions.template %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <span class="pull-right" style="padding-right: 20px; padding-top: 3px;">
+                            {% if menu.isActive %}
+                                <div class="btn btn-xs btn-success"><i class="fa fa-check"></i></div>
+                            {% else %}
+                                <div class="btn btn-xs btn-warning"><i class="fa fa-close"></i></div>
+                            {% endif %}
+                        </span>
+                        <span class="pull-right" style="padding-right: 15px; padding-top: 3px;">
+                            <span class="text-muted">ID: {{ menu.id }}</span>
+                        </span>
+                    </div>
+                </div>
+
+                {% if menu.children|length %}
+                    {{ self.catTree(menu.children, admin, false, field_description) }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% block list_filters_actions %}
+{% endblock %}
+
+{% block tab_menu %}
+    {% include 'MenuBundle:Admin:list_tab_menu.html.twig' with {
+        'mode':   'tree',
+        'action': action,
+        'admin':  admin
+    } only %}
+{% endblock %}
+
+{% block list_table %}
+    <div class="col-xs-12 col-md-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h1 class="box-title">
+                    {{ 'menu.tree_label'|trans({}, 'MenuBundle') }}
+                </h1>
+            </div>
+            <div class="box-content">
+                {{ tree.catTree(menus, admin, true, field_description) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

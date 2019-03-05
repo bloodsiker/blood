@@ -1,0 +1,19 @@
+{% if admin.isGranted('VIEW', object) %}
+    {% set url = object.getUrl() %}
+    {% if object.page %}
+        {% set url = object.page.getUrl() %}
+
+        {% if object.category %}
+            {% if object.category.parent %}
+                {% set url = path(object.page.routeName, {'subcategory': object.category.slug, 'category': object.category.parent.slug}) %}
+            {% else %}
+                {% set url = path(object.page.routeName, {'category': object.category.slug}) %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    <a href="{{ url|default('#') }}" class="btn btn-sm btn-default" title="{{ 'actions.btn.preview'|trans({}, 'SonataAdminBundle') }}" target="_blank">
+        <i class="glyphicon glyphicon-eye-open"></i>
+        {{ 'actions.btn.on_site'|trans({}, 'SonataAdminBundle') }}
+    </a>
+{% endif %}

@@ -15,8 +15,8 @@ group:
 
 help_article:
     fields:
-        title: Имя клиента
-        description: E-mail клиента
+        title: Заголовок
+        description: Описание
         category: Категория
         game: Игра
         created_at: Дата создания
@@ -27,4 +27,5 @@ help_category:
     fields:
         id: ID
         name: Название
+        game: Игра
         is_active: Активно

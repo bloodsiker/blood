@@ -1,0 +1,47 @@
+{% extends 'knp_menu.html.twig' %}
+
+{% block list %}
+    {% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
+        {% import 'knp_menu.html.twig' as macros %}
+        {{ block('children') }}
+    {% endif %}
+{% endblock %}
+
+{% block children %}
+    {% set currentItem = item %}
+    {% set currentLocale = app.request.locale %}
+
+    {% for item in currentItem.children %}
+        {{ block('item') }}
+    {% endfor %}
+{% endblock %}
+
+{% block item %}
+    {% import 'knp_menu.html.twig' as macros %}
+    {%- if item.displayed and item.uri is not empty %}
+        {{ block('linkElement') }}
+    {%- endif %}
+{% endblock %}
+
+{% block linkElement %}
+    {% import 'knp_menu.html.twig' as macros %}
+
+    {%- set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
+    {%- if matcher.isCurrent(item) %}
+        {%- set classes = classes|merge([options.currentClass]) %}
+    {%- endif %}
+
+    {%- set activeClass = null %}
+    {%- if item.uri == item.parent.isCurrent or classes is not empty and ('current' in classes|join(' ')) %}
+        {%- set activeClass = 'active' %}
+    {%- endif %}
+
+    {%- set itemClass = item.getExtra('itemClass') -%}
+
+    {#{% set finalUri = '://' in item.uri ? item.uri : ('/'~currentLocale|replace({'uk':'ua'})~item.uri) %}#}
+    <li class="{{ activeClass~' '~itemClass }}">
+        <a href="{{ item.uri }}"
+                {{ macros.attributes(item.linkAttributes) }}>{{ block('label') }}
+        </a>
+    </li>
+{% endblock %}

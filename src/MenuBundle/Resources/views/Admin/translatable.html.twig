@@ -1,0 +1,25 @@
+{% if(field_description.options.field == 'parent') %}
+    {% if object.getparent and object.getparent.getcategory is empty %}
+        {% set object = object.getparent %}
+        {% set value = attribute(object, 'gettitle', [{ 'locale': app.request.locale }]) %}
+    {% elseif object.getparent and object.getparent.getcategory %}
+        {% set object = object.getparent.getcategory %}
+        {% set value = attribute(object, 'gettitle', [{ 'locale': app.request.locale }]) %}
+    {% else %}
+        {% set value = '' %}
+    {% endif %}
+{% elseif(field_description.options.field == 'name' and object.category) %}
+    {% set value = attribute(object.category, 'gettitle', [{ 'locale': app.request.locale }]) %}
+{% elseif(field_description.options.field == 'page' and object.page) %}
+    {% set value = attribute(object.page, field_description.name, [{ 'locale': app.request.locale }]) %}
+
+    {% if object.category %}
+        {% set value = value|replace({
+            '{category}': object.category and object.category.parent ? object.category.parent.slug : object.category.slug,
+            '{subcategory}': object.category and object.category.parent ? object.category.slug : ''
+        }) %}
+    {% endif %}
+
+{% endif %}
+
+{% include 'SonataAdminBundle:CRUD:base_list_field.html.twig' with { 'value': value } %}

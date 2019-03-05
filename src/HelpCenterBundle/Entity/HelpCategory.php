@@ -30,6 +30,14 @@ class HelpCategory
     protected $name;
 
     /**
+     * @var \GameBundle\Entity\Game
+     *
+     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\Game")
+     * @ORM\JoinColumn(name="game_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    protected $game;
+
+    /**
      * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false)
@@ -110,5 +118,29 @@ class HelpCategory
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    /**
+     * Get game
+     *
+     * @return \GameBundle\Entity\Game
+     */
+    public function getGame()
+    {
+        return $this->game;
+    }
+
+    /**
+     * Set game
+     *
+     * @param \GameBundle\Entity\Game|null $game
+     *
+     * @return $this
+     */
+    public function setGame(\GameBundle\Entity\Game $game = null)
+    {
+        $this->game = $game;
+
+        return $this;
     }
 }
