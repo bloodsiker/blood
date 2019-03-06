@@ -5,6 +5,7 @@ Game Create: Добавить игру
 form_group:
     basic: Основные
     additional: Дополнительные
+    menu: Меню
 
 group:
     game: Игры
@@ -20,3 +21,11 @@ game:
         image: Изображение
         created_at: Дата создания
         id: ID
+
+        menu:
+            sell_to_us: Sell to us
+            how_it_work: How it works
+
+    tab:
+        game: Игра
+        sell_to_us: Sell to us

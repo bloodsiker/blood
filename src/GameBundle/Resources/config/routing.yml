@@ -3,6 +3,13 @@ view_list:
   defaults:
     _controller: GameBundle:Game:list
 
+game_how_sell_to_us:
+  path: /game/{slug}/sell-to-us
+  defaults:
+    _controller: GameBundle:Game:sellToUs
+  requirements:
+    slug: "([a-zA-Z\\-0-9\\_]+)?"
+
 game_how_it_work:
   path: /game/{slug}/how-it-work
   defaults:
@@ -16,6 +23,7 @@ game_how_it_work_view:
     _controller: GameBundle:Game:howItWork
   requirements:
     slug: "([a-zA-Z\\-0-9\\_]+)?"
+    id: "\\d+"
     helpSlug: "([a-zA-Z\\-0-9\\_]+)?"
 
 view_game_server:

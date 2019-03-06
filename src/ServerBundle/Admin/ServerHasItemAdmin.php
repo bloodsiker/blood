@@ -2,7 +2,6 @@
 
 namespace ServerBundle\Admin;
 
-use BookBundle\Entity\BookFile;
 use Sonata\AdminBundle\Admin\AbstractAdmin as Admin;
 
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -35,6 +34,12 @@ class ServerHasItemAdmin extends Admin
             ])
             ->add('price', null, [
                 'label' => 'server_has_item.fields.price',
+            ])
+            ->add('isHot', null, [
+                'label' => 'server_has_item.fields.is_hot',
+            ])
+            ->add('isNew', null, [
+                'label' => 'server_has_item.fields.is_new',
             ])
             ->add('_action', 'actions', [
                 'actions' => [
@@ -80,6 +85,14 @@ class ServerHasItemAdmin extends Admin
             ])
             ->add('discount', IntegerType::class, [
                 'label' => 'server_has_item.fields.discount',
+                'required' => false,
+            ])
+            ->add('isHot', null, [
+                'label' => 'server_has_item.fields.is_hot',
+                'required' => false,
+            ])
+            ->add('isNew', null, [
+                'label' => 'server_has_item.fields.is_new',
                 'required' => false,
             ])
         ;

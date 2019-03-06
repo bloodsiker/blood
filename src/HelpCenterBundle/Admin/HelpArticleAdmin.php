@@ -63,6 +63,7 @@ class HelpArticleAdmin extends Admin
             ])
             ->add('isActive', null, [
                 'label' => 'help_article.fields.is_active',
+                'editable' => true,
             ])
             ->add('createdAt', null, [
                 'label' => 'help_article.fields.created_at',

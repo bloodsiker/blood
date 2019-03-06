@@ -69,6 +69,20 @@ class Game
     protected $isHot;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $menuSellToUs;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $menuHowItWork;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=false)
@@ -290,5 +304,53 @@ class Game
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Get menuSellToUs
+     *
+     * @return bool
+     */
+    public function isMenuSellToUs()
+    {
+        return $this->menuSellToUs;
+    }
+
+    /**
+     * Set menuSellToUs
+     *
+     * @param bool $menuSellToUs
+     *
+     * @return $this
+     */
+    public function setMenuSellToUs(bool $menuSellToUs)
+    {
+        $this->menuSellToUs = $menuSellToUs;
+
+        return $this;
+    }
+
+    /**
+     * Get menuHowItWork
+     *
+     * @return bool
+     */
+    public function isMenuHowItWork()
+    {
+        return $this->menuHowItWork;
+    }
+
+    /**
+     * Set menuHowItWork
+     *
+     * @param bool $menuHowItWork
+     *
+     * @return $this
+     */
+    public function setMenuHowItWork(bool $menuHowItWork)
+    {
+        $this->menuHowItWork = $menuHowItWork;
+
+        return $this;
     }
 }

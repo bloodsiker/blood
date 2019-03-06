@@ -100,7 +100,7 @@ class HelpArticle
     {
         if (is_null($this->slug)) {
             $slugify = new Slugify();
-            $this->slug = $slugify->slugify($this->getName());
+            $this->slug = $slugify->slugify($this->getTitle());
         }
     }
 
@@ -259,7 +259,7 @@ class HelpArticle
      *
      * @return $this
      */
-    public function setGame(\GameBundle\Entity\Game $game)
+    public function setGame(\GameBundle\Entity\Game $game = null)
     {
         $this->game = $game;
 

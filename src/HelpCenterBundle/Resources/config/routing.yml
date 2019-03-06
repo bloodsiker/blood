@@ -1,17 +1,13 @@
-# order_board ========================================================
-#order_board:
-#    path: /order-board
-#    defaults:
-#        _controller: OrderBundle:OrderBoard:list
-#
-#order_board_vote:
-#    path: /order-board/vote
-#    defaults:
-#        _controller: OrderBundle:OrderBoard:voteOrder
-#
-#order_board_status:
-#    path: /order-board/{status}
-#    defaults:
-#        _controller: OrderBundle:OrderBoard:list
-#    requirements:
-#        status: "new|completed|cancel|top"
+# help center========================================================
+help_center:
+    path: /helpcenter
+    defaults:
+        _controller: HelpCenterBundle:HelpCenter:list
+
+help_center_view:
+    path: /helpcenter/{id}-{slug}
+    defaults:
+        _controller: HelpCenterBundle:HelpCenter:view
+    requirements:
+        id: "\\d+"
+        slug: "([a-zA-Z\\-0-9\\_]+)?"

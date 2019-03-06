@@ -3,6 +3,7 @@
 namespace HelpCenterBundle\Entity;
 
 use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,6 +52,14 @@ class HelpCategory
      * @ORM\Column(type="boolean", nullable=false)
      */
     protected $isActive;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="HelpCenterBundle\Entity\HelpArticle", mappedBy="category", fetch="EXTRA_LAZY")
+     * @ORM\OrderBy({"id" = "ASC"})
+     */
+    protected $articles;
 
     /**
      * Constructor
@@ -193,5 +202,41 @@ class HelpCategory
         $this->game = $game;
 
         return $this;
+    }
+
+    /**
+     * Add article.
+     *
+     * @param \HelpCenterBundle\Entity\HelpArticle $articles
+     *
+     * @return $this
+     */
+    public function addArticle(\HelpCenterBundle\Entity\HelpArticle $articles)
+    {
+        $this->articles[] = $articles;
+
+        return $this;
+    }
+
+    /**
+     * Remove article.
+     *
+     * @param \HelpCenterBundle\Entity\HelpArticle $articles
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeArticle(\HelpCenterBundle\Entity\HelpArticle $articles)
+    {
+        return $this->articles->removeElement($articles);
+    }
+
+    /**
+     * Get article.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getArticles()
+    {
+        return $this->articles;
     }
 }

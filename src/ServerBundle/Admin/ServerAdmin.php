@@ -77,43 +77,50 @@ class ServerAdmin extends Admin
         $context = $this->getPersistentParameter('context');
 
         $formMapper
-            ->with('form_group.basic', ['class' => 'col-md-8', 'name' => false])
-                ->add('name', TextType::class, [
-                    'label' => 'server.fields.name',
-                ])
-                ->add('slug', TextType::class, [
-                    'label' => 'server.fields.slug',
-                    'required' => false,
-                    'attr' => ['readonly' => !$this->getSubject()->getId() ? false : true],
-                ])
-                ->add('serverHasItems', CollectionType::class, [
-                    'label' => 'server.fields.item',
-                    'required' => false,
-                    'constraints' => new Valid(),
-                    'by_reference' => false,
-                ], [
-                    'edit' => 'inline',
-                    'inline' => 'table',
-                    'sortable' => 'orderNum',
-                    'link_parameters' => ['context' => $context],
-                    'admin_code' => 'server.admin.server_has_item',
-                ])
+            ->with('server.tab.server', ['tab' => true])
+                ->with('form_group.basic', ['class' => 'col-md-8', 'name' => false])
+                    ->add('name', TextType::class, [
+                        'label' => 'server.fields.name',
+                    ])
+                    ->add('slug', TextType::class, [
+                        'label' => 'server.fields.slug',
+                        'required' => false,
+                        'attr' => ['readonly' => !$this->getSubject()->getId() ? false : true],
+                    ])
+                ->end()
+                ->with('form_group.additional', ['class' => 'col-md-4', 'name' => false])
+                    ->add('isActive', null, [
+                        'label' => 'server.fields.is_active',
+                        'required' => false,
+                    ])
+                    ->add('game', ModelListType::class, [
+                        'label' => 'server.fields.game',
+                        'required' => false,
+                        'btn_edit' => false,
+                    ])
+                    ->add('createdAt', DateTimePickerType::class, [
+                        'label'     => 'server.fields.created_at',
+                        'required' => true,
+                        'format' => 'YYYY-MM-dd HH:mm',
+                        'attr' => ['readonly' => true],
+                    ])
+                ->end()
             ->end()
-            ->with('form_group.additional', ['class' => 'col-md-4', 'name' => false])
-                ->add('isActive', null, [
-                    'label' => 'server.fields.is_active',
-                    'required' => false,
-                ])
-                ->add('game', ModelListType::class, [
-                    'label' => 'server.fields.game',
-                    'required' => false,
-                ])
-                ->add('createdAt', DateTimePickerType::class, [
-                    'label'     => 'server.fields.created_at',
-                    'required' => true,
-                    'format' => 'YYYY-MM-dd HH:mm',
-                    'attr' => ['readonly' => true],
-                ])
+            ->with('server.tab.items', ['tab' => true])
+                ->with('form_group.basic', ['class' => 'col-md-12', 'label' => false])
+                    ->add('serverHasItems', CollectionType::class, [
+                        'label' => 'server.fields.item',
+                        'required' => false,
+                        'constraints' => new Valid(),
+                        'by_reference' => false,
+                    ], [
+                        'edit' => 'inline',
+                        'inline' => 'table',
+                        'sortable' => 'orderNum',
+                        'link_parameters' => ['context' => $context],
+                        'admin_code' => 'server.admin.server_has_item',
+                    ])
+                ->end()
             ->end();
     }
 }

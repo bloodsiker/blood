@@ -1,19 +1,9 @@
 services:
-    order.block.order_board_list:
-        class: "OrderBundle\\Block\\ListOrderBoardBlockService"
+    help.block.help_list:
+        class: HelpCenterBundle\Block\ListHelpArticleBlockService
         arguments:
-          - order.block.order_board_list
+          - help.block.help_list
           - '@templating'
           - '@?doctrine'
-        tags:
-          - { name: sonata.block }
-
-    order.block.add_order_board:
-        class: "OrderBundle\\Block\\AddOrderBoardBlockService"
-        arguments:
-          - order.block.add_order_board
-          - '@templating'
-          - '@app.entity_manager'
-          - '@request_stack'
         tags:
           - { name: sonata.block }

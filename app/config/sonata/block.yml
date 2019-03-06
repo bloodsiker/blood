@@ -30,36 +30,34 @@ sonata_block:
 #            contexts: [cms]
 
         # BookBundle Block's
-        book.block.list:
-            contexts: [cms]
-        book.block.book_voting:
-            contexts: [cms]
+#        book.block.list:
+#            contexts: [cms]
+#        book.block.book_voting:
+#            contexts: [cms]
 
         # GenreBundle Block's
-        genre.block.genre_list:
-            contexts: [cms]
+#        genre.block.genre_list:
+#            contexts: [cms]
 
         # SeriesBundle Block's
-        series.block.series_list:
-            contexts: [cms]
+#        series.block.series_list:
+#            contexts: [cms]
 
         # ShareBundle Block's
-        share.block.tag_list:
-            contexts: [cms]
-        share.block.author_list:
-            contexts: [cms]
+#        share.block.tag_list:
+#            contexts: [cms]
+#        share.block.author_list:
+#            contexts: [cms]
 
-        # OrderBundle Block's
-        order.block.order_board_list:
-            contexts: [cms]
-        order.block.add_order_board:
+        # HelpCenterBundle Block's
+        help.block.help_list:
             contexts: [cms]
 
         # CommentBundle Block's
-        comment.block.list_comments:
-            contexts: [cms]
-        comment.block.add_comment:
-            contexts: [cms]
+#        comment.block.list_comments:
+#            contexts: [cms]
+#        comment.block.add_comment:
+#            contexts: [cms]
 #
 #        # UserBundle's Blocks
 #        sonata.user.block.account: # used to display menu option (login option)

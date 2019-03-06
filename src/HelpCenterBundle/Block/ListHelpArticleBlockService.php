@@ -3,9 +3,7 @@
 namespace HelpCenterBundle\Block;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use OrderBundle\Entity\OrderBoard;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
+use HelpCenterBundle\Entity\HelpCategory;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Block\Service\AbstractAdminBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
@@ -14,9 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ListOrderBoardBlockService
+ * Class ListHelpArticleBlockService
  */
-class ListOrderBoardBlockService extends AbstractAdminBlockService
+class ListHelpArticleBlockService extends AbstractAdminBlockService
 {
     /**
      * @var Registry $doctrine
@@ -48,7 +46,7 @@ class ListOrderBoardBlockService extends AbstractAdminBlockService
             $this->getName(),
             (!is_null($code) ? $code : $this->getName()),
             false,
-            'OrderBundle',
+            'HelpCenterBundle',
             ['class' => 'fa fa-code']
         );
     }
@@ -59,10 +57,8 @@ class ListOrderBoardBlockService extends AbstractAdminBlockService
     public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'items_count' => 20,
-            'page'        => 1,
-            'status'      => null,
-            'template'    => 'OrderBundle:Block:orders_board_list.html.twig',
+            'game'     => null,
+            'template' => 'HelpCenterBundle:Block:help_list.html.twig',
         ]);
     }
 
@@ -80,26 +76,16 @@ class ListOrderBoardBlockService extends AbstractAdminBlockService
             return new Response();
         }
 
-        $limit = $blockContext->getSetting('items_count');
-        $page = $blockContext->getSetting('page');
+        $categoryRepository = $this->doctrine->getRepository(HelpCategory::class);
+        $game = $blockContext->getSetting('game');
 
-        $repository = $this->doctrine->getRepository(OrderBoard::class);
+        $categories = $categoryRepository->findBy(['game' => $game]);
 
-        $qb = $repository->baseOrderBoardQueryBuilder();
-
-        if ($blockContext->getSetting('status')) {
-            $repository->filterByStatus($qb, $blockContext->getSetting('status'));
-        }
-
-        $paginator = new Pagerfanta(new DoctrineORMAdapter($qb, true, false));
-        $paginator->setAllowOutOfRangePages(true);
-        $paginator->setMaxPerPage((int) $limit);
-        $paginator->setCurrentPage((int) $page);
 
         return $this->renderResponse($blockContext->getTemplate(), [
-            'orders'    => $paginator,
-            'block'     => $block,
-            'settings'  => array_merge($blockContext->getSettings(), $block->getSettings()),
+            'categories' => $categories,
+            'block'      => $block,
+            'settings'   => array_merge($blockContext->getSettings(), $block->getSettings()),
         ], $response);
     }
 }

@@ -52,6 +52,7 @@ class HelpCategoryAdmin extends Admin
             ])
             ->add('isActive', null, [
                 'label' => 'help_category.fields.is_active',
+                'editable' => true,
             ]);
     }
 
@@ -97,7 +98,6 @@ class HelpCategoryAdmin extends Admin
                 ->add('game', ModelListType::class, [
                     'label' => 'help_article.fields.game',
                     'required' => false,
-                    'btn_delete' => false,
                     'btn_edit' => false,
                     'btn_add' => false,
                 ])

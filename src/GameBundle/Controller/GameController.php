@@ -130,4 +130,25 @@ class GameController extends Controller
             'game'   => $game,
         ]);
     }
+
+    /**
+     * @param string  $slug
+     * @param Request $request
+     *
+     * @return Response
+     *
+     * @Cache(maxage=60, public=true)
+     */
+    public function sellToUsAction($slug, Request $request)
+    {
+        $gameRepository = $this->getDoctrine()->getManager()->getRepository(Game::class);
+        $game = $gameRepository->findOneBy(['slug' => (string) $slug]);
+        if (!$game || !$game->getIsActive()) {
+            throw $this->createNotFoundException(self::GAME_404);
+        }
+
+        return $this->render('GameBundle::game_sell_to_us.html.twig', [
+            'game'   => $game,
+        ]);
+    }
 }

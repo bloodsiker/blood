@@ -67,6 +67,20 @@ class ServerHasItem
     protected $discount;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $isHot;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $isNew;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -237,6 +251,54 @@ class ServerHasItem
     public function setDiscount(int $discount)
     {
         $this->discount = $discount;
+
+        return $this;
+    }
+
+    /**
+     * Get isHot
+     *
+     * @return bool
+     */
+    public function getIsHot()
+    {
+        return $this->isHot;
+    }
+
+    /**
+     * Set isHot
+     *
+     * @param bool $isHot
+     *
+     * @return $this
+     */
+    public function setIsHot(bool $isHot)
+    {
+        $this->isHot = $isHot;
+
+        return $this;
+    }
+
+    /**
+     * Get isNew
+     *
+     * @return bool
+     */
+    public function getIsNew()
+    {
+        return $this->isNew;
+    }
+
+    /**
+     * Set isNew
+     *
+     * @param bool $isNew
+     *
+     * @return $this
+     */
+    public function setIsNew(bool $isNew)
+    {
+        $this->isNew = $isNew;
 
         return $this;
     }

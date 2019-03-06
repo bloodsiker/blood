@@ -47,7 +47,7 @@ class DefaultController extends Controller
      *
      * @return Response
      */
-    public function searchAction(Request $request)
+    public function sellToUsAction(Request $request)
     {
         $breadcrumb = $this->get('app.breadcrumb');
         $breadcrumb->addBreadcrumb(['title' => 'Поиск']);
@@ -58,6 +58,6 @@ class DefaultController extends Controller
             'keywords' => 'скачать книги, рецензии, отзывы на книги, цитаты из книг, краткое содержание, топбук',
         ]);
 
-        return $this->render('AppBundle:search:search.html.twig');
+        return $this->render('AppBundle:sell:sell_to_us.html.twig');
     }
 }

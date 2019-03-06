@@ -20,10 +20,16 @@ server:
         item: Итемы на сервере/платформе
         id: ID
 
+    tab:
+        server: Сервер/платформа
+        items: Итемы
+
 server_has_item:
     fields:
         server: Сервар/Платформа
         item: Итем
         available: Количество
         price: Цена
+        is_hot: Hot
+        is_new: New
         discount: 'Скидка %'

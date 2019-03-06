@@ -4,10 +4,10 @@ index:
   defaults:
     _controller: AppBundle:Default:index
 
-search:
-  path: /search
+sell_to_us:
+  path: /sell-to-us
   defaults:
-    _controller: AppBundle:Default:search
+    _controller: AppBundle:Default:sellToUs
 
 
 block__ajax:
