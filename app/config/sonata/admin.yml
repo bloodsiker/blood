@@ -38,10 +38,6 @@ sonata_admin:
                 label: group.game
                 label_catalogue: GameBundle
                 icon: <i class="fa fa-gamepad"></i>
-            group.server:
-                label: group.server
-                label_catalogue: ServerBundle
-                icon: <i class="fa fa-braille"></i>
             group.media:
                 label: group.media
                 label_catalogue: MediaBundle

@@ -40,7 +40,7 @@ class HelpArticle
     /**
      * @var \HelpCenterBundle\Entity\HelpCategory
      *
-     * @ORM\ManyToOne(targetEntity="HelpCenterBundle\Entity\HelpCategory")
+     * @ORM\ManyToOne(targetEntity="HelpCenterBundle\Entity\HelpCategory", inversedBy="articles")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $category;

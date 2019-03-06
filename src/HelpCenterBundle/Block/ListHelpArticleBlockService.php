@@ -4,6 +4,7 @@ namespace HelpCenterBundle\Block;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use HelpCenterBundle\Entity\HelpCategory;
+use HelpCenterBundle\Entity\HelpCenterRepository;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Block\Service\AbstractAdminBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;

@@ -1,0 +1,9 @@
+services:
+    game.block.item_list:
+        class: GameBundle\Block\ListItemsBlockService
+        arguments:
+          - game.block.item_list
+          - '@templating'
+          - '@?doctrine'
+        tags:
+          - { name: sonata.block }

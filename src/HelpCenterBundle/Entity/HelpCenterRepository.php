@@ -13,11 +13,11 @@ class HelpCenterRepository extends EntityRepository
     /**
      * @return QueryBuilder
      */
-    public function baseOrderBoardQueryBuilder(): QueryBuilder
+    public function baseArticleQueryBuilder(): QueryBuilder
     {
         $qb = $this->createQueryBuilder('a');
         $qb
-            ->innerJoin('a.category')
+            ->innerJoin('a.category', 'c')
             ->orderBy('a.createdAt', 'DESC')
         ;
 

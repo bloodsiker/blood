@@ -1,6 +1,6 @@
 <?php
 
-namespace ServerBundle\Admin;
+namespace GameBundle\Admin;
 
 use AdminBundle\Admin\BaseAdmin as Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -118,7 +118,7 @@ class ServerAdmin extends Admin
                         'inline' => 'table',
                         'sortable' => 'orderNum',
                         'link_parameters' => ['context' => $context],
-                        'admin_code' => 'server.admin.server_has_item',
+                        'admin_code' => 'game.admin.server_has_item',
                     ])
                 ->end()
             ->end();

@@ -3,6 +3,7 @@
 namespace GameBundle\Controller;
 
 use GameBundle\Entity\Game;
+use GameBundle\Entity\Server;
 use ShareBundle\Entity\ItemCategory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 class GameController extends Controller
 {
     const GAME_404 = 'Game doesn\'t exist';
+    const SERVER_404 = 'Server doesn\'t exist';
     const CATEGORY_404 = 'Category doesn\'t exist';
 
     /**
@@ -47,10 +49,10 @@ class GameController extends Controller
             throw $this->createNotFoundException(self::GAME_404);
         }
 
-        if (!empty($categorySlug)) {
+        if (!empty($category)) {
             $categorySlug = substr($category, 1);
             $categoryRepository = $this->getDoctrine()->getManager()->getRepository(ItemCategory::class);
-            $categoryObject = $categoryRepository->findOneBy(['slug' => $categorySlug]);
+            $categoryObject = $categoryRepository->findOneBy(['slug' => (string) $categorySlug]);
             if (!$categoryObject) {
                 throw $this->createNotFoundException(self::CATEGORY_404);
             }
@@ -79,9 +81,15 @@ class GameController extends Controller
             throw $this->createNotFoundException(self::GAME_404);
         }
 
+        $serverRepository = $this->getDoctrine()->getManager()->getRepository(Server::class);
+        $serverObject = $serverRepository->findOneBy(['slug' => (string) $server]);
+        if (!$serverObject || !$serverObject->getIsActive()) {
+            throw $this->createNotFoundException(self::SERVER_404);
+        }
+
         return $this->render('GameBundle::game_view.html.twig', [
             'game'   => $game,
-            'server' => $server,
+            'server' => $serverObject,
         ]);
     }
 
@@ -103,10 +111,22 @@ class GameController extends Controller
             throw $this->createNotFoundException(self::GAME_404);
         }
 
+        $serverRepository = $this->getDoctrine()->getManager()->getRepository(Server::class);
+        $serverObject = $serverRepository->findOneBy(['slug' => (string) $server]);
+        if (!$serverObject || !$serverObject->getIsActive()) {
+            throw $this->createNotFoundException(self::SERVER_404);
+        }
+
+        $categoryRepository = $this->getDoctrine()->getManager()->getRepository(ItemCategory::class);
+        $categoryObject = $categoryRepository->findOneBy(['slug' => $category]);
+        if (!$categoryObject) {
+            throw $this->createNotFoundException(self::CATEGORY_404);
+        }
+
         return $this->render('GameBundle::game_view.html.twig', [
             'game'     => $game,
-            'server'   => $server,
-            'category' => $category,
+            'server'   => $serverObject,
+            'category' => $categoryObject,
         ]);
     }
 

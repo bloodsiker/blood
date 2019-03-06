@@ -31,9 +31,9 @@ class OrderHasItem
     protected $order;
 
     /**
-     * @var \ServerBundle\Entity\Server
+     * @var \GameBundle\Entity\Server
      *
-     * @ORM\ManyToOne(targetEntity="ServerBundle\Entity\Server")
+     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\Server")
      * @ORM\JoinColumn(name="server_id", referencedColumnName="id", nullable=false)
      */
     protected $server;
@@ -132,11 +132,11 @@ class OrderHasItem
     /**
      * Set server
      *
-     * @param \ServerBundle\Entity\Server $server
+     * @param \GameBundle\Entity\Server $server
      *
      * @return $this
      */
-    public function setServer(\ServerBundle\Entity\Server $server = null)
+    public function setServer(\GameBundle\Entity\Server $server = null)
     {
         $this->server = $server;
 
@@ -146,7 +146,7 @@ class OrderHasItem
     /**
      * Get server
      *
-     * @return \ServerBundle\Entity\Server
+     * @return \GameBundle\Entity\Server
      */
     public function getServer()
     {
@@ -156,7 +156,7 @@ class OrderHasItem
     /**
      * Set item
      *
-     * @param \ShareBundle\Entity\Item
+     * @param \ShareBundle\Entity\Item $item
      *
      * @return $this
      */

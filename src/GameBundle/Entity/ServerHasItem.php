@@ -1,14 +1,14 @@
 <?php
 
-namespace ServerBundle\Entity;
+namespace GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class ServerHasItem
  *
- * @ORM\Entity()
- * @ORM\Table(name="server_has_item")
+ * @ORM\Entity(repositoryClass="GameBundle\Entity\ServerHasItemRepository")
+ * @ORM\Table(name="games_server_has_item")
  * @ORM\HasLifecycleCallbacks
  */
 class ServerHasItem
@@ -23,9 +23,9 @@ class ServerHasItem
     protected $id;
 
     /**
-     * @var \ServerBundle\Entity\Server
+     * @var \GameBundle\Entity\Server
      *
-     * @ORM\ManyToOne(targetEntity="ServerBundle\Entity\Server", inversedBy="serverHasItems")
+     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\Server", inversedBy="serverHasItems")
      * @ORM\JoinColumn(name="server_id", referencedColumnName="id", nullable=false)
      */
     protected $server;
@@ -138,11 +138,11 @@ class ServerHasItem
     /**
      * Set book.
      *
-     * @param \ServerBundle\Entity\Server $server
+     * @param \GameBundle\Entity\Server $server
      *
      * @return $this
      */
-    public function setServer(\ServerBundle\Entity\Server $server = null)
+    public function setServer(\GameBundle\Entity\Server $server = null)
     {
         $this->server = $server;
 
@@ -152,7 +152,7 @@ class ServerHasItem
     /**
      * Get server.
      *
-     * @return \ServerBundle\Entity\Server
+     * @return \GameBundle\Entity\Server
      */
     public function getServer()
     {

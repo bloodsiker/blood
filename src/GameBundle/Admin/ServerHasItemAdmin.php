@@ -1,6 +1,6 @@
 <?php
 
-namespace ServerBundle\Admin;
+namespace GameBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin as Admin;
 

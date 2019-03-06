@@ -1,17 +1,16 @@
 <?php
 
-namespace ServerBundle\Entity;
+namespace GameBundle\Entity;
 
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Class Game
+ * Class Server
  *
  * @ORM\Entity()
- * @ORM\Table(name="servers")
+ * @ORM\Table(name="games_servers")
  * @ORM\HasLifecycleCallbacks
  */
 class Server
@@ -64,7 +63,7 @@ class Server
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="ServerBundle\Entity\ServerHasItem",
+     * @ORM\OneToMany(targetEntity="GameBundle\Entity\ServerHasItem",
      *     mappedBy="server", cascade={"all"}, orphanRemoval=true
      * )
      * @ORM\OrderBy({"orderNum" = "ASC"})
@@ -245,11 +244,11 @@ class Server
     /**
      * Add serverHasItems.
      *
-     * @param \ServerBundle\Entity\ServerHasItem $serverHasItems
+     * @param \GameBundle\Entity\ServerHasItem $serverHasItems
      *
      * @return $this
      */
-    public function addServerHasItem(\ServerBundle\Entity\ServerHasItem $serverHasItems)
+    public function addServerHasItem(\GameBundle\Entity\ServerHasItem $serverHasItems)
     {
         $serverHasItems->setServer($this);
         $this->serverHasItems[] = $serverHasItems;
@@ -260,11 +259,11 @@ class Server
     /**
      * Remove serverHasItems.
      *
-     * @param \ServerBundle\Entity\ServerHasItem $serverHasItems
+     * @param \GameBundle\Entity\ServerHasItem $serverHasItems
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeServerHasItem(\ServerBundle\Entity\ServerHasItem $serverHasItems)
+    public function removeServerHasItem(\GameBundle\Entity\ServerHasItem $serverHasItems)
     {
         return $this->serverHasItems->removeElement($serverHasItems);
     }

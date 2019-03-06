@@ -1,1 +1,12 @@
 {{ game.name }}
+
+{{
+sonata_block_render(
+    { 'type': 'game.block.item_list' },
+    {
+        'game': game,
+        'server': server is defined ? server : null,
+        'category': category is defined ? category : null,
+    }
+)
+}}
