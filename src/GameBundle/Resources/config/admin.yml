@@ -21,6 +21,17 @@ services:
         calls:
           - [ setTranslationDomain, [GameBundle] ]
 
+    game.admin.game_genre:
+        class: GameBundle\Admin\GameGenreAdmin
+        tags:
+          - { name: sonata.admin, manager_type: orm, group: "group.game", label: "group.game_genre_editor" }
+        arguments:
+          - ~
+          - GameBundle\Entity\GameGenre
+          - ~
+        calls:
+          - [ setTranslationDomain, [GameBundle] ]
+
     game.admin.server_has_item:
         class: GameBundle\Admin\ServerHasItemAdmin
         tags:

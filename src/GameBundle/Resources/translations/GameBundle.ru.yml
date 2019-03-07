@@ -1,6 +1,8 @@
 Action: Действия
 Game List: Список игр
 Game Create: Добавить игру
+Game Genre List: Список жанров
+Game Genre Create: Добавить жанр
 Server List: Список cерверов/платформ
 Server Create: Добавить cервер/платформу
 
@@ -12,6 +14,7 @@ form_group:
 group:
     game: Игры
     game_editor: Игры
+    game_genre_editor: Игровые жанры
     server_editor: Сервера/Платформы
 
 game:
@@ -22,6 +25,7 @@ game:
         is_active: Активно
         is_hot: Hot
         image: Изображение
+        genre: Жанр
         created_at: Дата создания
         id: ID
 
@@ -32,6 +36,9 @@ game:
     tab:
         game: Игра
         sell_to_us: Sell to us
+
+    validate:
+        genre_not_empty: Жанр не должен быть пустым
 
 server:
     fields:
@@ -56,3 +63,8 @@ server_has_item:
         is_hot: Hot
         is_new: New
         discount: 'Скидка %'
+
+game_genre:
+    fields:
+        name: Название
+        slug: Сегмент URL (slug)

@@ -7,3 +7,12 @@ services:
           - '@?doctrine'
         tags:
           - { name: sonata.block }
+
+    game.block.game_list:
+        class: GameBundle\Block\ListGameBlockService
+        arguments:
+          - game.block.game_list
+          - '@templating'
+          - '@?doctrine'
+        tags:
+          - { name: sonata.block }

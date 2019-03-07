@@ -4,11 +4,14 @@ namespace GameBundle\Admin;
 
 use AdminBundle\Admin\BaseAdmin as Admin;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use GameBundle\Entity\GameGenre;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\CoreBundle\Form\Type\DateTimePickerType;
+use Sonata\CoreBundle\Validator\ErrorElement;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -23,6 +26,23 @@ class GameAdmin extends Admin
         '_sort_by'    => 'id',
         '_sort_order' => 'ASC',
     ];
+
+    /**
+     * @param ErrorElement $errorElement
+     * @param mixed        $object
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        if (!$object->getGenre()) {
+            $errorElement
+                ->with('genre')
+                ->addViolation(
+                    $this->trans('game.validate.genre_not_empty', [], $this->translationDomain)
+                )
+                ->end()
+            ;
+        }
+    }
 
     /**
      * @param ListMapper $listMapper
@@ -97,6 +117,14 @@ class GameAdmin extends Admin
                     ])
                 ->end()
                 ->with('form_group.additional', ['class' => 'col-md-4', 'name' => false])
+                    ->add('genre', ChoiceType::class, [
+                        'label' => 'game.fields.genre',
+                        'choices' => $this->getGenres(),
+                        'required' => true,
+                        'choice_label' => function ($status) {
+                            return strtoupper($status->getName());
+                        },
+                    ])
                     ->add('isActive', null, [
                         'label' => 'game.fields.is_active',
                         'required' => false,
@@ -130,5 +158,16 @@ class GameAdmin extends Admin
             ->with('game.tab.sell_to_us', ['tab' => true])
 
             ->end();
+    }
+
+    /**
+     * @return array|object[]|\OrderBundle\Entity\OrderStatus[]
+     */
+    private function getGenres()
+    {
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine.orm.entity_manager');
+        $repository = $em->getRepository(GameGenre::class);
+
+        return $repository->findAll();
     }
 }

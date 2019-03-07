@@ -3,6 +3,7 @@
 namespace GameBundle\Block;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use GameBundle\Entity\Game;
 use GameBundle\Entity\Server;
 use GameBundle\Entity\ServerHasItem;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
@@ -15,12 +16,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ListItemsBlockService
+ * Class ListGameBlockService
  */
-class ListItemsBlockService extends AbstractAdminBlockService
+class ListGameBlockService extends AbstractAdminBlockService
 {
-    const POPULAR_LIST = 'BookBundle:Block:popular_list.html.twig';
-    const TOP_100_LIST = 'BookBundle:Block:top_100_list.html.twig';
+    const HOMEPAGE_LIST = 'GameBundle:Block:games_homepage_list.html.twig';
 
     /**
      * @var Registry $doctrine
@@ -64,12 +64,8 @@ class ListItemsBlockService extends AbstractAdminBlockService
     {
         $resolver->setDefaults([
             'list_type'        => null,
-            'items_count'      => 20,
-            'page'             => 1,
-            'game'             => null,
-            'server'           => null,
-            'category'         => null,
-            'template'         => 'GameBundle:Block:items_list.html.twig',
+            'is_hot'           => false,
+            'template'         => 'GameBundle:Block:games_list.html.twig',
         ]);
     }
 
@@ -89,37 +85,20 @@ class ListItemsBlockService extends AbstractAdminBlockService
             return new Response();
         }
 
-        $limit = (int) $blockContext->getSetting('items_count');
-        $page = (int) $blockContext->getSetting('page');
+        $repository = $this->doctrine->getRepository(Game::class);
 
-        $repositoryItem = $this->doctrine->getRepository(ServerHasItem::class);
+        $qb = $repository->baseGameQueryBuilder();
 
-        $qb = $repositoryItem->baseServerQueryBuilder();
-
-        if ($blockContext->getSetting('game')) {
-            $repositoryItem->filterByGame($qb, $blockContext->getSetting('game'));
+        if ($blockContext->getSetting('is_hot')) {
+            $repository->filterByHot($qb);
         }
-
-        if ($blockContext->getSetting('server')) {
-            $repositoryItem->filterByServer($qb, $blockContext->getSetting('server'));
-        }
-
-        if ($blockContext->getSetting('category')) {
-            $repositoryItem->filterByCategory($qb, $blockContext->getSetting('category'));
-        }
-
-        $result = $qb->getQuery()->getResult();
-
-//
-//        $paginator = new Pagerfanta(new DoctrineORMAdapter($qb, true, false));
-//        $paginator->setAllowOutOfRangePages(true);
-//        $paginator->setMaxPerPage($limit);
-//        $paginator->setCurrentPage($page);
+        $games = $qb->getQuery()->getResult();
 
         $template = !is_null($blockContext->getSetting('list_type'))
             ? $blockContext->getSetting('list_type') : $blockContext->getTemplate();
 
         return $this->renderResponse($template, [
+            'games'     => $games,
             'block'     => $block,
             'settings'  => array_merge($blockContext->getSettings(), $block->getSettings()),
         ], $response);

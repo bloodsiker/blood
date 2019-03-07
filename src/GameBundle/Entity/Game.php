@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Class Game
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="GameBundle\Entity\GameRepository")
  * @ORM\Table(name="games")
  * @ORM\HasLifecycleCallbacks
  */
@@ -39,6 +39,14 @@ class Game
      * @ORM\JoinColumn(name="image_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $image;
+
+    /**
+     * @var \GameBundle\Entity\GameGenre
+     *
+     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\GameGenre")
+     * @ORM\JoinColumn(name="genre_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    protected $genre;
 
     /**
      * @var string
@@ -183,6 +191,30 @@ class Game
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set genre
+     *
+     * @param \GameBundle\Entity\GameGenre $genre
+     *
+     * @return $this
+     */
+    public function setGenre(\GameBundle\Entity\GameGenre $genre = null)
+    {
+        $this->genre = $genre;
+
+        return $this;
+    }
+
+    /**
+     * Get genre
+     *
+     * @return \GameBundle\Entity\GameGenre
+     */
+    public function getGenre()
+    {
+        return $this->genre;
     }
 
     /**

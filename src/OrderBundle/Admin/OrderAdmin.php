@@ -3,15 +3,14 @@
 namespace OrderBundle\Admin;
 
 use AdminBundle\Admin\BaseAdmin as Admin;
+use OrderBundle\Entity\OrderStatus;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\CoreBundle\Form\Type\DateTimePickerType;
 use Sonata\CoreBundle\Form\Type\CollectionType;
 use Sonata\DoctrineORMAdminBundle\Filter\DateTimeFilter;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Valid;
 
@@ -141,7 +140,7 @@ class OrderAdmin extends Admin
     private function getStatuses()
     {
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine.orm.entity_manager');
-        $repository = $em->getRepository('OrderBundle:OrderStatus');
+        $repository = $em->getRepository(OrderStatus::class);
 
         return $repository->findAll();
     }

@@ -32,6 +32,8 @@ sonata_block:
         # GameBundle Block's
         game.block.item_list:
             contexts: [cms]
+        game.block.game_list:
+            contexts: [cms]
 
         # GenreBundle Block's
 #        genre.block.genre_list:
