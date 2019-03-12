@@ -107,11 +107,17 @@ class OrderAdmin extends Admin
                         return strtoupper($status->getName());
                     },
                 ])
+                ->add('clientName', TextType::class, [
+                    'label' => 'order.fields.client_name',
+                ])
                 ->add('clientEmail', TextType::class, [
                     'label' => 'order.fields.client_email',
                 ])
                 ->add('gameNickName', TextType::class, [
                     'label' => 'order.fields.game_nick_name',
+                ])
+                ->add('skype', TextType::class, [
+                    'label' => 'order.fields.skype',
                 ])
                 ->add('orderHasItems', CollectionType::class, [
                     'label' => 'order.fields.items',

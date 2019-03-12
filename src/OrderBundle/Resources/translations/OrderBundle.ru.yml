@@ -19,6 +19,7 @@ order:
         client_name: Имя клиента
         client_email: E-mail клиента
         game_nick_name: Игровой ник
+        skype: Skype
         status: Статус
         items: Итемы в заказе
         quantity: Количество

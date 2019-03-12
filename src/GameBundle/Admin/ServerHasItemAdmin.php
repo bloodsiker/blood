@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin as Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
@@ -94,6 +95,9 @@ class ServerHasItemAdmin extends Admin
             ->add('isNew', null, [
                 'label' => 'server_has_item.fields.is_new',
                 'required' => false,
+            ])
+            ->add('orderNum', HiddenType::class, [
+                'label' => 'server_has_item.fields.order_num',
             ])
         ;
     }

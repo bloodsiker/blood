@@ -28,7 +28,21 @@ class Order
      *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
+    protected $clientName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
     protected $clientEmail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $skype;
 
     /**
      * @var string
@@ -136,6 +150,54 @@ class Order
     public function setStatus(\OrderBundle\Entity\OrderStatus $status = null)
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get clientName
+     *
+     * @return string
+     */
+    public function getClientName()
+    {
+        return $this->clientName;
+    }
+
+    /**
+     * Set clientName
+     *
+     * @param string $clientName
+     *
+     * @return $this
+     */
+    public function setClientName(string $clientName)
+    {
+        $this->clientName = $clientName;
+
+        return $this;
+    }
+
+    /**
+     * Get skype
+     *
+     * @return string
+     */
+    public function getSkype()
+    {
+        return $this->skype;
+    }
+
+    /**
+     * Set skype
+     *
+     * @param string $skype
+     *
+     * @return $this
+     */
+    public function setSkype(string $skype = null)
+    {
+        $this->skype = $skype;
 
         return $this;
     }
