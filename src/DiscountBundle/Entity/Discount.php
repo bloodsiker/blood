@@ -1,19 +1,19 @@
 <?php
 
-namespace ShareBundle\Entity;
+namespace DiscountBundle\Entity;
 
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class DiscountPack
+ * Class Discount
  *
  * @ORM\Entity()
- * @ORM\Table(name="share_discount_pack")
+ * @ORM\Table(name="discount_discount")
  * @ORM\HasLifecycleCallbacks
  */
-class DiscountPack
+class Discount
 {
     /**
      * @var int
@@ -55,6 +55,27 @@ class DiscountPack
     protected $orderNum;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $isActive;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $isMain;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $isRandom;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=false)
@@ -64,12 +85,12 @@ class DiscountPack
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="ShareBundle\Entity\DiscountPackHasPack",
-     *     mappedBy="discountPack", cascade={"all"}, orphanRemoval=true
+     * @ORM\OneToMany(targetEntity="DiscountBundle\Entity\DiscountHasPack",
+     *     mappedBy="discount", cascade={"all"}, orphanRemoval=true
      * )
      * @ORM\OrderBy({"orderNum" = "ASC"})
      */
-    protected $discountPackHasPacks;
+    protected $discountHasPacks;
 
 
     /**
@@ -78,9 +99,10 @@ class DiscountPack
     public function __construct()
     {
         $this->orderNum = 0;
+        $this->isActive = true;
         $this->createdAt = new \DateTime('now');
 
-        $this->discountPackHasPacks   = new ArrayCollection();
+        $this->discountHasPacks   = new ArrayCollection();
     }
 
     /**
@@ -200,6 +222,54 @@ class DiscountPack
     }
 
     /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return $this
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set isMain
+     *
+     * @param boolean $isMain
+     *
+     * @return $this
+     */
+    public function setIsMain($isMain)
+    {
+        $this->isMain = $isMain;
+
+        return $this;
+    }
+
+    /**
+     * Get isMain
+     *
+     * @return boolean
+     */
+    public function getIsMain()
+    {
+        return $this->isMain;
+    }
+
+    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
@@ -224,16 +294,16 @@ class DiscountPack
     }
 
     /**
-     * Add discountPackHasPacks.
+     * Add discountHasPacks.
      *
-     * @param \ShareBundle\Entity\DiscountPackHasPack $discountPackHasPacks
+     * @param \DiscountBundle\Entity\DiscountHasPack $discountPackHasPacks
      *
      * @return $this
      */
-    public function addDiscountPackHasPack(\ShareBundle\Entity\DiscountPackHasPack $discountPackHasPacks)
+    public function addDiscountHasPack(\DiscountBundle\Entity\DiscountHasPack $discountPackHasPacks)
     {
         $discountPackHasPacks->setDiscountPack($this);
-        $this->discountPackHasPacks[] = $discountPackHasPacks;
+        $this->discountHasPacks[] = $discountPackHasPacks;
 
         return $this;
     }
@@ -241,13 +311,13 @@ class DiscountPack
     /**
      * Remove discountPackHasPacks.
      *
-     * @param \ShareBundle\Entity\DiscountPackHasPack $discountPackHasPacks
+     * @param \DiscountBundle\Entity\DiscountHasPack $discountPackHasPacks
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeDiscountPackHasPack(\ShareBundle\Entity\DiscountPackHasPack $discountPackHasPacks)
+    public function removeDiscountHasPack(\DiscountBundle\Entity\DiscountHasPack $discountPackHasPacks)
     {
-        return $this->discountPackHasPacks->removeElement($discountPackHasPacks);
+        return $this->discountHasPacks->removeElement($discountPackHasPacks);
     }
 
     /**
@@ -255,8 +325,32 @@ class DiscountPack
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getDiscountPackHasPacks()
+    public function getDiscountHasPacks()
     {
-        return $this->discountPackHasPacks;
+        return $this->discountHasPacks;
+    }
+
+    /**
+     * Get isRandom
+     *
+     * @return bool
+     */
+    public function getIsRandom()
+    {
+        return $this->isRandom;
+    }
+
+    /**
+     * Set isRandom
+     *
+     * @param bool $isRandom
+     *
+     * @return $this
+     */
+    public function setIsRandom(bool $isRandom)
+    {
+        $this->isRandom = $isRandom;
+
+        return $this;
     }
 }

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class GameGenre
  *
  * @ORM\Entity()
- * @ORM\Table(name="games_genre")
+ * @ORM\Table(name="game_genre")
  * @ORM\HasLifecycleCallbacks
  */
 class GameGenre

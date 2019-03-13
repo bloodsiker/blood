@@ -1,6 +1,6 @@
 <?php
 
-namespace ShareBundle\Entity;
+namespace DiscountBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class PackHasItem
  *
  * @ORM\Entity()
- * @ORM\Table(name="share_pack_has_item")
+ * @ORM\Table(name="discount_pack_has_item")
  * @ORM\HasLifecycleCallbacks
  */
 class PackHasItem
@@ -23,9 +23,9 @@ class PackHasItem
     protected $id;
 
     /**
-     * @var \ShareBundle\Entity\Pack
+     * @var \DiscountBundle\Entity\Pack
      *
-     * @ORM\ManyToOne(targetEntity="ShareBundle\Entity\Pack", inversedBy="packHasItems")
+     * @ORM\ManyToOne(targetEntity="DiscountBundle\Entity\Pack", inversedBy="packHasItems")
      * @ORM\JoinColumn(name="pack_id", referencedColumnName="id", nullable=false)
      */
     protected $pack;
@@ -60,13 +60,6 @@ class PackHasItem
     protected $available;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(type="integer", nullable=false, options={"default": 0})
-     */
-    protected $discount;
-
-    /**
      * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false)
@@ -81,14 +74,21 @@ class PackHasItem
     protected $isNew;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $isActive;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->orderNum = 0;
         $this->price = 0;
-        $this->available = 0;
-        $this->discount = 0;
+        $this->available = 1;
+        $this->isActive = true;
     }
 
     /**
@@ -138,11 +138,11 @@ class PackHasItem
     /**
      * Set pack.
      *
-     * @param \ShareBundle\Entity\Pack $pack
+     * @param \DiscountBundle\Entity\Pack $pack
      *
      * @return $this
      */
-    public function setPack(\ShareBundle\Entity\Pack $pack = null)
+    public function setPack(\DiscountBundle\Entity\Pack $pack = null)
     {
         $this->pack = $pack;
 
@@ -152,7 +152,7 @@ class PackHasItem
     /**
      * Get pack.
      *
-     * @return \ShareBundle\Entity\Pack
+     * @return \DiscountBundle\Entity\Pack
      */
     public function getPack()
     {
@@ -232,30 +232,6 @@ class PackHasItem
     }
 
     /**
-     * Get discount
-     *
-     * @return int
-     */
-    public function getDiscount()
-    {
-        return $this->discount;
-    }
-
-    /**
-     * Set discount
-     *
-     * @param int $discount
-     *
-     * @return $this
-     */
-    public function setDiscount(int $discount)
-    {
-        $this->discount = $discount;
-
-        return $this;
-    }
-
-    /**
      * Get isHot
      *
      * @return bool
@@ -301,5 +277,29 @@ class PackHasItem
         $this->isNew = $isNew;
 
         return $this;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return $this
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
     }
 }

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class OrderHasItem
  *
  * @ORM\Entity()
- * @ORM\Table(name="orders_has_items")
+ * @ORM\Table(name="order_order_has_item")
  * @ORM\HasLifecycleCallbacks
  */
 class OrderHasItem

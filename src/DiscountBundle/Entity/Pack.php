@@ -1,6 +1,6 @@
 <?php
 
-namespace ShareBundle\Entity;
+namespace DiscountBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Pack
  *
  * @ORM\Entity()
- * @ORM\Table(name="share_pack")
+ * @ORM\Table(name="discount_pack")
  * @ORM\HasLifecycleCallbacks
  */
 class Pack
@@ -29,13 +29,6 @@ class Pack
      * @ORM\Column(type="string", length=100, nullable=false)
      */
     protected $name;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="order_num", type="integer", nullable=false, options={"default": 1})
-     */
-    protected $orderNum;
 
     /**
      * @var int
@@ -61,7 +54,7 @@ class Pack
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="ShareBundle\Entity\PackHasItem",
+     * @ORM\OneToMany(targetEntity="DiscountBundle\Entity\PackHasItem",
      *     mappedBy="pack", cascade={"all"}, orphanRemoval=true
      * )
      * @ORM\OrderBy({"orderNum" = "ASC"})
@@ -73,7 +66,6 @@ class Pack
      */
     public function __construct()
     {
-        $this->orderNum = 0;
         $this->price = 0;
         $this->discount = 0;
         $this->createdAt = new \DateTime('now');
@@ -123,30 +115,6 @@ class Pack
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set orderNum.
-     *
-     * @param int $orderNum
-     *
-     * @return $this
-     */
-    public function setOrderNum($orderNum)
-    {
-        $this->orderNum = $orderNum;
-
-        return $this;
-    }
-
-    /**
-     * Get orderNum.
-     *
-     * @return int
-     */
-    public function getOrderNum()
-    {
-        return $this->orderNum;
     }
 
     /**
@@ -224,11 +192,11 @@ class Pack
     /**
      * Add packHasItems.
      *
-     * @param \ShareBundle\Entity\PackHasItem $packHasItems
+     * @param \DiscountBundle\Entity\PackHasItem $packHasItems
      *
      * @return $this
      */
-    public function addServerHasItem(\ShareBundle\Entity\PackHasItem $packHasItems)
+    public function addPackHasItem(\DiscountBundle\Entity\PackHasItem $packHasItems)
     {
         $packHasItems->setPack($this);
         $this->packHasItems[] = $packHasItems;
@@ -239,11 +207,11 @@ class Pack
     /**
      * Remove packHasItems.
      *
-     * @param \ShareBundle\Entity\DiscountPackHasItem $packHasItems
+     * @param \DiscountBundle\Entity\PackHasItem $packHasItems
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeServerHasItem(\ShareBundle\Entity\PackHasItem $packHasItems)
+    public function removePackHasItem(\DiscountBundle\Entity\PackHasItem $packHasItems)
     {
         return $this->packHasItems->removeElement($packHasItems);
     }
@@ -253,7 +221,7 @@ class Pack
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getServerHasItems()
+    public function getPackHasItems()
     {
         return $this->packHasItems;
     }

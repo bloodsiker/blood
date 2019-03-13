@@ -62,7 +62,7 @@ server_has_item:
         price: Цена
         is_hot: Hot
         is_new: New
-        order_num: Сортировка
+        order_num: ''
         discount: 'Скидка %'
 
 game_genre:

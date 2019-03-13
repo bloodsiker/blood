@@ -1,0 +1,53 @@
+Action: Действия
+Discount List: Список скидок
+Discount Create: Добавить скидку
+Pack List: Список пакетов товаров
+Pack Create: Добавить пакет товаров
+
+form_group:
+    basic: Основные
+    additional: Дополнительные
+
+group:
+    discount: Discount Pack
+    discount_editor: Скидки
+    pack_editor: Пакеты товаров
+
+discount:
+    fields:
+        id: ID
+        name: Название
+        is_active: Активен
+        is_main: Отображать на главной
+        is_random: Случайные пакеты
+        has_pack: Содержит пакеты скидок
+        image: Изображение
+        game: Игра
+        created_at: Создано
+
+discount_has_pack:
+    fields:
+        id: ID
+        pack: Пакет товаров
+        is_active: Активен
+        order_num: ''
+
+pack:
+    fields:
+        id: ID
+        name: Название
+        has_item: Товары в пакете
+        price: Цена
+        discount: 'Скидка %'
+        created_at: Создано
+
+pack_has_item:
+    fields:
+        id: ID
+        item: Предмет
+        available: Количество
+        price: Цена
+        is_hot: Hot
+        is_new: New
+        is_active: Активен
+        order_num: ''

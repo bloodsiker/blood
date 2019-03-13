@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Order
  *
  * @ORM\Entity(repositoryClass="OrderBundle\Entity\OrderRepository")
- * @ORM\Table(name="orders")
+ * @ORM\Table(name="order_order")
  * @ORM\HasLifecycleCallbacks
  */
 class Order

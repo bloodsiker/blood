@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Server
  *
  * @ORM\Entity()
- * @ORM\Table(name="games_servers")
+ * @ORM\Table(name="game_server")
  * @ORM\HasLifecycleCallbacks
  */
 class Server

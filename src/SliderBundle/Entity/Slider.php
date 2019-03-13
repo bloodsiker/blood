@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Slider
  *
  * @ORM\Entity()
- * @ORM\Table(name="slider")
+ * @ORM\Table(name="slider_slider")
  * @ORM\HasLifecycleCallbacks
  */
 class Slider

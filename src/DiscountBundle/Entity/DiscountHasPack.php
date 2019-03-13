@@ -1,17 +1,17 @@
 <?php
 
-namespace ShareBundle\Entity;
+namespace DiscountBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class DiscountPackHasPack
+ * Class DiscountHasPack
  *
  * @ORM\Entity()
- * @ORM\Table(name="share_discount_pack_has_pack")
+ * @ORM\Table(name="discount_discount_has_pack")
  * @ORM\HasLifecycleCallbacks
  */
-class DiscountPackHasPack
+class DiscountHasPack
 {
     /**
      * @var int
@@ -23,17 +23,17 @@ class DiscountPackHasPack
     protected $id;
 
     /**
-     * @var \ShareBundle\Entity\DiscountPack
+     * @var \DiscountBundle\Entity\Discount
      *
-     * @ORM\ManyToOne(targetEntity="ShareBundle\Entity\DiscountPack", inversedBy="discountPackHasItems")
-     * @ORM\JoinColumn(name="discount_pack_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="DiscountBundle\Entity\Discount", inversedBy="discountHasPacks")
+     * @ORM\JoinColumn(name="discount_id", referencedColumnName="id", nullable=false)
      */
-    protected $discountPack;
+    protected $discount;
 
     /**
-     * @var \ShareBundle\Entity\Pack
+     * @var \DiscountBundle\Entity\Pack
      *
-     * @ORM\ManyToOne(targetEntity="ShareBundle\Entity\Pack", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="DiscountBundle\Entity\Pack", fetch="EAGER")
      * @ORM\JoinColumn(name="pack_id", referencedColumnName="id", nullable=false)
      */
     protected $pack;
@@ -106,37 +106,37 @@ class DiscountPackHasPack
     }
 
     /**
-     * Set discountPack.
+     * Set discount.
      *
-     * @param \ShareBundle\Entity\DiscountPack $discountPack
+     * @param \DiscountBundle\Entity\Discount $discount
      *
      * @return $this
      */
-    public function setDiscountPack(\ShareBundle\Entity\DiscountPack $discountPack = null)
+    public function setDiscountPack(\DiscountBundle\Entity\Discount $discount = null)
     {
-        $this->discountPack = $discountPack;
+        $this->discount = $discount;
 
         return $this;
     }
 
     /**
-     * Get discountPack.
+     * Get discount.
      *
-     * @return \ShareBundle\Entity\DiscountPack
+     * @return \DiscountBundle\Entity\Discount
      */
     public function getDiscountPack()
     {
-        return $this->discountPack;
+        return $this->discount;
     }
 
     /**
      * Set pack.
      *
-     * @param \ShareBundle\Entity\Pack $pack
+     * @param \DiscountBundle\Entity\Pack $pack
      *
      * @return $this
      */
-    public function setPack(\ShareBundle\Entity\Pack $pack = null)
+    public function setPack(\DiscountBundle\Entity\Pack $pack = null)
     {
         $this->pack = $pack;
 
@@ -146,7 +146,7 @@ class DiscountPackHasPack
     /**
      * Get pack.
      *
-     * @return \ShareBundle\Entity\Pack
+     * @return \DiscountBundle\Entity\Pack
      */
     public function getPack()
     {

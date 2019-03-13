@@ -42,6 +42,10 @@ sonata_admin:
                 label: group.media
                 label_catalogue: MediaBundle
                 icon: <i class="fa fa-files-o"></i>
+            group.discount:
+                label: group.discount
+                label_catalogue: DiscountBundle
+                icon: <i class="fa fa-clone"></i>
             group.slider:
                 label: group.slider
                 label_catalogue: SliderBundle

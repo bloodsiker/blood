@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class ServerHasItem
  *
  * @ORM\Entity(repositoryClass="GameBundle\Entity\ServerHasItemRepository")
- * @ORM\Table(name="games_server_has_item")
+ * @ORM\Table(name="game_server_has_item")
  * @ORM\HasLifecycleCallbacks
  */
 class ServerHasItem
@@ -87,7 +87,7 @@ class ServerHasItem
     {
         $this->orderNum = 0;
         $this->price = 0;
-        $this->available = 0;
+        $this->available = 1;
         $this->discount = 0;
     }
 

@@ -1,0 +1,44 @@
+services:
+    discount.admin.discount:
+        class: DiscountBundle\Admin\DiscountAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "group.discount", label: "group.discount_editor" }
+        arguments:
+            - ~
+            - DiscountBundle\Entity\Discount
+            - ~
+        calls:
+            - [ setTranslationDomain, [DiscountBundle] ]
+
+    discount.admin.discount_has_pack:
+        class: DiscountBundle\Admin\DiscountHasPackAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'group.discount', label: "group.discount_has_pack", show_in_dashboard: false }
+        arguments:
+            - ~
+            - DiscountBundle\Entity\DiscountHasPack
+            - ~
+        calls:
+            - [ setTranslationDomain, [DiscountBundle] ]
+
+    discount.admin.pack:
+        class: DiscountBundle\Admin\PackAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'group.discount', label: "group.pack_editor" }
+        arguments:
+            - ~
+            - DiscountBundle\Entity\Pack
+            - ~
+        calls:
+            - [ setTranslationDomain, [DiscountBundle] ]
+
+    discount.admin.pack_has_item:
+        class: DiscountBundle\Admin\PackHasItemAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'group.discount', label: "group.pack_has_item", show_in_dashboard: false }
+        arguments:
+            - ~
+            - DiscountBundle\Entity\PackHasItem
+            - ~
+        calls:
+            - [ setTranslationDomain, [DiscountBundle] ]

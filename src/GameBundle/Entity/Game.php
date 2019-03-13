@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Class Game
  *
  * @ORM\Entity(repositoryClass="GameBundle\Entity\GameRepository")
- * @ORM\Table(name="games")
+ * @ORM\Table(name="game_game")
  * @ORM\HasLifecycleCallbacks
  */
 class Game
