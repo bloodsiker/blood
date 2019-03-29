@@ -33,9 +33,6 @@ class PackHasItemAdmin extends Admin
             ->add('isHot', null, [
                 'label' => 'pack_has_item.fields.is_hot',
             ])
-            ->add('isNew', null, [
-                'label' => 'pack_has_item.fields.is_new',
-            ])
             ->add('isActive', null, [
                 'label' => 'pack_has_item.fields.is_active',
             ])
@@ -83,10 +80,6 @@ class PackHasItemAdmin extends Admin
             ])
             ->add('isHot', null, [
                 'label' => 'pack_has_item.fields.is_hot',
-                'required' => false,
-            ])
-            ->add('isNew', null, [
-                'label' => 'pack_has_item.fields.is_new',
                 'required' => false,
             ])
             ->add('isActive', null, [

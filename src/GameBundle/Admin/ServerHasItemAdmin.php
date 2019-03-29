@@ -39,9 +39,6 @@ class ServerHasItemAdmin extends Admin
             ->add('isHot', null, [
                 'label' => 'server_has_item.fields.is_hot',
             ])
-            ->add('isNew', null, [
-                'label' => 'server_has_item.fields.is_new',
-            ])
             ->add('_action', 'actions', [
                 'actions' => [
                     'delete' => [],
@@ -90,10 +87,6 @@ class ServerHasItemAdmin extends Admin
             ])
             ->add('isHot', null, [
                 'label' => 'server_has_item.fields.is_hot',
-                'required' => false,
-            ])
-            ->add('isNew', null, [
-                'label' => 'server_has_item.fields.is_new',
                 'required' => false,
             ])
             ->add('orderNum', HiddenType::class, [

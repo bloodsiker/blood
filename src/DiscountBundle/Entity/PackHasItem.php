@@ -71,13 +71,6 @@ class PackHasItem
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    protected $isNew;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean", nullable=false)
-     */
     protected $isActive;
 
     /**
@@ -251,30 +244,6 @@ class PackHasItem
     public function setIsHot(bool $isHot)
     {
         $this->isHot = $isHot;
-
-        return $this;
-    }
-
-    /**
-     * Get isNew
-     *
-     * @return bool
-     */
-    public function getIsNew()
-    {
-        return $this->isNew;
-    }
-
-    /**
-     * Set isNew
-     *
-     * @param bool $isNew
-     *
-     * @return $this
-     */
-    public function setIsNew(bool $isNew)
-    {
-        $this->isNew = $isNew;
 
         return $this;
     }

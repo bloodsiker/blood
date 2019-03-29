@@ -1,7 +1,7 @@
 {% extends admin.getTemplate('base_list_field') %}
 
 {% block field %}
-    {% if object is instanceof('\\ShareBundle\\Entity\\Item') %}
+    {% if object is instanceof('\\DiscountBundle\\Entity\\Discount') %}
         {% if field_description.name == 'image' %}
             {% set v = asset('bundles/admin/images/default_item.png') %}
             {% set image_preview_path = value ? value.path : null %}

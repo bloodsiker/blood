@@ -74,13 +74,6 @@ class ServerHasItem
     protected $isHot;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    protected $isNew;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -275,30 +268,6 @@ class ServerHasItem
     public function setIsHot(bool $isHot)
     {
         $this->isHot = $isHot;
-
-        return $this;
-    }
-
-    /**
-     * Get isNew
-     *
-     * @return bool
-     */
-    public function getIsNew()
-    {
-        return $this->isNew;
-    }
-
-    /**
-     * Set isNew
-     *
-     * @param bool $isNew
-     *
-     * @return $this
-     */
-    public function setIsNew(bool $isNew)
-    {
-        $this->isNew = $isNew;
 
         return $this;
     }

@@ -61,7 +61,6 @@ server_has_item:
         available: Количество
         price: Цена
         is_hot: Hot
-        is_new: New
         order_num: ''
         discount: 'Скидка %'
 

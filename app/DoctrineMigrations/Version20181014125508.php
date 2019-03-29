@@ -15,9 +15,14 @@ final class Version20181014125508 extends AbstractMigration
      */
     public function getDescription() : string
     {
-        return "Image (MediaBundle))";
+        return "Image (MediaBundle)";
     }
 
+    /**
+     * @param Schema $schema
+     *
+     * @throws \Doctrine\DBAL\Schema\SchemaException
+     */
     public function up(Schema $schema) : void
     {
         $book = $schema->createTable('media_image');
@@ -37,6 +42,9 @@ final class Version20181014125508 extends AbstractMigration
         $book->addForeignKeyConstraint($schema->getTable('user_user'), ['user_id'], ['id'], ['onDelete' => 'set null']);
     }
 
+    /**
+     * @param Schema $schema
+     */
     public function down(Schema $schema) : void
     {
         $schema->dropTable('media_image');

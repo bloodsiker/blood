@@ -2,7 +2,6 @@
 
 namespace DiscountBundle\Entity;
 
-use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -180,7 +179,7 @@ class Discount
      *
      * @return $this
      */
-    public function setGame(\MediaBundle\Entity\MediaImage $game = null)
+    public function setGame(\GameBundle\Entity\Game $game = null)
     {
         $this->game = $game;
 

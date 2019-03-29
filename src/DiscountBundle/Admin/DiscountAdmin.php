@@ -35,7 +35,7 @@ class DiscountAdmin extends Admin
             ])
             ->add('image', null, [
                 'label'     => 'discount.fields.image',
-                'template'  => 'ShareBundle:Admin:list_fields.html.twig',
+                'template'  => 'DiscountBundle:Admin:list_fields.html.twig',
             ])
             ->addIdentifier('name', null, [
                 'label' => 'discount.fields.name',
@@ -45,12 +45,15 @@ class DiscountAdmin extends Admin
             ])
             ->add('isMain', null, [
                 'label' => 'discount.fields.is_main',
+                'editable' => true,
             ])
             ->add('isRandom', null, [
                 'label' => 'discount.fields.is_random',
+                'editable' => true,
             ])
             ->add('isActive', null, [
                 'label' => 'discount.fields.is_active',
+                'editable' => true,
             ])
             ->add('createdAt', null, [
                 'label' => 'discount.fields.created_at',
@@ -119,6 +122,10 @@ class DiscountAdmin extends Admin
                 ])
                 ->add('isRandom', null, [
                     'label' => 'discount.fields.is_random',
+                    'required' => false,
+                ])
+                ->add('orderNum', null, [
+                    'label' => 'discount.fields.order_num',
                     'required' => false,
                 ])
                 ->add('createdAt', DateTimePickerType::class, [
