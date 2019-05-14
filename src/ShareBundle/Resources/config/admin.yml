@@ -10,13 +10,13 @@ services:
         calls:
             - [ setTranslationDomain, [ShareBundle] ]
 
-    share.admin.item_category:
-        class: ShareBundle\Admin\ItemCategoryAdmin
+    share.admin.category:
+        class: ShareBundle\Admin\CategoryAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "group.share", label: "group.item_category_editor" }
+            - { name: sonata.admin, manager_type: orm, group: "group.share", label: "group.category_editor" }
         arguments:
             - ~
-            - ShareBundle\Entity\ItemCategory
+            - ShareBundle\Entity\Category
             - ~
         calls:
             - [ setTranslationDomain, [ShareBundle] ]

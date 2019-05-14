@@ -39,7 +39,7 @@ pack:
         name: Название
         has_item: Товары в пакете
         price: Цена
-        discount: 'Скидка %'
+        discount: Цена со скидкой
         created_at: Создано
 
 pack_has_item:

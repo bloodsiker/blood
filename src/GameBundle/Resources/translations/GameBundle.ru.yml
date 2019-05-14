@@ -62,9 +62,10 @@ server_has_item:
         price: Цена
         is_hot: Hot
         order_num: ''
-        discount: 'Скидка %'
+        discount: Цена со скидкой
 
 game_genre:
     fields:
+        id: ID
         name: Название
         slug: Сегмент URL (slug)

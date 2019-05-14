@@ -1,17 +1,17 @@
 <?php
 
-namespace SliderBundle\Entity;
+namespace MainImageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Slider
+ * Class MainImage
  *
- * @ORM\Entity()
- * @ORM\Table(name="slider_slider")
+ * @ORM\Entity(repositoryClass="MainImageBundle\Entity\MainImageRepository")
+ * @ORM\Table(name="main_image")
  * @ORM\HasLifecycleCallbacks
  */
-class Slider
+class MainImage
 {
     /**
      * @var int
@@ -37,14 +37,6 @@ class Slider
     protected $description;
 
     /**
-     * @var \BookBundle\Entity\Book
-     *
-     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\Game")
-     * @ORM\JoinColumn(name="game_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     */
-    protected $game;
-
-    /**
      * @var \MediaBundle\Entity\MediaImage
      *
      * @ORM\ManyToOne(targetEntity="MediaBundle\Entity\MediaImage")
@@ -60,6 +52,13 @@ class Slider
     protected $isActive;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", options={"default"=1}, nullable=false)
+     */
+    protected $orderNum;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=false)
@@ -72,6 +71,7 @@ class Slider
     public function __construct()
     {
         $this->isActive = true;
+        $this->orderNum = 1;
         $this->createdAt = new \DateTime('now');
     }
 
@@ -93,30 +93,6 @@ class Slider
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set game
-     *
-     * @param \GameBundle\Entity\Game $game
-     *
-     * @return $this
-     */
-    public function setGame(\GameBundle\Entity\Game $game = null)
-    {
-        $this->game = $game;
-
-        return $this;
-    }
-
-    /**
-     * Get book
-     *
-     * @return string
-     */
-    public function getGame()
-    {
-        return $this->game;
     }
 
     /**
@@ -238,5 +214,29 @@ class Slider
         $this->description = $description;
 
         return $this;
+    }
+
+    /**
+     * Set orderNum.
+     *
+     * @param int $orderNum
+     *
+     * @return $this
+     */
+    public function setOrderNum($orderNum)
+    {
+        $this->orderNum = $orderNum;
+
+        return $this;
+    }
+
+    /**
+     * Get orderNum.
+     *
+     * @return int
+     */
+    public function getOrderNum()
+    {
+        return $this->orderNum;
     }
 }

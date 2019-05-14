@@ -1,22 +1,21 @@
 <?php
 
-namespace SliderBundle\Admin;
+namespace MainImageBundle\Admin;
 
 use AdminBundle\Admin\BaseAdmin as Admin;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\CoreBundle\Form\Type\DateTimePickerType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
- * Class SliderAdmin
+ * Class MainImageAdmin
  */
-class SliderAdmin extends Admin
+class MainImageAdmin extends Admin
 {
     /**
      * @var array
@@ -24,9 +23,18 @@ class SliderAdmin extends Admin
     protected $datagridValues = [
         '_page'       => 1,
         '_per_page'   => 25,
-        '_sort_by'    => 'id',
+        '_sort_by'    => 'orderNum',
         '_sort_order' => 'ASC',
     ];
+
+    /**
+     * @param RouteCollection $collection
+     */
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('moveup', $this->getRouterIdParameter().'/move-up');
+        $collection->add('movedown', $this->getRouterIdParameter().'/move-down');
+    }
 
     /**
      * @param ListMapper $listMapper
@@ -35,28 +43,30 @@ class SliderAdmin extends Admin
     {
         $listMapper
             ->add('id', null, [
-                'label' => 'slider.fields.id',
+                'label' => 'main_image.fields.id',
             ])
             ->add('image', null, [
-                'label'     => 'slider.fields.image',
-                'template'  => 'SliderBundle:Admin:list_fields.html.twig',
+                'label'     => 'main_image.fields.image',
+                'template'  => 'MainImageBundle:Admin:list_fields.html.twig',
             ])
-            ->addIdentifier('game', null, [
-                'label' => 'slider.fields.game',
-            ])
-            ->add('title', null, [
-                'label' => 'slider.fields.title',
+            ->addIdentifier('title', null, [
+                'label' => 'main_image.fields.title',
             ])
             ->add('isActive', null, [
-                'label' => 'slider.fields.is_active',
+                'label' => 'main_image.fields.is_active',
                 'editable'  => true,
             ])
             ->add('createdAt', null, [
-                'label' => 'slider.fields.created_at',
+                'label' => 'main_image.fields.created_at',
                 'pattern' => 'eeee, dd MMMM yyyy, HH:mm',
             ])
             ->add('_action', 'actions', [
-                'actions' => ['edit' => []],
+                'actions' => [
+                    'move_up'   => ['template' => 'AdminBundle:CRUD:list__action_move_up.html.twig'],
+                    'order_num' => ['template' => 'AdminBundle:CRUD:list__action_order_num.html.twig'],
+                    'move_down' => ['template' => 'AdminBundle:CRUD:list__action_move_down.html.twig'],
+                    'edit'      => [],
+                ],
             ]);
     }
 
@@ -66,14 +76,11 @@ class SliderAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('game', null, [
-                'label' => 'slider.fields.game',
-            ])
             ->add('isActive', null, [
-                'label' => 'slider.fields.is_active',
+                'label' => 'main_image.fields.is_active',
             ])
             ->add('createdAt', null, [
-                'label' => 'slider.fields.created_at',
+                'label' => 'main_image.fields.created_at',
             ]);
     }
 
@@ -85,11 +92,11 @@ class SliderAdmin extends Admin
         $formMapper
             ->with('form_group.basic', ['class' => 'col-md-8', 'name' => false])
                 ->add('title', TextType::class, [
-                    'label' => 'slider.fields.title',
+                    'label' => 'main_image.fields.title',
                     'required' => false,
                 ])
                 ->add('description', TextareaType::class, [
-                    'label' => 'slider.fields.description',
+                    'label' => 'main_image.fields.description',
                     'required' => true,
                     'attr' => [
                         'rows' => 5,
@@ -98,19 +105,19 @@ class SliderAdmin extends Admin
             ->end()
             ->with('form_group.additional', ['class' => 'col-md-4', 'name' => false])
                 ->add('isActive', null, [
-                    'label' => 'slider.fields.is_active',
+                    'label' => 'main_image.fields.is_active',
                     'required' => false,
                 ])
                 ->add('image', ModelListType::class, [
-                    'label' => 'slider.fields.image',
+                    'label' => 'main_image.fields.image',
                     'required' => false,
                 ])
-                ->add('game', ModelListType::class, [
-                    'label' => 'slider.fields.game',
+                ->add('orderNum', null, [
+                    'label' => 'main_image.fields.order_num',
                     'required' => false,
                 ])
                 ->add('createdAt', DateTimePickerType::class, [
-                    'label'     => 'slider.fields.created_at',
+                    'label'     => 'main_image.fields.created_at',
                     'required' => true,
                     'format' => 'YYYY-MM-dd HH:mm',
                     'attr' => ['readonly' => true],

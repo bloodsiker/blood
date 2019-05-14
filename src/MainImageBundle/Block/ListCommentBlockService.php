@@ -1,6 +1,6 @@
 <?php
 
-namespace SliderBundle\Block;
+namespace MainImageBundle\Block;
 
 use CommentBundle\Entity\Comment;
 use Doctrine\ORM\EntityManager;

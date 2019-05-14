@@ -13,7 +13,7 @@ form_group:
 group:
     share: Справочники
     item_editor: Итемы
-    item_category_editor: Категории итемов
+    category_editor: Категории итемов
     rtf_block: Текстовые блоки
 
 category:
@@ -29,7 +29,7 @@ item:
         image: Изображение
         description: Описание
         slug: Сегмент URL (slug)
-        category: Категория
+        categories: Категории
         id: ID
 
 rtf_block:

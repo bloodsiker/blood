@@ -32,7 +32,7 @@ order_has_item:
         item: Итем
         quantity: Количество
         price: Цена
-        discount: 'Скидка %'
+        discount: Цена со скидкой
 
 
 order_status:

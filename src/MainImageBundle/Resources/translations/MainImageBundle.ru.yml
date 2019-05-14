@@ -1,21 +1,21 @@
 Action: Действия
-Slider List: Список слайдов
-Slider Create: Добавить слайд
+Main Image List: Список изображений
+Main Image Create: Добавить изображение
 
 form_group:
     basic: Основные
     additional: Дополнительные
 
 group:
-    slider: Слайдер
-    slider_editor: Слайдер
+    main_image: Фоновая картинка
+    main_image_editor: Фоновая картинка
 
-slider:
+main_image:
     fields:
         title: Заголовок
         description: Описание
         image: Изображение
         is_active: Активный
-        game: Игра
         created_at: Дата создания
+        order_num: Позиция
         id: ID

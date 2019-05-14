@@ -64,7 +64,7 @@ final class Version20190328133032 extends AbstractMigration
         $serverHasItem->addColumn('order_num', 'integer', ['unsigned' => true, 'notnull' => true, 'default' => 0]);
         $serverHasItem->addColumn('price', 'decimal', ['precision' => 6, 'scale' => 2, 'unsigned' => true, 'notnull' => true, 'default' => 0]);
         $serverHasItem->addColumn('available', 'integer', ['unsigned' => true, 'notnull' => true, 'default' => 0]);
-        $serverHasItem->addColumn('discount', 'integer', ['unsigned' => true, 'notnull' => true, 'default' => 0]);
+        $serverHasItem->addColumn('discount', 'decimal', ['unsigned' => true, 'notnull' => false]);
         $serverHasItem->addColumn('is_hot', 'boolean', ['notnull' => true]);
         $serverHasItem->setPrimaryKey(['id']);
         $serverHasItem->addForeignKeyConstraint($server, ['server_id'], ['id']);

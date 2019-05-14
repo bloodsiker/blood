@@ -81,8 +81,9 @@ class ServerHasItemAdmin extends Admin
                 'currency' => 'usd',
                 'required' => false,
             ])
-            ->add('discount', IntegerType::class, [
+            ->add('discount', MoneyType::class, [
                 'label' => 'server_has_item.fields.discount',
+                'currency' => 'usd',
                 'required' => false,
             ])
             ->add('isHot', null, [

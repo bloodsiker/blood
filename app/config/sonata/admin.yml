@@ -46,16 +46,16 @@ sonata_admin:
                 label: group.discount
                 label_catalogue: DiscountBundle
                 icon: <i class="fa fa-clone"></i>
-            group.slider:
-                label: group.slider
-                label_catalogue: SliderBundle
+            group.main_image:
+                label: group.main_image
+                label_catalogue: MainImageBundle
                 icon: <i class="fa fa-picture-o"></i>
             group.share:
                 label: group.share
                 label_catalogue: ShareBundle
                 icon: <i class="fa fa-text-width"></i>
                 items:
-                    - share.admin.item_category
+                    - share.admin.category
                     - share.admin.item
             group.help_center:
                 label: group.help_center

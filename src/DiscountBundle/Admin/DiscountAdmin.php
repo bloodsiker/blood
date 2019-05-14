@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\CoreBundle\Form\Type\DateTimePickerType;
 use Sonata\CoreBundle\Form\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -20,9 +21,18 @@ class DiscountAdmin extends Admin
     protected $datagridValues = [
         '_page'       => 1,
         '_per_page'   => 25,
-        '_sort_by'    => 'id',
-        '_sort_order' => 'DESC',
+        '_sort_by'    => 'orderNum',
+        '_sort_order' => 'ASC',
     ];
+
+    /**
+     * @param RouteCollection $collection
+     */
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('moveup', $this->getRouterIdParameter().'/move-up');
+        $collection->add('movedown', $this->getRouterIdParameter().'/move-down');
+    }
 
     /**
      * @param ListMapper $listMapper
@@ -58,6 +68,14 @@ class DiscountAdmin extends Admin
             ->add('createdAt', null, [
                 'label' => 'discount.fields.created_at',
                 'pattern' => 'eeee, dd MMMM yyyy, HH:mm',
+            ])
+            ->add('_action', 'actions', [
+                'actions' => [
+                    'move_up'   => ['template' => 'AdminBundle:CRUD:list__action_move_up.html.twig'],
+                    'order_num' => ['template' => 'AdminBundle:CRUD:list__action_order_num.html.twig'],
+                    'move_down' => ['template' => 'AdminBundle:CRUD:list__action_move_down.html.twig'],
+                    'edit'      => [],
+                ],
             ]);
     }
 

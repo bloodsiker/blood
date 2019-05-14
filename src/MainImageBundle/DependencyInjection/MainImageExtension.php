@@ -1,6 +1,6 @@
 <?php
 
-namespace SliderBundle\DependencyInjection;
+namespace MainImageBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -8,9 +8,9 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * Class SliderExtension
+ * Class MainImageExtension
  */
-class SliderExtension extends Extension
+class MainImageExtension extends Extension
 {
     /**
      * {@inheritdoc}

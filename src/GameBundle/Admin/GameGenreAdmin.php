@@ -35,6 +35,9 @@ class GameGenreAdmin extends Admin
             ])
             ->addIdentifier('name', null, [
                 'label' => 'game_genre.fields.name',
+            ])
+            ->add('slug', null, [
+                'label' => 'game_genre.fields.slug',
             ]);
     }
 

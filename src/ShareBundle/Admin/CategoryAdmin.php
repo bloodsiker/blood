@@ -10,9 +10,9 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
- * Class ItemCategoryAdmin
+ * Class CategoryAdmin
  */
-class ItemCategoryAdmin extends Admin
+class CategoryAdmin extends Admin
 {
     /**
      * @var array

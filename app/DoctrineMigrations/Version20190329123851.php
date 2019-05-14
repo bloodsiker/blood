@@ -29,7 +29,7 @@ final class Version20190329123851 extends AbstractMigration
         $pack->addColumn('id', 'integer', ['unsigned' => true, 'notnull' => true, 'autoincrement' => true]);
         $pack->addColumn('name', 'string', ['length' => 255, 'notnull' => true]);
         $pack->addColumn('price', 'decimal', ['precision' => 6, 'scale' => 2, 'unsigned' => true, 'notnull' => true, 'default' => 0]);
-        $pack->addColumn('discount', 'integer', ['unsigned' => true, 'notnull' => true, 'default' => 0]);
+        $pack->addColumn('discount', 'decimal', ['unsigned' => true, 'notnull' => false]);
         $pack->addColumn('created_at', 'datetime', ['notnull' => true]);
         $pack->setPrimaryKey(['id']);
 
@@ -62,13 +62,13 @@ final class Version20190329123851 extends AbstractMigration
 
         $discountHasPack = $schema->createTable('discount_discount_has_pack');
         $discountHasPack->addColumn('id', 'integer', ['unsigned' => true, 'notnull' => true, 'autoincrement' => true]);
-        $discountHasPack->addColumn('discount__id', 'integer', ['unsigned' => true, 'notnull' => false]);
+        $discountHasPack->addColumn('discount_id', 'integer', ['unsigned' => true, 'notnull' => false]);
         $discountHasPack->addColumn('pack_id', 'integer', ['unsigned' => true, 'notnull' => false]);
         $discountHasPack->addColumn('order_num', 'integer', ['unsigned' => true, 'notnull' => true, 'default' => 0]);
         $discountHasPack->addColumn('is_active', 'boolean', ['notnull' => true]);
         $discountHasPack->setPrimaryKey(['id']);
         $discountHasPack->addForeignKeyConstraint($pack, ['pack_id'], ['id']);
-        $discountHasPack->addForeignKeyConstraint($discount, ['discount__id'], ['id']);
+        $discountHasPack->addForeignKeyConstraint($discount, ['discount_id'], ['id']);
     }
 
     /**

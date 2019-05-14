@@ -92,8 +92,9 @@ class OrderHasItemAdmin extends Admin
                     'readonly' => true,
                 ]
             ])
-            ->add('discount', IntegerType::class, [
+            ->add('discount', MoneyType::class, [
                 'label' => 'order_has_item.fields.discount',
+                'currency' => 'usd',
                 'required' => false,
                 'attr' => [
                     'readonly' => true,

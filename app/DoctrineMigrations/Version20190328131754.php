@@ -25,23 +25,29 @@ final class Version20190328131754 extends AbstractMigration
      */
     public function up(Schema $schema)
     {
-        $category = $schema->createTable('share_items_category');
+        $category = $schema->createTable('share_category');
         $category->addColumn('id', 'integer', ['unsigned' => true, 'notnull' => true, 'autoincrement' => true]);
         $category->addColumn('name', 'string', ['length' => 255, 'notnull' => true]);
         $category->addColumn('slug', 'string', ['length' => 255, 'notnull' => true]);
         $category->setPrimaryKey(['id']);
 
-        $item = $schema->createTable('share_items');
+        $item = $schema->createTable('share_item');
         $item->addColumn('id', 'integer', ['unsigned' => true, 'notnull' => true, 'autoincrement' => true]);
         $item->addColumn('name', 'string', ['length' => 255, 'notnull' => true]);
         $item->addColumn('slug', 'string', ['length' => 255, 'notnull' => true]);
         $item->addColumn('image_id', 'integer', ['unsigned' => true, 'notnull' => false]);
-        $item->addColumn('category_id', 'integer', ['unsigned' => true, 'notnull' => false]);
         $item->addColumn('description', 'text', ['length' => 65535, 'notnull' => true]);
         $item->addColumn('created_at', 'datetime', ['notnull' => true]);
         $item->setPrimaryKey(['id']);
         $item->addForeignKeyConstraint($schema->getTable('media_image'), ['image_id'], ['id']);
-        $item->addForeignKeyConstraint($category, ['category_id'], ['id']);
+
+        // bookTags
+        $itemCategory = $schema->createTable('share_item_category');
+        $itemCategory->addColumn('item_id', 'integer', array('unsigned' => true, 'notnull' => true));
+        $itemCategory->addColumn('category_id', 'integer', array('unsigned' => true, 'notnull' => true));
+        $itemCategory->addIndex(['item_id', 'category_id']);
+        $itemCategory->addForeignKeyConstraint($item, ['item_id'], ['id'], ['onDelete' => 'cascade']);
+        $itemCategory->addForeignKeyConstraint($category, ['category_id'], ['id'], ['onDelete' => 'cascade']);
 
         // rtf-blocks
         $rtfBlock = $schema->createTable('share_rtf_block');
@@ -59,8 +65,8 @@ final class Version20190328131754 extends AbstractMigration
      */
     public function down(Schema $schema)
     {
-        $schema->dropTable('share_items');
-        $schema->dropTable('share_items_category');
+        $schema->dropTable('share_item');
+        $schema->dropTable('share_category');
         $schema->dropTable('share_rtf_block');
     }
 }

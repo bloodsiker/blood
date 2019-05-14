@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Item
  *
  * @ORM\Entity()
- * @ORM\Table(name="share_items")
+ * @ORM\Table(name="share_item")
  * @ORM\HasLifecycleCallbacks
  */
 class Item
@@ -54,12 +54,15 @@ class Item
     protected $description;
 
     /**
-     * @var \ShareBundle\Entity\ItemCategory
+     * @var ArrayCollection
      *
-     * @ORM\ManyToOne(targetEntity="ShareBundle\Entity\ItemCategory")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @ORM\ManyToMany(targetEntity="ShareBundle\Entity\Category", inversedBy="items")
+     * @ORM\JoinTable(name="share_item_category",
+     *     joinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id", onDelete="CASCADE")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")}
+     *     )
      */
-    protected $category;
+    protected $categories;
 
     /**
      * @var \DateTime
@@ -73,7 +76,8 @@ class Item
      */
     public function __construct()
     {
-        $this->createdAt = new \DateTime('now');
+        $this->categories = new ArrayCollection();
+        $this->createdAt  = new \DateTime('now');
     }
 
     /**
@@ -188,30 +192,6 @@ class Item
     }
 
     /**
-     * Set category
-     *
-     * @param \ShareBundle\Entity\ItemCategory $category
-     *
-     * @return $this
-     */
-    public function setCategory(\ShareBundle\Entity\ItemCategory $category = null)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return \ShareBundle\Entity\ItemCategory
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
@@ -257,5 +237,39 @@ class Item
         $this->description = $description;
 
         return $this;
+    }
+
+    /**
+     * Add category
+     *
+     * @param \ShareBundle\Entity\Category $category
+     *
+     * @return $this
+     */
+    public function addCategory(\ShareBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \ShareBundle\Entity\Category $category
+     */
+    public function removeCategory(\ShareBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }

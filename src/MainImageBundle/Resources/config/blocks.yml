@@ -1,6 +1,6 @@
 services:
     comment.block.list_comments:
-        class: "CommentBundle\\Block\\ListCommentBlockService"
+        class: "MainImageBundle\\Block\\ListCommentBlockService"
         arguments:
           - comment.block.list_comments
           - '@templating'

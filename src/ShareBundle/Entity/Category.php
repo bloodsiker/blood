@@ -3,16 +3,17 @@
 namespace ShareBundle\Entity;
 
 use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class ItemCategory
+ * Class Category
  *
  * @ORM\Entity
- * @ORM\Table(name="share_items_category")
+ * @ORM\Table(name="share_category")
  * @ORM\HasLifecycleCallbacks
  */
-class ItemCategory
+class Category
 {
     /**
      * @var int
@@ -36,6 +37,21 @@ class ItemCategory
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
      */
     protected $slug;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="ShareBundle\Entity\Item", mappedBy="categories")
+     */
+    protected $items;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
 
     /**
      * "String" representation of class
@@ -114,5 +130,36 @@ class ItemCategory
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Add item
+     *
+     * @param \ShareBundle\Entity\Item $item
+     *
+     * @return $this
+     */
+    public function addItem(\ShareBundle\Entity\Item $item)
+    {
+        $this->items[] = $item;
+        return $this;
+    }
+    /**
+     * Remove item
+     *
+     * @param \ShareBundle\Entity\Item $book
+     */
+    public function removeItem(\ShareBundle\Entity\Item $item)
+    {
+        $this->items->removeElement($item);
+    }
+    /**
+     * Get book
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getItems()
+    {
+        return $this->items;
     }
 }

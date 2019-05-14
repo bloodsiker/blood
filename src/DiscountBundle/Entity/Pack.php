@@ -40,7 +40,7 @@ class Pack
     /**
      * @var int
      *
-     * @ORM\Column(type="integer", nullable=false, options={"default": 0})
+     * @ORM\Column(type="float", nullable=true)
      */
     protected $discount;
 
@@ -67,7 +67,6 @@ class Pack
     public function __construct()
     {
         $this->price = 0;
-        $this->discount = 0;
         $this->createdAt = new \DateTime('now');
 
         $this->packHasItems   = new ArrayCollection();
@@ -154,11 +153,11 @@ class Pack
     /**
      * Set discount
      *
-     * @param int $discount
+     * @param float|null $discount
      *
      * @return $this
      */
-    public function setDiscount(int $discount)
+    public function setDiscount(float $discount = null)
     {
         $this->discount = $discount;
 

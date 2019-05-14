@@ -7,6 +7,7 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\CoreBundle\Form\Type\DateTimePickerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -40,9 +41,9 @@ class ItemAdmin extends Admin
             ->addIdentifier('name', null, [
                 'label' => 'item.fields.name',
             ])
-            ->add('category', null, [
-                'label'     => 'item.fields.category',
-            ])
+//            ->add('category', null, [
+//                'label'     => 'item.fields.category',
+//            ])
             ->add('createdAt', null, [
                 'label' => 'item.fields.created_at',
                 'pattern' => 'eeee, dd MMMM yyyy, HH:mm',
@@ -58,9 +59,9 @@ class ItemAdmin extends Admin
             ->add('name', null, [
                 'label' => 'item.fields.name',
             ])
-            ->add('category', null, [
-                'label' => 'item.fields.category',
-            ])
+//            ->add('category', null, [
+//                'label' => 'item.fields.category',
+//            ])
             ->add('createdAt', null, [
                 'label' => 'item.fields.created_at',
             ]);
@@ -92,9 +93,14 @@ class ItemAdmin extends Admin
                     'label' => 'item.fields.image',
                     'required' => false,
                 ])
-                ->add('category', ModelListType::class, [
-                    'label' => 'item.fields.category',
+                ->add('categories', ModelAutocompleteType::class, [
+                    'label' => 'item.fields.categories',
                     'required' => false,
+                    'property' => 'name',
+                    'multiple' => true,
+                    'attr' => ['class' => 'form-control'],
+                    'btn_catalogue' => $this->translationDomain,
+                    'minimum_input_length' => 2,
                 ])
                 ->add('createdAt', DateTimePickerType::class, [
                     'label'     => 'item.fields.created_at',

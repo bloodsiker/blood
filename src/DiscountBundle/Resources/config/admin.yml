@@ -6,7 +6,7 @@ services:
         arguments:
             - ~
             - DiscountBundle\Entity\Discount
-            - ~
+            - AdminBundle:CRUD
         calls:
             - [ setTranslationDomain, [DiscountBundle] ]
 

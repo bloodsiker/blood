@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class Discount
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="DiscountBundle\Entity\DiscountRepository")
  * @ORM\Table(name="discount_discount")
  * @ORM\HasLifecycleCallbacks
  */
