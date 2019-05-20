@@ -61,24 +61,12 @@ class Server
     protected $createdAt;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="GameBundle\Entity\ServerHasItem",
-     *     mappedBy="server", cascade={"all"}, orphanRemoval=true
-     * )
-     * @ORM\OrderBy({"orderNum" = "ASC"})
-     */
-    protected $serverHasItems;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
         $this->isActive = true;
         $this->createdAt = new \DateTime('now');
-
-        $this->serverHasItems   = new ArrayCollection();
     }
 
     /**
@@ -239,42 +227,5 @@ class Server
     public function getCreatedAt()
     {
         return $this->createdAt;
-    }
-
-    /**
-     * Add serverHasItems.
-     *
-     * @param \GameBundle\Entity\ServerHasItem $serverHasItems
-     *
-     * @return $this
-     */
-    public function addServerHasItem(\GameBundle\Entity\ServerHasItem $serverHasItems)
-    {
-        $serverHasItems->setServer($this);
-        $this->serverHasItems[] = $serverHasItems;
-
-        return $this;
-    }
-
-    /**
-     * Remove serverHasItems.
-     *
-     * @param \GameBundle\Entity\ServerHasItem $serverHasItems
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeServerHasItem(\GameBundle\Entity\ServerHasItem $serverHasItems)
-    {
-        return $this->serverHasItems->removeElement($serverHasItems);
-    }
-
-    /**
-     * Get serverHasItems.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getServerHasItems()
-    {
-        return $this->serverHasItems;
     }
 }

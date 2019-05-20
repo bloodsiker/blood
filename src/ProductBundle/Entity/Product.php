@@ -1,17 +1,17 @@
 <?php
 
-namespace GameBundle\Entity;
+namespace ProductBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class ServerHasItem
+ * Class Product
  *
- * @ORM\Entity(repositoryClass="GameBundle\Entity\ServerHasItemRepository")
- * @ORM\Table(name="game_server_has_item")
+ * @ORM\Entity()
+ * @ORM\Table(name="product_product")
  * @ORM\HasLifecycleCallbacks
  */
-class ServerHasItem
+class Product
 {
     /**
      * @var int
@@ -37,13 +37,6 @@ class ServerHasItem
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
      */
     protected $item;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="order_num", type="integer", nullable=false, options={"default": 1})
-     */
-    protected $orderNum;
 
     /**
      * @var int
@@ -74,13 +67,29 @@ class ServerHasItem
     protected $isHot;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $isActive;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $createdAt;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->orderNum = 0;
         $this->price = 0;
+        $this->isActive = true;
         $this->available = 1;
+
+        $this->createdAt  = new \DateTime('now');
     }
 
     /**
@@ -101,30 +110,6 @@ class ServerHasItem
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set orderNum.
-     *
-     * @param int $orderNum
-     *
-     * @return $this
-     */
-    public function setOrderNum($orderNum)
-    {
-        $this->orderNum = $orderNum;
-
-        return $this;
-    }
-
-    /**
-     * Get orderNum.
-     *
-     * @return int
-     */
-    public function getOrderNum()
-    {
-        return $this->orderNum;
     }
 
     /**
@@ -269,5 +254,53 @@ class ServerHasItem
         $this->isHot = $isHot;
 
         return $this;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return $this
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return $this
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 }

@@ -1,0 +1,24 @@
+Action: Действия
+Product List: Список товаров
+Product Create: Добавить товар
+
+form_group:
+    basic: Основные
+    additional: Дополнительные
+
+group:
+    product: Товары
+    product_editor: Товары
+
+product:
+    fields:
+        id: ID
+        item: Итем
+        image: Изображение
+        created_at: Дата создания
+        server: Сервер/Платформа
+        is_hot: Hot
+        is_active: Активен
+        available: Количество
+        price: Цена
+        discount: Цена со скидкой

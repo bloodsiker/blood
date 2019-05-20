@@ -54,16 +54,6 @@ server:
         server: Сервер/платформа
         items: Итемы
 
-server_has_item:
-    fields:
-        server: Сервар/Платформа
-        item: Итем
-        available: Количество
-        price: Цена
-        is_hot: Hot
-        order_num: ''
-        discount: Цена со скидкой
-
 game_genre:
     fields:
         id: ID

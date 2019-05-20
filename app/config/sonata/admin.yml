@@ -38,10 +38,10 @@ sonata_admin:
                 label: group.game
                 label_catalogue: GameBundle
                 icon: <i class="fa fa-gamepad"></i>
-            group.media:
-                label: group.media
-                label_catalogue: MediaBundle
-                icon: <i class="fa fa-files-o"></i>
+            group.product:
+                label: group.product
+                label_catalogue: ProductBundle
+                icon: <i class="fa fa-cubes"></i>
             group.discount:
                 label: group.discount
                 label_catalogue: DiscountBundle
@@ -64,6 +64,10 @@ sonata_admin:
                 items:
                     - help_center.admin.category
                     - help_center.admin.article
+            group.media:
+                label: group.media
+                label_catalogue: MediaBundle
+                icon: <i class="fa fa-files-o"></i>
             group.rtf_block:
                 label: group.rtf_block
                 label_catalogue: ShareBundle
