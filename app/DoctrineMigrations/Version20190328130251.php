@@ -6,9 +6,9 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
- * Class Version20190328133032
+ * Class Version20190328130251
  */
-final class Version20190328133032 extends AbstractMigration
+final class Version20190328130251 extends AbstractMigration
 {
     /**
      * @return string
@@ -56,19 +56,6 @@ final class Version20190328133032 extends AbstractMigration
         $server->addColumn('created_at', 'datetime', ['notnull' => true]);
         $server->setPrimaryKey(['id']);
         $server->addForeignKeyConstraint($game, ['game_id'], ['id']);
-
-        $serverHasItem = $schema->createTable('game_server_has_item');
-        $serverHasItem->addColumn('id', 'integer', ['unsigned' => true, 'notnull' => true, 'autoincrement' => true]);
-        $serverHasItem->addColumn('server_id', 'integer', ['unsigned' => true, 'notnull' => false]);
-        $serverHasItem->addColumn('is_active', 'boolean', ['notnull' => true]);
-        $serverHasItem->addColumn('order_num', 'integer', ['unsigned' => true, 'notnull' => true, 'default' => 0]);
-        $serverHasItem->addColumn('price', 'decimal', ['precision' => 6, 'scale' => 2, 'unsigned' => true, 'notnull' => true, 'default' => 0]);
-        $serverHasItem->addColumn('available', 'integer', ['unsigned' => true, 'notnull' => true, 'default' => 0]);
-        $serverHasItem->addColumn('discount', 'decimal', ['unsigned' => true, 'notnull' => false]);
-        $serverHasItem->addColumn('is_hot', 'boolean', ['notnull' => true]);
-        $serverHasItem->setPrimaryKey(['id']);
-        $serverHasItem->addForeignKeyConstraint($server, ['server_id'], ['id']);
-        $serverHasItem->addForeignKeyConstraint($schema->getTable('share_items'), ['item_id'], ['id']);
     }
 
     /**
@@ -76,7 +63,6 @@ final class Version20190328133032 extends AbstractMigration
      */
     public function down(Schema $schema)
     {
-        $schema->dropTable('game_server_has_item');
         $schema->dropTable('game_server');
         $schema->dropTable('game_game');
         $schema->dropTable('game_genre');

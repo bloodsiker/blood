@@ -24,8 +24,8 @@ class PackHasItemAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('item', null, [
-                'label' => 'pack_has_item.fields.item',
+            ->add('product', null, [
+                'label' => 'pack_has_item.fields.product',
             ])
             ->add('pack', null, [
                 'label' => 'pack_has_item.fields.pack',
@@ -64,8 +64,8 @@ class PackHasItemAdmin extends Admin
         }
 
         $formMapper
-            ->add('item', ModelListType::class, [
-                'label' => 'pack_has_item.fields.item',
+            ->add('product', ModelListType::class, [
+                'label' => 'pack_has_item.fields.product',
                 'required' => true,
                 'btn_delete' => false,
             ], ['link_parameters' => $linkParameters])

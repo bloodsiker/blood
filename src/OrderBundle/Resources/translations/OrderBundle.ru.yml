@@ -29,7 +29,7 @@ order:
 order_has_item:
     fields:
         server: Сервер
-        item: Итем
+        product: Предмет
         quantity: Количество
         price: Цена
         discount: Цена со скидкой

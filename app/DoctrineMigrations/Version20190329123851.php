@@ -36,7 +36,7 @@ final class Version20190329123851 extends AbstractMigration
         $packHasItem = $schema->createTable('discount_pack_has_item');
         $packHasItem->addColumn('id', 'integer', ['unsigned' => true, 'notnull' => true, 'autoincrement' => true]);
         $packHasItem->addColumn('pack_id', 'integer', ['unsigned' => true, 'notnull' => false]);
-        $packHasItem->addColumn('item_id', 'integer', ['unsigned' => true, 'notnull' => false]);
+        $packHasItem->addColumn('product_id', 'integer', ['unsigned' => true, 'notnull' => false]);
         $packHasItem->addColumn('is_active', 'boolean', ['notnull' => true]);
         $packHasItem->addColumn('order_num', 'integer', ['unsigned' => true, 'notnull' => true, 'default' => 0]);
         $packHasItem->addColumn('price', 'decimal', ['precision' => 6, 'scale' => 2, 'unsigned' => true, 'notnull' => true, 'default' => 0]);
@@ -44,7 +44,7 @@ final class Version20190329123851 extends AbstractMigration
         $packHasItem->addColumn('is_hot', 'boolean', ['notnull' => true]);
         $packHasItem->setPrimaryKey(['id']);
         $packHasItem->addForeignKeyConstraint($pack, ['pack_id'], ['id']);
-        $packHasItem->addForeignKeyConstraint($schema->getTable('share_items'), ['item_id'], ['id']);
+        $packHasItem->addForeignKeyConstraint($schema->getTable('product_product'), ['product_id'], ['id']);
 
         $discount = $schema->createTable('discount_discount');
         $discount->addColumn('id', 'integer', ['unsigned' => true, 'notnull' => true, 'autoincrement' => true]);

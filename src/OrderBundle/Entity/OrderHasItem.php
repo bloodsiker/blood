@@ -39,12 +39,12 @@ class OrderHasItem
     protected $server;
 
     /**
-     * @var \ShareBundle\Entity\Item
+     * @var \ProductBundle\Entity\Product
      *
-     * @ORM\ManyToOne(targetEntity="ShareBundle\Entity\Item", fetch="EAGER")
-     * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="ProductBundle\Entity\Product", fetch="EAGER")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false)
      */
-    protected $item;
+    protected $product;
 
     /**
      * @var int
@@ -91,7 +91,7 @@ class OrderHasItem
      */
     public function __toString()
     {
-        return (string) $this->item;
+        return (string) $this->product;
     }
 
     /**
@@ -153,27 +153,27 @@ class OrderHasItem
     }
 
     /**
-     * Set item
+     * Set product.
      *
-     * @param \ShareBundle\Entity\Item $item
+     * @param \ProductBundle\Entity\Product $product
      *
      * @return $this
      */
-    public function setItem(\ShareBundle\Entity\Item $item = null)
+    public function setProduct(\ProductBundle\Entity\Product $product = null)
     {
-        $this->item = $item;
+        $this->product = $product;
 
         return $this;
     }
 
     /**
-     * Get item
+     * Get product.
      *
-     * @return \ShareBundle\Entity\Item
+     * @return \ProductBundle\Entity\Product
      */
-    public function getItem()
+    public function getProduct()
     {
-        return $this->item;
+        return $this->product;
     }
 
     /**
