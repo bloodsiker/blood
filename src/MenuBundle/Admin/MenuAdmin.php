@@ -209,11 +209,36 @@ class MenuAdmin extends Admin
                     'required'  => false,
                 ])
             ->end()
+            ->with('menu_form_group.styles', ['class' => 'col-md-4', 'label' => false])
+                ->add('orderNum', IntegerType::class, [
+                    'label' => 'menu.fields.order_num',
+                    'required' => false,
+                    'attr' => [
+                        'min' => 0,
+                    ],
+                ])
+                ->add('itemClass', TextType::class, [
+                    'label'     => 'menu.fields.item_class',
+                    'required'  => false,
+                ])
+                ->add('isBlank', CheckboxType::class, [
+                    'label'     => 'menu.fields.is_blank',
+                    'required'  => false,
+                ])
+                ->add('isActive', CheckboxType::class, [
+                    'label'     => 'menu.fields.is_active',
+                    'required'  => false,
+                ])
+            ->end()
             ->with('menu_form_group.additional', ['class' => 'col-md-4', 'label' => false])
                 ->add('type', ChoiceType::class, [
                     'label'     => 'menu.fields.type',
                     'choices'   => $this->getMenuTypes(),
                     'required'  => true,
+                ])
+                ->add('game', ModelListType::class, [
+                    'label' => 'menu.fields.game',
+                    'required' => false,
                 ])
                 ->add('parent', ModelListType::class, [
                     'label' => 'menu.fields.parent',
@@ -231,27 +256,6 @@ class MenuAdmin extends Admin
                     'link_parameters' => [
                         'filter[site][value]' => $site ? $site->getId() : null,
                     ],
-                ])
-                ->add('orderNum', IntegerType::class, [
-                    'label' => 'menu.fields.order_num',
-                    'required' => false,
-                    'attr' => [
-                        'min' => 0,
-                    ],
-                ])
-            ->end()
-            ->with('menu_form_group.styles', ['class' => 'col-md-4', 'label' => false])
-                ->add('itemClass', TextType::class, [
-                    'label'     => 'menu.fields.item_class',
-                    'required'  => false,
-                ])
-                ->add('isBlank', CheckboxType::class, [
-                    'label'     => 'menu.fields.is_blank',
-                    'required'  => false,
-                ])
-                ->add('isActive', CheckboxType::class, [
-                    'label'     => 'menu.fields.is_active',
-                    'required'  => false,
                 ])
             ->end()
         ;
@@ -279,7 +283,7 @@ class MenuAdmin extends Admin
         $types = $entity::getTypeList();
 
         foreach ($types as $key => $value) {
-            $typeChoice['menu.fields.types.'.$value] = $key;
+            $typeChoice['menu.types.'.$value] = $key;
         }
 
         return $typeChoice;

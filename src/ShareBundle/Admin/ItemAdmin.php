@@ -10,6 +10,8 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\CoreBundle\Form\Type\DateTimePickerType;
+use Sonata\DoctrineORMAdminBundle\Filter\DateTimeFilter;
+use Sonata\DoctrineORMAdminBundle\Filter\ModelAutocompleteFilter;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -41,12 +43,12 @@ class ItemAdmin extends Admin
             ->addIdentifier('name', null, [
                 'label' => 'item.fields.name',
             ])
-//            ->add('category', null, [
-//                'label'     => 'item.fields.category',
-//            ])
+            ->add('categories', null, [
+                'label'     => 'item.fields.categories',
+                'template' => 'ShareBundle:Admin:list_category.html.twig',
+            ])
             ->add('createdAt', null, [
                 'label' => 'item.fields.created_at',
-                'pattern' => 'eeee, dd MMMM yyyy, HH:mm',
             ]);
     }
 
@@ -59,11 +61,13 @@ class ItemAdmin extends Admin
             ->add('name', null, [
                 'label' => 'item.fields.name',
             ])
-//            ->add('category', null, [
-//                'label' => 'item.fields.category',
-//            ])
-            ->add('createdAt', null, [
+            ->add('categories', ModelAutocompleteFilter::class, [
+                'label' => 'item.fields.categories',
+            ], null, ['property' => 'name'])
+            ->add('createdAt', DateTimeFilter::class, [
                 'label' => 'item.fields.created_at',
+                'field_type'    => DateTimePickerType::class,
+                'field_options' => array('format' => 'dd.MM.yyyy'),
             ]);
     }
 
@@ -79,6 +83,7 @@ class ItemAdmin extends Admin
                 ])
                 ->add('description', CKEditorType::class, [
                     'label' => 'item.fields.description',
+                    'config_name' => 'advanced',
                     'required' => false,
                     'attr' => ['rows' => 5],
                 ])

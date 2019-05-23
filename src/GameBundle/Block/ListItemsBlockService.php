@@ -7,6 +7,7 @@ use GameBundle\Entity\Server;
 use GameBundle\Entity\ServerHasItem;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
+use ProductBundle\Entity\Product;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Block\Service\AbstractAdminBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
@@ -92,20 +93,20 @@ class ListItemsBlockService extends AbstractAdminBlockService
         $limit = (int) $blockContext->getSetting('items_count');
         $page = (int) $blockContext->getSetting('page');
 
-        $repositoryItem = $this->doctrine->getRepository(ServerHasItem::class);
+        $repositoryProduct = $this->doctrine->getRepository(Product::class);
 
-        $qb = $repositoryItem->baseServerQueryBuilder();
+        $qb = $repositoryProduct->baseProductQueryBuilder();
 
         if ($blockContext->getSetting('game')) {
-            $repositoryItem->filterByGame($qb, $blockContext->getSetting('game'));
+            $repositoryProduct->filterByGame($qb, $blockContext->getSetting('game'));
         }
 
         if ($blockContext->getSetting('server')) {
-            $repositoryItem->filterByServer($qb, $blockContext->getSetting('server'));
+            $repositoryProduct->filterByServer($qb, $blockContext->getSetting('server'));
         }
 
         if ($blockContext->getSetting('category')) {
-            $repositoryItem->filterByCategory($qb, $blockContext->getSetting('category'));
+            $repositoryProduct->filterByCategory($qb, $blockContext->getSetting('category'));
         }
 
         $result = $qb->getQuery()->getResult();

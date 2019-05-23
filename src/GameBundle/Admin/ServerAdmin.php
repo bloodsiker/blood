@@ -45,7 +45,6 @@ class ServerAdmin extends Admin
             ])
             ->add('createdAt', null, [
                 'label' => 'server.fields.created_at',
-                'pattern' => 'eeee, dd MMMM yyyy, HH:mm',
             ]);
     }
 

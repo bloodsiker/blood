@@ -62,7 +62,6 @@ class ProductAdmin extends Admin
             ])
             ->add('createdAt', null, [
                 'label' => 'product.fields.created_at',
-                'pattern' => 'eeee, dd MMMM yyyy, HH:mm',
             ])
             ->add('_action', 'actions', [
                 'actions' => [

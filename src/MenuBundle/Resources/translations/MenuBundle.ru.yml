@@ -21,6 +21,7 @@ menu:
         created_at: Дата создания
         order_num: Позиция
         item_class: CSS класс
+        game: Игра
 
     types:
         header: Header

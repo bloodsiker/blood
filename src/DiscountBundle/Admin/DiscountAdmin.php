@@ -67,7 +67,6 @@ class DiscountAdmin extends Admin
             ])
             ->add('createdAt', null, [
                 'label' => 'discount.fields.created_at',
-                'pattern' => 'eeee, dd MMMM yyyy, HH:mm',
             ])
             ->add('_action', 'actions', [
                 'actions' => [

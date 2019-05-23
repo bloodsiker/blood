@@ -4,7 +4,7 @@ namespace GameBundle\Controller;
 
 use GameBundle\Entity\Game;
 use GameBundle\Entity\Server;
-use ShareBundle\Entity\ItemCategory;
+use ShareBundle\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,7 +51,7 @@ class GameController extends Controller
 
         if (!empty($category)) {
             $categorySlug = substr($category, 1);
-            $categoryRepository = $this->getDoctrine()->getManager()->getRepository(ItemCategory::class);
+            $categoryRepository = $this->getDoctrine()->getManager()->getRepository(Category::class);
             $categoryObject = $categoryRepository->findOneBy(['slug' => (string) $categorySlug]);
             if (!$categoryObject) {
                 throw $this->createNotFoundException(self::CATEGORY_404);
@@ -117,7 +117,7 @@ class GameController extends Controller
             throw $this->createNotFoundException(self::SERVER_404);
         }
 
-        $categoryRepository = $this->getDoctrine()->getManager()->getRepository(ItemCategory::class);
+        $categoryRepository = $this->getDoctrine()->getManager()->getRepository(Category::class);
         $categoryObject = $categoryRepository->findOneBy(['slug' => $category]);
         if (!$categoryObject) {
             throw $this->createNotFoundException(self::CATEGORY_404);

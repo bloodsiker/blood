@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class Product
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="ProductBundle\Entity\ProductRepository")
  * @ORM\Table(name="product_product")
  * @ORM\HasLifecycleCallbacks
  */
@@ -25,7 +25,7 @@ class Product
     /**
      * @var \GameBundle\Entity\Server
      *
-     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\Server", inversedBy="serverHasItems")
+     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\Server")
      * @ORM\JoinColumn(name="server_id", referencedColumnName="id", nullable=false)
      */
     protected $server;

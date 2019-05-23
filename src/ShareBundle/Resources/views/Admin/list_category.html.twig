@@ -1,0 +1,22 @@
+{% extends get_admin_template('base_list_field', admin.code) %}
+
+{% block field %}
+    {% spaceless %}
+        {% if object.categories|length %}
+            {% set route_name = field_description.options.route.name %}
+
+            {% for category in object.categories %}
+                {% if field_description.hasAssociationAdmin
+                    and field_description.associationadmin.hasRoute(route_name)
+                    and field_description.associationadmin.hasAccess(route_name, category)
+                %}
+                    <a href="{{ field_description.associationadmin.generateObjectUrl(route_name, category, field_description.options.route.parameters) }}" class="label label-primary">
+                     {{ category }}
+                    </a> &nbsp;
+                {% else %}
+                    <span class="text-success">{{ category~(not loop.last ? ', ' : '') }}</span>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}

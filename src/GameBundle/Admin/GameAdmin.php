@@ -70,7 +70,6 @@ class GameAdmin extends Admin
             ])
             ->add('createdAt', null, [
                 'label' => 'game.fields.created_at',
-                'pattern' => 'eeee, dd MMMM yyyy, HH:mm',
             ]);
     }
 

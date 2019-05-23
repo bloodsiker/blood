@@ -58,7 +58,6 @@ class MainImageAdmin extends Admin
             ])
             ->add('createdAt', null, [
                 'label' => 'main_image.fields.created_at',
-                'pattern' => 'eeee, dd MMMM yyyy, HH:mm',
             ])
             ->add('_action', 'actions', [
                 'actions' => [

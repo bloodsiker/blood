@@ -46,7 +46,6 @@ class PackAdmin extends Admin
             ])
             ->add('createdAt', null, [
                 'label' => 'pack.fields.created_at',
-                'pattern' => 'eeee, dd MMMM yyyy, HH:mm',
             ]);
     }
 

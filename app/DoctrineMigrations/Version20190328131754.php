@@ -41,7 +41,6 @@ final class Version20190328131754 extends AbstractMigration
         $item->setPrimaryKey(['id']);
         $item->addForeignKeyConstraint($schema->getTable('media_image'), ['image_id'], ['id']);
 
-        // bookTags
         $itemCategory = $schema->createTable('share_item_category');
         $itemCategory->addColumn('item_id', 'integer', array('unsigned' => true, 'notnull' => true));
         $itemCategory->addColumn('category_id', 'integer', array('unsigned' => true, 'notnull' => true));

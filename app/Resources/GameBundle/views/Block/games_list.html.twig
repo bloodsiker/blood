@@ -1,5 +1,5 @@
 <ul>
 {% for game in games %}
-    <li>{{ game }}</li>
+    <li><a href="{{ path('view_game', {'slug': game.slug}) }}">{{ game }}</a></li>
 {% endfor %}
 </ul>
