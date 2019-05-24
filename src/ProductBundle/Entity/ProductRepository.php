@@ -37,8 +37,7 @@ class ProductRepository extends EntityRepository
     public function filterByServer(QueryBuilder $qb, Server $server = null) : QueryBuilder
     {
         if ($server) {
-            $qb->innerJoin('p.server', 'server', 'WITH', 'server.id = :server')
-                ->setParameter('server', $server);
+            $qb->andWhere('p.server = :server')->setParameter('server', $server);
         } else {
             $qb->innerJoin('p.server', 'server');
         }
@@ -75,42 +74,29 @@ class ProductRepository extends EntityRepository
     }
 
 
-
-
-
-
-    /**
-     * @param QueryBuilder $qb
-     * @param Genre        $genre
-     *
-     * @return QueryBuilder
-     */
-    public function filterByGenre(QueryBuilder $qb, Genre $genre): QueryBuilder
+    public function articlesRelatedSpectopics($articles)
     {
-        $genreIds = [$genre->getId()];
-        if ($genre->getChildren()->count()) {
-            foreach ($genre->getChildren()->getValues() as $child) {
-                if ($child->getIsActive()) {
-                    $genreIds[] = $child->getId();
-                }
-            }
-        }
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
-        return $qb->innerJoin('b.genres', 'genre', 'WITH', 'genre.id IN (:genre)')
-            ->setParameter('genre', $genreIds);
+        $result = $qb
+            ->select([
+                'IDENTITY(ahs.article) as id',
+                'spectopic.isKhot as isKhot',
+                'spectopic.isHot as isHot',
+                'spectopic.isLs',
+                'spectopic.slug',
+            ])
+            ->from(ArticleHasSpectopics::class, 'ahs')
+            ->leftJoin('ahs.spectopic', 'spectopic')
+            ->andWhere('ahs.isMain = 1')
+            ->andWhere('ahs.article in (:articles)')->setParameter('articles', $articles)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return array_combine(array_column($result, 'id'), $result);
     }
 
-    /**
-     * @param QueryBuilder $qb
-     * @param Author       $author
-     *
-     * @return QueryBuilder
-     */
-    public function filterByAuthor(QueryBuilder $qb, Author $author) : QueryBuilder
-    {
-        return $qb->innerJoin('b.authors', 'author', 'WITH', 'author.id = :author')
-            ->setParameter('author', $author);
-    }
 
     /**
      * @param QueryBuilder $qb

@@ -45,7 +45,6 @@ final class Version20190523140816 extends AbstractMigration implements Container
         $menu = $schema->createTable('menu_menu');
         $menu->addColumn('id', 'integer', array('unsigned' => true, 'notnull' => true, 'autoincrement' => true));
         $menu->addColumn('parent_id', 'integer', array('unsigned' => true, 'notnull' => false));
-        $menu->addColumn('game_id', 'integer', array('unsigned' => true, 'notnull' => false));
         $menu->addColumn('title', 'string', array('length' => 64, 'notnull' => false));
         $menu->addColumn('url', 'string', array('length' => 300, 'notnull' => false));
         $menu->addColumn('page', 'integer', array('unsigned' => true, 'notnull' => false));
@@ -58,7 +57,6 @@ final class Version20190523140816 extends AbstractMigration implements Container
         $menu->addColumn('order_num', 'integer', array('notnull' => true, 'default' => 0, 'notnull' => true));
         $menu->setPrimaryKey(array('id'));
         $menu->addIndex(array('is_active'));
-        $menu->addForeignKeyConstraint($schema->getTable('game_game'), array('game_id'), array('id'), array('onDelete' => 'set null'));
         $menu->addForeignKeyConstraint($schema->getTable('menu_menu'), array('parent_id'), array('id'), array('onDelete' => 'set null'));
         $menu->addForeignKeyConstraint($schema->getTable('page_page'), array('page'), array('id'), array('onDelete' => 'set null'));
         $menu->addForeignKeyConstraint($schema->getTable('user_users'), array('created_by'), array('id'), array('onDelete' => 'set null'));
@@ -84,7 +82,6 @@ final class Version20190523140816 extends AbstractMigration implements Container
                 'title' => 'Home',
                 'url' => '/',
                 'route' => '',
-                'game_id' => '',
                 'childs' => [],
                 'type' => Menu::TYPE_HEADER,
             ],
@@ -92,15 +89,13 @@ final class Version20190523140816 extends AbstractMigration implements Container
                 'title' => 'Games',
                 'url' => '',
                 'route' => 'game_list',
-                'game_id' => '',
                 'childs' => [],
                 'type' => Menu::TYPE_HEADER,
             ],
             [
                 'title' => 'Items',
                 'url' => '',
-                'route' => '',
-                'game_id' => '',
+                'route' => 'items',
                 'childs' => [],
                 'type' => Menu::TYPE_HEADER,
             ],
@@ -108,7 +103,6 @@ final class Version20190523140816 extends AbstractMigration implements Container
                 'title' => 'Sell to us',
                 'url' => '',
                 'route' => 'sell_to_us',
-                'game_id' => '',
                 'childs' => [],
                 'type' => Menu::TYPE_HEADER,
             ],
@@ -116,7 +110,6 @@ final class Version20190523140816 extends AbstractMigration implements Container
                 'title' => 'Help center',
                 'url' => '',
                 'route' => 'help_center',
-                'game_id' => '',
                 'childs' => [],
                 'type' => Menu::TYPE_HEADER,
             ],
@@ -141,7 +134,6 @@ final class Version20190523140816 extends AbstractMigration implements Container
         $em = $this->container->get('doctrine.orm.entity_manager');
 
         $pageRepository = $em->getRepository('PageBundle:Page');
-        $gameRepository = $em->getRepository('GameBundle:Game');
 
         $order = 0;
         foreach ($menus as $item) {
@@ -150,11 +142,6 @@ final class Version20190523140816 extends AbstractMigration implements Container
             if ($item['route']) {
                 $page = $pageRepository->findOneBy(['routeName' => $item['route']]);
                 $menu->setPage($page);
-            }
-
-            if ($item['game_id']) {
-                $game = $gameRepository->find($item['game_id']);
-                $menu->setGame($game);
             }
 
             $menu->setTitle($item['title']);

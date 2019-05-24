@@ -17,9 +17,9 @@ services:
 #      tags:
 #        - { name: twig.extension }
 
-#  app.twig.extension.genre:
-#      class: "GenreBundle\\Twig\\GenreExtension"
-#      arguments:
-#        - '@genre.router.helper'
-#      tags:
-#        - { name: twig.extension }
+  app.twig.extension.genre:
+      class: GameBundle\Twig\GameExtension
+      arguments:
+        - '@game.router.helper'
+      tags:
+        - { name: twig.extension }

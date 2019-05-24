@@ -1,24 +1,23 @@
 {% if(field_description.options.field == 'parent') %}
-    {% if object.getparent and object.getparent.getcategory is empty %}
+    {% if object.getparent and object.getparent.getgame is empty %}
         {% set object = object.getparent %}
-        {% set value = attribute(object, 'gettitle', [{ 'locale': app.request.locale }]) %}
-    {% elseif object.getparent and object.getparent.getcategory %}
-        {% set object = object.getparent.getcategory %}
-        {% set value = attribute(object, 'gettitle', [{ 'locale': app.request.locale }]) %}
+        {% set value = attribute(object, 'gettitle') %}
+    {% elseif object.getparent and object.getparent.getgame %}
+        {% set object = object.getparent.getgame %}
+        {% set value = attribute(object, 'gettitle') %}
     {% else %}
         {% set value = '' %}
     {% endif %}
-{% elseif(field_description.options.field == 'name' and object.category) %}
-    {% set value = attribute(object.category, 'gettitle', [{ 'locale': app.request.locale }]) %}
+{% elseif(field_description.options.field == 'title' and object.game) %}
+    {% set value = attribute(object.game, 'getname') %}
 {% elseif(field_description.options.field == 'page' and object.page) %}
-    {% set value = attribute(object.page, field_description.name, [{ 'locale': app.request.locale }]) %}
+    {% set value = attribute(object.page, field_description.name) %}
 
-    {% if object.category %}
-        {% set value = value|replace({
-            '{category}': object.category and object.category.parent ? object.category.parent.slug : object.category.slug,
-            '{subcategory}': object.category and object.category.parent ? object.category.slug : ''
-        }) %}
-    {% endif %}
+{#    {% if object.game %}#}
+{#        {% set value = value|replace({#}
+{#            '{slug}': object.game ? object.game.slug : ''#}
+{#        }) %}#}
+{#    {% endif %}#}
 
 {% endif %}
 

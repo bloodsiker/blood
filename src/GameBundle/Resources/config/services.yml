@@ -1,0 +1,5 @@
+services:
+  game.router.helper:
+    class: GameBundle\Helper\GameRouterHelper
+    arguments:
+      - '@router'

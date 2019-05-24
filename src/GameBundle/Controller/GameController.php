@@ -34,14 +34,13 @@ class GameController extends Controller
 
     /**
      * @param string  $slug
-     * @param string  $category
      * @param Request $request
      *
      * @return Response
      *
      * @Cache(maxage=60, public=true)
      */
-    public function viewAction($slug, $category, Request $request)
+    public function viewAction($slug, Request $request)
     {
         $gameRepository = $this->getDoctrine()->getManager()->getRepository(Game::class);
         $game = $gameRepository->findOneBy(['slug' => (string) $slug]);
@@ -49,18 +48,35 @@ class GameController extends Controller
             throw $this->createNotFoundException(self::GAME_404);
         }
 
-        if (!empty($category)) {
-            $categorySlug = substr($category, 1);
-            $categoryRepository = $this->getDoctrine()->getManager()->getRepository(Category::class);
-            $categoryObject = $categoryRepository->findOneBy(['slug' => (string) $categorySlug]);
-            if (!$categoryObject) {
-                throw $this->createNotFoundException(self::CATEGORY_404);
-            }
+        return $this->render('GameBundle::game_view.html.twig', [
+            'game'     => $game,
+        ]);
+    }
+
+    /**
+     * @param string $slug
+     * @param string $category
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function viewCategoryAction($slug, $category, Request $request)
+    {
+        $gameRepository = $this->getDoctrine()->getManager()->getRepository(Game::class);
+        $game = $gameRepository->findOneBy(['slug' => (string) $slug]);
+        if (!$game || !$game->getIsActive()) {
+            throw $this->createNotFoundException(self::GAME_404);
+        }
+
+        $categoryRepository = $this->getDoctrine()->getManager()->getRepository(Category::class);
+        $categoryObject = $categoryRepository->findOneBy(['slug' => (string) $category]);
+        if (!$categoryObject) {
+            throw $this->createNotFoundException(self::CATEGORY_404);
         }
 
         return $this->render('GameBundle::game_view.html.twig', [
             'game'     => $game,
-            'category' => $categoryObject ?? null,
+            'category' => $categoryObject,
         ]);
     }
 

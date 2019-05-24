@@ -1,0 +1,22 @@
+<h2>Servers</h2>
+<ul>
+    {% for gServer in gameServers %}
+        <li><a href="{{ game_server_path(game, gServer, settings.category) }}">{{ gServer.name }}</a></li>
+    {% endfor %}
+</ul>
+
+<h2>Category</h2>
+<ul>
+        {% for gCategory in gameCategory %}
+                <li><a href="{{ game_category_path(game, gCategory, settings.server) }}">{{ gCategory.name }}</a></li>
+        {% endfor %}
+
+</ul>
+
+<hr>
+<h2>Items</h2>
+<ul>
+    {% for product in products %}
+        <li>{{ product.item.name }}</li>
+    {% endfor %}
+</ul>

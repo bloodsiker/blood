@@ -4,7 +4,6 @@ namespace GameBundle\Block;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use GameBundle\Entity\Server;
-use GameBundle\Entity\ServerHasItem;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use ProductBundle\Entity\Product;
@@ -93,36 +92,49 @@ class ListItemsBlockService extends AbstractAdminBlockService
         $limit = (int) $blockContext->getSetting('items_count');
         $page = (int) $blockContext->getSetting('page');
 
+        $gameServers = [];
+        $gameCategory = [];
+
         $repositoryProduct = $this->doctrine->getRepository(Product::class);
+        $repositoryServer = $this->doctrine->getRepository(Server::class);
 
         $qb = $repositoryProduct->baseProductQueryBuilder();
 
         if ($blockContext->getSetting('game')) {
             $repositoryProduct->filterByGame($qb, $blockContext->getSetting('game'));
+            $gameServers = $repositoryServer->findBy(['game' => $blockContext->getSetting('game'), 'isActive' => true]);
         }
 
         if ($blockContext->getSetting('server')) {
             $repositoryProduct->filterByServer($qb, $blockContext->getSetting('server'));
         }
 
+        $resultCategory = $qb->getQuery()->getResult();
+        foreach ($resultCategory as $product) {
+            foreach ($product->getItem()->getCategories() as $category) {
+                $gameCategory[$category->getId()] = $category;
+            }
+        }
+
         if ($blockContext->getSetting('category')) {
             $repositoryProduct->filterByCategory($qb, $blockContext->getSetting('category'));
         }
 
-        $result = $qb->getQuery()->getResult();
-
-//
-//        $paginator = new Pagerfanta(new DoctrineORMAdapter($qb, true, false));
-//        $paginator->setAllowOutOfRangePages(true);
-//        $paginator->setMaxPerPage($limit);
-//        $paginator->setCurrentPage($page);
+        $paginator = new Pagerfanta(new DoctrineORMAdapter($qb, true, false));
+        $paginator->setAllowOutOfRangePages(true);
+        $paginator->setMaxPerPage($limit);
+        $paginator->setCurrentPage($page);
 
         $template = !is_null($blockContext->getSetting('list_type'))
             ? $blockContext->getSetting('list_type') : $blockContext->getTemplate();
 
         return $this->renderResponse($template, [
-            'block'     => $block,
-            'settings'  => array_merge($blockContext->getSettings(), $block->getSettings()),
+            'game'         => $blockContext->getSetting('game'),
+            'gameServers'  => $gameServers,
+            'gameCategory' => $gameCategory,
+            'products'     => $paginator,
+            'block'        => $block,
+            'settings'     => array_merge($blockContext->getSettings(), $block->getSettings()),
         ], $response);
     }
 }

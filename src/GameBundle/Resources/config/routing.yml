@@ -8,46 +8,54 @@ game_how_sell_to_us:
   defaults:
     _controller: GameBundle:Game:sellToUs
   requirements:
-    slug: "([a-zA-Z\\-0-9\\_]+)?"
+    slug: "([a-zA-Z\\-0-9]+)?"
 
 game_how_it_work:
   path: /games/{slug}/how-it-work
   defaults:
     _controller: GameBundle:Game:howItWork
   requirements:
-    slug: "([a-zA-Z\\-0-9\\_]+)?"
+    slug: "([a-zA-Z\\-0-9]+)?"
 
 game_how_it_work_view:
   path: /games/{slug}/how-it-work/{id}-{helpSlug}
   defaults:
     _controller: GameBundle:Game:howItWork
   requirements:
-    slug: "([a-zA-Z\\-0-9\\_]+)?"
+    slug: "([a-zA-Z\\-0-9]+)?"
     id: "\\d+"
-    helpSlug: "([a-zA-Z\\-0-9\\_]+)?"
+    helpSlug: "([a-zA-Z\\-0-9]+)?"
 
 view_game_server:
-  path: /games/{slug}/{server}
+  path: /games/{slug}_s_{server}
   defaults:
     _controller: GameBundle:Game:viewServer
   requirements:
-    slug: "([a-zA-Z\\-0-9\\_]+)?"
-    server: "([a-zA-Z\\-0-9\\_]+)?"
+    slug: "([a-zA-Z\\-0-9]+)?"
+    server: "([a-zA-Z\\-0-9]+)?"
 
 view_game_server_category:
-  path: /games/{slug}/{server}/{category}
+  path: /games/{slug}_s_{server}_c_{category}
   defaults:
     _controller: GameBundle:Game:viewServerCategory
   requirements:
-    slug: "([a-zA-Z\\-0-9\\_]+)?"
-    server: "([a-zA-Z\\-0-9\\_]+)?"
-    category: "([a-zA-Z\\-0-9\\_]+)?"
+    slug: "([a-zA-Z\\-0-9]+)?"
+    server: "([a-zA-Z\\-0-9]+)?"
+    category: "([a-zA-Z\\-0-9]+)?"
 
 view_game:
-  path: /games/{slug}{category}
+  path: /games/{slug}
   defaults:
     _controller: GameBundle:Game:view
+  requirements:
+    slug: "([a-zA-Z\\-0-9]+)?"
+
+view_game_category:
+  path: /games/{slug}_c_{category}
+  defaults:
+    _controller: GameBundle:Game:viewCategory
     category: null
   requirements:
-    slug: "((?!_\\[a-zA-Z\\-0-9]+)([a-zA-Z\\-0-9]+\\/?))+"
-    category: "([a-zA-Z\\-0-9\\_]+)?"
+#    slug: "((?!_\\[a-zA-Z\\-0-9]+)([a-zA-Z\\-0-9]+\\/?))+"
+    slug: "([a-zA-Z\\-0-9]+)?"
+    category: "([a-zA-Z\\-0-9]+)?"

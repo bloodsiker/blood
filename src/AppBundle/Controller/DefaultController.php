@@ -49,8 +49,8 @@ class DefaultController extends Controller
      */
     public function sellToUsAction(Request $request)
     {
-        $breadcrumb = $this->get('app.breadcrumb');
-        $breadcrumb->addBreadcrumb(['title' => 'Поиск']);
+//        $breadcrumb = $this->get('app.breadcrumb');
+//        $breadcrumb->addBreadcrumb(['title' => 'Поиск']);
 
         $this->get('app.seo.updater')->doMagic(null, [
             'title' => 'Поиск по каталогу книг | TopBook.com.ua - скачать книги в fb2, epub, pdf, txt форматах',
@@ -59,5 +59,24 @@ class DefaultController extends Controller
         ]);
 
         return $this->render('AppBundle:sell:sell_to_us.html.twig');
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function itemsAction(Request $request)
+    {
+//        $breadcrumb = $this->get('app.breadcrumb');
+//        $breadcrumb->addBreadcrumb(['title' => 'Поиск']);
+
+        $this->get('app.seo.updater')->doMagic(null, [
+            'title' => 'Поиск по каталогу книг | TopBook.com.ua - скачать книги в fb2, epub, pdf, txt форматах',
+            'description' => 'Поиск по каталогу книг | ТопБук - электронная библиотека. Тут Вы можете скачать бесплатно книги',
+            'keywords' => 'скачать книги, рецензии, отзывы на книги, цитаты из книг, краткое содержание, топбук',
+        ]);
+
+        return $this->render('AppBundle:items:items.html.twig');
     }
 }

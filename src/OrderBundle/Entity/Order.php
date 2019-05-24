@@ -268,13 +268,13 @@ class Order
     /**
      * Remove orderHasItems.
      *
-     * @param \OrderBundle\Entity\OrderHasItem $serverHasItems
+     * @param \OrderBundle\Entity\OrderHasItem $orderHasItems
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeOrderHasItem(\OrderBundle\Entity\OrderHasItem $serverHasItems)
+    public function removeOrderHasItem(\OrderBundle\Entity\OrderHasItem $orderHasItems)
     {
-        return $this->orderHasItems->removeElement($serverHasItems);
+        return $this->orderHasItems->removeElement($orderHasItems);
     }
 
     /**

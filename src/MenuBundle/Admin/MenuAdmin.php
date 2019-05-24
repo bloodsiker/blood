@@ -139,6 +139,8 @@ class MenuAdmin extends Admin
             ])
             ->add('url', null, [
                 'label' => 'menu.fields.url',
+                'field' => 'page',
+                'template' => 'MenuBundle:Admin:translatable.html.twig',
             ])
             ->add('isActive', null, [
                 'label' => 'menu.fields.is_active',
@@ -170,6 +172,9 @@ class MenuAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
+            ->add('title', null, [
+                'label' => 'menu.fields.title',
+            ])
             ->add('isActive', null, [
                 'label' => 'menu.fields.is_active',
             ])
@@ -235,10 +240,6 @@ class MenuAdmin extends Admin
                     'label'     => 'menu.fields.type',
                     'choices'   => $this->getMenuTypes(),
                     'required'  => true,
-                ])
-                ->add('game', ModelListType::class, [
-                    'label' => 'menu.fields.game',
-                    'required' => false,
                 ])
                 ->add('parent', ModelListType::class, [
                     'label' => 'menu.fields.parent',
