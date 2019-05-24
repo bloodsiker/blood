@@ -22,3 +22,7 @@ parameters:
     imagine_web_root: '%kernel.root_dir%/../web'
     imagine_cache_prefix: i
     static_version: 1
+
+    domain: 'blood.com.ua'
+
+    session_lifetime: 86400

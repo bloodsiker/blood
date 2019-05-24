@@ -1,0 +1,19 @@
+{% if mainImage %}
+    <div class="wrap-bg row">
+        <div class="wrap-bg-container">
+            <div class="wrap-bg-title">
+                {% if mainImage.title %}
+                    <h1>{{ mainImage.title }}</h1>
+                {% endif %}
+
+                {% if mainImage.description %}
+                    <h2>{{ mainImage.description }}</h2>
+                {% endif %}
+            </div>
+            <div class="img-header-top" style="background-image: url({{ asset(mainImage.image.path) }});"></div>
+            <div class="img-header" style="background-image: url({{ asset(mainImage.image.path) }});"></div>
+            <div class="img-header-bottom" style="background-image: url({{ asset(mainImage.image.path) }});"></div>
+            <div class="img-header-bottom-mask"></div>
+        </div>
+    </div>
+{% endif %}

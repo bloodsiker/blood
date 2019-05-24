@@ -1,11 +1,73 @@
 
-{#<p>© {{ 'now'|date('Y') }} {{ 'app.frontend.footer.site_copyright'|trans({}, 'AppBundle') }}</p>#}
+<div class="container-fluid">
+    <div class="row">
+        <div class="container">
+            <div class="row equal-height">
 
-{{
-sonata_block_render(
-    { 'type': 'page.block.site_variable' },
-    {
-        'placement': 'footer-counters'
-    }
-)
-}}
+                <div class="col-md-9 col-sm-12 col-xs-12">
+                    <div class="row footer-nav">
+                        <div class="col-md-6 col-xs-12 no-padding">
+                            <h4 class="footer-contact-title"><span>TOP GAMES</span></h4>
+                            <ul>
+                                <li><a href="/">FIFA 19</a></li>
+                                <li><a href="/">Counter Strike</a></li>
+                                <li><a href="/">League of Legends</a></li>
+                                <li><a href="/">Path of Exile</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-md-6 col-xs-12 no-padding">
+                            <h4 class="footer-contact-title"><span>Menu</span></h4>
+                            <ul>
+                                <li><a href="games.html">Games</a></li>
+                                <li><a href="/">Items</a></li>
+                                <li><a href="/">Sell to us</a></li>
+                                <li><a href="/">Help center</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="footer-contact">
+                        <h4 class="footer-contact-title"><span>Contact us</span></h4>
+                        <ul>
+                            <li>Skype: <a href="skype:live:ggetfun?chat">live:ggetfun</a></li>
+                            <li> Mail: <a href="mailto:ggetfun@gmail.com">ggetfun@gmail.com</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="payments">
+                        <div class="payment">
+                            <img src="{{ asset('bundles/app/assets/images/icons/paypal.png') }}" alt="paypal">
+                        </div>
+                        <div class="payment">
+                            <img src="{{ asset('bundles/app/assets/images/icons/webmoney.png') }}" alt="paypal">
+                        </div>
+                        <div class="payment">
+                            <img src="{{ asset('bundles/app/assets/images/icons/visa.png') }}" alt="paypal">
+                        </div>
+                        <div class="payment">
+                            <img src="{{ asset('bundles/app/assets/images/icons/mastercard.png') }}" alt="paypal">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 copyright">
+                    <p>All rights reserved. getfun {{ 'now'|date('Y') }} © </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{#{{#}
+{#sonata_block_render(#}
+{#    { 'type': 'page.block.site_variable' },#}
+{#    {#}
+{#        'placement': 'footer-counters'#}
+{#    }#}
+{#)#}
+{#}}#}

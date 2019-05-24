@@ -32,7 +32,7 @@
     {%- endif %}
 
     {%- set activeClass = null %}
-    {%- if item.uri == item.parent.isCurrent or classes is not empty and ('current' in classes|join(' ')) %}
+    {%- if item.uri == item.parent.isCurrent or classes is not empty and ('active' in classes|join(' ')) %}
         {%- set activeClass = 'active' %}
     {%- endif %}
 

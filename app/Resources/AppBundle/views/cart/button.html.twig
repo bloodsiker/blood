@@ -1,0 +1,5 @@
+{% set block_ajax_path = block.page is defined ? sonata_page_ajax_url(block) : block_ajax_url(block) %}
+<button class="btn btn-cart" type="button" id="show-head-cart" data-url="{{ block_ajax_path }}">
+    <i class="fa fa-shopping-cart"></i>
+    <span class="total-product">0</span>
+</button>

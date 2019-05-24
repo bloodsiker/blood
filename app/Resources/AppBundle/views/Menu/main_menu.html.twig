@@ -3,68 +3,58 @@
 {% block children %}
     {% set currentItem = item %}
 
-    <!-- navbar -->
-    <nav class="h-nav">
+    <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
-            <div class="mobile-menu-btn">
-                <img src='{{ asset('bundles/app/img/mobile_burger.svg') }}' />
-                <div class="mobile-close"><div></div><div></div></div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#navbar-top" aria-expanded="false">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
             </div>
-            <a class="n-logo" href="{{ path('index') }}">
-                {% if app.request.locale == 'ru' %}
-                    <img src='{{ asset('bundles/app/img/nav_logo_small.svg') }}' />
-                {% else %}
-                    <img src='{{ asset('bundles/app/img/nav_logo_small_ua.svg') }}' />
-                {% endif %}
-            </a>
-            <div class="n-search">
-                <p>{{ 'app.frontend.search.title'|trans({}, 'AppBundle') }}</p>
-                <form action="/">
-                    <div class="n-search-form">
-                        <img src="{{ asset('bundles/app/img/header_search.svg') }}" />
-                        <input class="search-field"
-                               name="q"
-                               placeholder="{{ 'app.frontend.search.enter_text'|trans({}, 'AppBundle') }}"
-                               type="text">
-                        <div class="search-clean"></div>
-                    </div>
-                </form>
-            </div>
-            <ul>
-                {% set currentSubMenu = [] %}
-                {% if options.matchingDepth is not none and options.matchingDepth > 0 %}
-                    {% set options = options|merge({'matchingDepth': currentOptions.matchingDepth - 1}) %}
-                {% endif %}
 
-                {% for item in currentItem.children %}
-                    {% set linkAttributes = item.linkAttributes %}
+            <div class="collapse navbar-collapse" id="navbar-top">
+                <ul class="nav navbar-nav navbar-left">
 
-                    {% if matcher.isCurrent(item) or matcher.isAncestor(item, options.matchingDepth) %}
-                        {% set linkAttributes = linkAttributes|merge({'class': 'active'}) %}
-                        {% set currentSubMenu = item.children %}
+                    {% set currentSubMenu = [] %}
+                    {% if options.matchingDepth is not none and options.matchingDepth > 0 %}
+                        {% set options = options|merge({'matchingDepth': currentOptions.matchingDepth - 1}) %}
                     {% endif %}
 
-                    {{ block('item') }}
-                {% endfor %}
-            </ul>
-        </div>
+                    {% for item in currentItem.children %}
+                        {% set linkAttributes = item.linkAttributes %}
 
-        {% if currentSubMenu %}
-            <div class="h-nav-submenu">
-                <div class="container">
-                    <ul>
-                        {% for item in currentSubMenu %}
-                            {% set linkAttributes = item.linkAttributes %}
-                            {% if matcher.isCurrent(item) %}
-                                {% set linkAttributes = linkAttributes|merge({'class': 'active'}) %}
-                                {% set currentSubMenu = item.children %}
-                            {% endif %}
+                        {% if matcher.isCurrent(item) or matcher.isAncestor(item, options.matchingDepth) %}
+                            {% set linkAttributes = linkAttributes|merge({'class': 'active'}) %}
+                            {% set currentSubMenu = item.children %}
+                        {% endif %}
 
-                            {{ block('item') }}
-                        {% endfor %}
-                    </ul>
-                </div>
+                        {{ block('item') }}
+                    {% endfor %}
+                </ul>
             </div>
-        {% endif %}
+        </div>
     </nav>
+
+
+    <!-- navbar -->
+{#    <nav class="h-nav">#}
+{#        <div class="container">#}
+{#            <ul>#}
+{#                <li class="active"><a href="index.html">Home</a></li>#}
+{#                <li><a href="games.html">Games</a>#}
+{#                    <ul class="submenu">#}
+{#                        <li><a href="">FIFA 19</a></li>#}
+{#                        <li><a href="">Counter Strike</a></li>#}
+{#                        <li><a href="">League of Legends</a></li>#}
+{#                        <li><a href="">Path of Exile</a></li>#}
+{#                    </ul>#}
+{#                </li>#}
+{#                <li><a href="/">Items</a></li>#}
+{#                <li><a href="/">Sell to us</a></li>#}
+{#                <li><a href="/">Help center</a></li>#}
+{#            </ul>#}
+{#        </div>#}
+{#    </nav>#}
 {% endblock %}

@@ -22,6 +22,8 @@ sonata_block:
             contexts: [cms]
         app.block.service.footer:
             contexts: [cms]
+        app.block.service.cart:
+            contexts: [cms]
         app.block.service.search:
             contexts: [cms]
         app.block.service.breadcrumb:
@@ -53,11 +55,9 @@ sonata_block:
         help.block.help_list:
             contexts: [cms]
 
-        # CommentBundle Block's
-#        comment.block.list_comments:
-#            contexts: [cms]
-#        comment.block.add_comment:
-#            contexts: [cms]
+        # MainImageBundle Block's
+        main.block.image:
+            contexts: [cms]
 #
 #        # UserBundle's Blocks
 #        sonata.user.block.account: # used to display menu option (login option)

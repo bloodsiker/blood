@@ -1,11 +1,31 @@
 {% extends 'AppBundle::base.html.twig' %}
 
 {% block body %}
+    <div class="wrap-topbar">
+        <div class="container">
+            <div class="row">
+                <div class="topbar-left col-xs-8 col-sm-6">
+                    <div class="custom">
+                        <p>Welcome to the GetFun shop</p>
+                    </div>
+                </div>
+                <div class="topbar-right pull-right col-xs-4 col-sm-6">
+                    <div class="languageswitcherload">
+                        <div class="mod-languages">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{ parent() }}
+
 {% endblock %}
 
 {% block header %}
-    <header class="head-container">
+    <header id="header" class="header">
         {{
             sonata_block_render(
                 {
@@ -21,36 +41,44 @@
         {% endif %}
         {{ sonata_page_render_container('header', page) }}
     {% endif %}
+
+
+    <div class="header-menu">
+        {{ knp_menu_render('header', {'template': 'AppBundle:Menu:main_menu.html.twig'}) }}
+    </div>
+
+    {{ block('wrap_bg') }}
+
+{% endblock %}
+
+{% block wrap_bg %}
+    <div class="wrap-inner-bg" style="background: url({{ asset('bundles/app/assets/images/bg1.jpg') }}) rgb(247, 248, 250) center repeat-x;">
+        <div class="wrap-inner-holder">
+            <h1>GAMES</h1>
+            <p>Browse the games we are selling in and find the most popular titles highlighted. Select the game you are interested in to see our selection, way of delivery and other useful information.</p>
+        </div>
+    </div>
 {% endblock %}
 
 {% block content %}
-    <section class="wrap center">
+    <section class="main-body">
         {{ parent() }}
     </section>
 
 {% endblock %}
 
-{% block top_nav %}
-    <div class="top-nav">
-        <div class="top-nav-title">
+{# {% block breadchumbs %}#}
 
-        </div>
-    </div>
-{% endblock %}
+{#     {{#}
+{#     sonata_block_render(#}
+{#         { 'type': 'app.block.service.breadcrumb' }#}
+{#     )#}
+{#     }}#}
 
- {% block breadchumbs %}
-
-     {{
-     sonata_block_render(
-         { 'type': 'app.block.service.breadcrumb' }
-     )
-     }}
-
- {% endblock %}
+{# {% endblock %}#}
 
 {% block content_main %}
-    <section class="cols">
-        {{ block('content_side') }}
+    <div class="container">
 
         {% if content is defined and content|length > 0 %}
             {{ content|raw }}
@@ -62,14 +90,7 @@
             {% endif %}
             {{ sonata_page_render_container('content_main', page) }}
         {% endif %}
-    </section>
-{% endblock %}
-
-{% block content_side %}
-    <aside class="col-side">
-
-
-    </aside>
+    </div>
 {% endblock %}
 
 {% block content_bottom %}
@@ -82,7 +103,7 @@
 {% endblock %}
 
 {% block footer %}
-    <footer class="foot-line">
+    <footer class="footer">
         {% if page is defined %}
             {% if page.name != 'global' %}
                 {{ sonata_page_render_container('footer', 'global') }}
@@ -96,4 +117,59 @@
             )
         }}
     </footer>
+{% endblock %}
+
+{% block modals %}
+    <div class="modal fade" id="modal-cart" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+
+    </div><!-- /.modal -->
+
+    <div class="modal fade default-modal" id="modal-add-cart" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Price in server/platform</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row modal-line">
+                        <div class="col-md-8">
+                            <div class="name-server">Hardcore Mode</div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="price-server">$200.00</div>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="addtocart-button"></button>
+                        </div>
+                    </div>
+                    <div class="row modal-line">
+                        <div class="col-md-8">
+                            <div class="name-server">Synthesis - Hardcore</div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="price-server">$3.40</div>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="addtocart-button"></button>
+                        </div>
+                    </div>
+                    <div class="row modal-line">
+                        <div class="col-md-8">
+                            <div class="name-server">Synthesis - Softcore</div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="price-server">$0.40</div>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="addtocart-button"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 {% endblock %}

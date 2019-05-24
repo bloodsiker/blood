@@ -1,8 +1,8 @@
 services:
-    comment.block.list_comments:
-        class: "MainImageBundle\\Block\\ListCommentBlockService"
+    main.block.image:
+        class: MainImageBundle\Block\MainImageBlockService
         arguments:
-          - comment.block.list_comments
+          - main.block.image
           - '@templating'
           - '@app.entity_manager'
         tags:
