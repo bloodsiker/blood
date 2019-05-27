@@ -1,5 +1,5 @@
 {% set block_ajax_path = block.page is defined ? sonata_page_ajax_url(block) : block_ajax_url(block) %}
-<button class="btn btn-cart" type="button" id="show-head-cart" data-url="{{ block_ajax_path }}">
+<button class="btn btn-cart" type="button" id="show-head-cart" data-url="{{ block_ajax_path }}" data-action="{{ constant('AppBundle\\Block\\CartBlockService::ACTION_SHOW') }}">
     <i class="fa fa-shopping-cart"></i>
-    <span class="total-product">0</span>
+    <span class="total-product">{{ countItems }}</span>
 </button>

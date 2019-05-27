@@ -17,12 +17,13 @@ $(function () {
     /* Cart modal */
     $('#show-head-cart').on('click', function () {
         let _this = $(this),
-            url = _this.data('url');
+            url = _this.data('url'),
+            action = _this.data('action');
 
         $.ajax({
             type: 'POST',
             url: url,
-            data: { },
+            data: { action: action },
             success: function (response) {
                 let modalCart = $('#modal-cart');
                 modalCart.html(response);

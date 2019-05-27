@@ -58,6 +58,7 @@ services:
     arguments:
       - app.block.service.cart
       - '@templating'
+      - '@app.cart'
       - '@request_stack'
     tags:
       - { name: sonata.block }

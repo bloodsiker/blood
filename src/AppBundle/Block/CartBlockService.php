@@ -2,6 +2,7 @@
 
 namespace AppBundle\Block;
 
+use AppBundle\Services\Cart;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Block\Service\AbstractAdminBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
@@ -16,10 +17,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CartBlockService extends AbstractAdminBlockService
 {
-    const SESSION_CART = 'user.cart';
-
     const TEMPLATE_BUTTON = 'AppBundle:cart:button.html.twig';
     const TEMPLATE_MODAL  = 'AppBundle:cart:modal.html.twig';
+
+    const ACTION_ADD = 'add.cart';
+    const ACTION_REMOVE = 'remove.cart';
+    const ACTION_CLEAR = 'clear.cart';
+    const ACTION_SHOW = 'show.cart';
 
     /**
      * @var RequestStack
@@ -27,16 +31,23 @@ class CartBlockService extends AbstractAdminBlockService
     private $request;
 
     /**
+     * @var Cart
+     */
+    private $cart;
+
+    /**
      * CartBlockService constructor.
      *
      * @param string          $name
      * @param EngineInterface $templating
+     * @param Cart            $cart
      * @param RequestStack    $request
      */
-    public function __construct($name, EngineInterface $templating, RequestStack $request)
+    public function __construct($name, EngineInterface $templating, Cart $cart, RequestStack $request)
     {
         parent::__construct($name, $templating);
 
+        $this->cart = $cart;
         $this->request  = $request;
     }
 
@@ -68,9 +79,11 @@ class CartBlockService extends AbstractAdminBlockService
 
     /**
      * @param BlockContextInterface $blockContext
-     * @param Response|null         $response
+     * @param Response|null $response
      *
      * @return Response
+     *
+     * @throws \Exception
      */
     public function execute(BlockContextInterface $blockContext, Response $response = null)
     {
@@ -79,17 +92,92 @@ class CartBlockService extends AbstractAdminBlockService
         }
 
         $request = $this->request->getCurrentRequest();
-        $session = $request->getSession();
+
+        $type = Cart::TYPE_PRODUCT;
+        $action = self::ACTION_ADD;
+        $id = 366;
+        $count = 11;
 
         if ($request->isXmlHttpRequest()) {
 
+            switch ($action) {
+                case self::ACTION_ADD:
+                    $this->addToCart($type, $id, $count);
+                    break;
+                case self::ACTION_REMOVE:
+                    $this->removeProductFromCart($type, $id);
+                    break;
+                case self::ACTION_CLEAR:
+                    $this->clearCart();
+                    break;
+                case self::ACTION_SHOW:
+                    $products = $this->getProductInfoFromCart();
+                    break;
+                default:
+                    throw new \Exception('Undefined action');
+            }
         }
 
-        $session->set(self::SESSION_CART, ['id' => 34]);
-
         return $this->renderResponse($request->isXmlHttpRequest() ? self::TEMPLATE_MODAL : $blockContext->getTemplate(), [
-            'settings'  => $blockContext->getSettings(),
-            'block'     => $blockContext->getBlock(),
+            'countItems' => $this->cart->countItems(),
+            'products'   => $products ?? [],
+            'settings'   => $blockContext->getSettings(),
+            'block'      => $blockContext->getBlock(),
         ]);
+    }
+
+    /**
+     * Add product to cart
+     *
+     * @param string $type
+     * @param int    $id
+     * @param int    $count
+     *
+     * @throws \Exception
+     */
+    private function addToCart($type, int $id, int $count)
+    {
+        switch ($type) {
+            case Cart::TYPE_PRODUCT:
+                $this->cart->addProductToCart(Cart::TYPE_PRODUCT, $id, $count);
+                break;
+            case Cart::TYPE_DISCOUNT:
+                $this->cart->addProductToCart(Cart::TYPE_DISCOUNT, $id, $count);
+                break;
+            default:
+                throw new \Exception('Undefined type product');
+        }
+    }
+
+    private function getProductInfoFromCart()
+    {
+        return $this->cart->getProductsInfo();
+    }
+
+    /**
+     * Remove product from cart
+     *
+     * @param string $type
+     * @param int $id
+     *
+     * @return bool
+     */
+    private function removeProductFromCart($type, int $id)
+    {
+        $this->cart->deleteProduct($type, $id);
+
+        return true;
+    }
+
+    /**
+     * Clear cart
+     *
+     * @return bool
+     */
+    private function clearCart()
+    {
+        $this->cart->clear();
+
+        return true;
     }
 }
