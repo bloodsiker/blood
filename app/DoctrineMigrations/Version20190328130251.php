@@ -39,9 +39,11 @@ final class Version20190328130251 extends AbstractMigration
         $game->addColumn('image_id', 'integer', ['unsigned' => true, 'notnull' => false]);
         $game->addColumn('description', 'text', ['length' => 65535, 'notnull' => true]);
         $game->addColumn('is_active', 'boolean', ['notnull' => true]);
+        $game->addColumn('show_in_main', 'boolean', ['notnull' => true]);
         $game->addColumn('is_hot', 'boolean', ['notnull' => true]);
         $game->addColumn('menu_sell_to_us', 'boolean', ['notnull' => true]);
         $game->addColumn('menu_how_it_work', 'boolean', ['notnull' => true]);
+        $game->addColumn('order_num', 'integer', ['unsigned' => true, 'notnull' => true, 'default' => 0]);
         $game->addColumn('created_at', 'datetime', ['notnull' => true]);
         $game->setPrimaryKey(['id']);
         $game->addForeignKeyConstraint($genre, ['genre_id'], ['id']);

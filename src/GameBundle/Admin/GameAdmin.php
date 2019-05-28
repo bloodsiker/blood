@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\CoreBundle\Form\Type\DateTimePickerType;
 use Sonata\CoreBundle\Validator\ErrorElement;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -23,7 +24,7 @@ class GameAdmin extends Admin
     protected $datagridValues = [
         '_page'       => 1,
         '_per_page'   => 25,
-        '_sort_by'    => 'id',
+        '_sort_by'    => 'orderNum',
         '_sort_order' => 'ASC',
     ];
 
@@ -42,6 +43,15 @@ class GameAdmin extends Admin
                 ->end()
             ;
         }
+    }
+
+    /**
+     * @param RouteCollection $collection
+     */
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('moveup', $this->getRouterIdParameter().'/move-up');
+        $collection->add('movedown', $this->getRouterIdParameter().'/move-down');
     }
 
     /**
@@ -64,12 +74,24 @@ class GameAdmin extends Admin
                 'label' => 'game.fields.is_active',
                 'editable'  => true,
             ])
+            ->add('showInMain', null, [
+                'label' => 'game.fields.show_in_main',
+                'editable'  => true,
+            ])
             ->add('isHot', null, [
                 'label' => 'game.fields.is_hot',
                 'editable'  => true,
             ])
             ->add('createdAt', null, [
                 'label' => 'game.fields.created_at',
+            ])
+            ->add('_action', 'actions', [
+                'actions' => [
+                    'move_up'   => ['template' => 'AdminBundle:CRUD:list__action_move_up.html.twig'],
+                    'order_num' => ['template' => 'AdminBundle:CRUD:list__action_order_num.html.twig'],
+                    'move_down' => ['template' => 'AdminBundle:CRUD:list__action_move_down.html.twig'],
+                    'edit'      => [],
+                ],
             ]);
     }
 
@@ -84,6 +106,9 @@ class GameAdmin extends Admin
             ])
             ->add('isActive', null, [
                 'label' => 'game.fields.is_active',
+            ])
+            ->add('showInMain', null, [
+                'label' => 'game.fields.show_in_main',
             ])
             ->add('isHot', null, [
                 'label' => 'game.fields.is_hot',
@@ -128,6 +153,10 @@ class GameAdmin extends Admin
                         'label' => 'game.fields.is_active',
                         'required' => false,
                     ])
+                    ->add('showInMain', null, [
+                        'label' => 'game.fields.show_in_main',
+                        'required' => false,
+                    ])
                     ->add('isHot', null, [
                         'label' => 'game.fields.is_hot',
                         'required' => false,
@@ -141,6 +170,10 @@ class GameAdmin extends Admin
                         'required' => true,
                         'format' => 'YYYY-MM-dd HH:mm',
                         'attr' => ['readonly' => true],
+                    ])
+                    ->add('orderNum', null, [
+                        'label' => 'game.fields.order_num',
+                        'required' => false,
                     ])
                 ->end()
                 ->with('form_group.menu', ['class' => 'col-md-4', 'name' => false])

@@ -1,10 +1,18 @@
 services:
-#    share.block.tag_list:
-#        class: "ShareBundle\\Block\\ListTagsBlockService"
-#        arguments:
-#          - share.block.tag_list
-#          - '@templating'
-#          - '@?doctrine'
-#        tags:
-#          - { name: sonata.block }
-#
+    product.block.main_game:
+        class: ProductBundle\Block\GameProductInMainBlockService
+        arguments:
+          - product.block.main_game
+          - '@templating'
+          - '@app.entity_manager'
+        tags:
+          - { name: sonata.block }
+
+    product.block.in_main:
+      class: ProductBundle\Block\ProductInMainBlockService
+      arguments:
+        - product.block.in_main
+        - '@templating'
+        - '@app.entity_manager'
+      tags:
+        - { name: sonata.block }

@@ -37,9 +37,9 @@ sonata_block:
         game.block.game_list:
             contexts: [cms]
 
-        # GenreBundle Block's
-#        genre.block.genre_list:
-#            contexts: [cms]
+        #DiscountBundle Block's
+        discount.block.pack:
+            contexts: [cms]
 
         # SeriesBundle Block's
 #        series.block.series_list:
@@ -53,6 +53,12 @@ sonata_block:
 
         # HelpCenterBundle Block's
         help.block.help_list:
+            contexts: [cms]
+
+        #ProductBundle Block's
+        product.block.main_game:
+            contexts: [cms]
+        product.block.in_main:
             contexts: [cms]
 
         # MainImageBundle Block's

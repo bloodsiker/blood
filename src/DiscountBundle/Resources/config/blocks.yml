@@ -1,27 +1,9 @@
 services:
-#    share.block.tag_list:
-#        class: "ShareBundle\\Block\\ListTagsBlockService"
-#        arguments:
-#          - share.block.tag_list
-#          - '@templating'
-#          - '@?doctrine'
-#        tags:
-#          - { name: sonata.block }
-#
-#    share.block.author_list:
-#        class: "ShareBundle\\Block\\ListAuthorsBlockService"
-#        arguments:
-#          - share.block.author_list
-#          - '@templating'
-#          - '@?doctrine'
-#        tags:
-#          - { name: sonata.block }
-
-  share.block.service.rtf:
-      class: ShareBundle\Block\RTFBlockService
+  discount.block.pack:
+      class: DiscountBundle\Block\DiscountBlockService
       arguments:
-        - share.block.service.rtf
+        - discount.block.pack
         - '@templating'
-        - '@service_container'
+        - '@app.entity_manager'
       tags:
         - { name: sonata.block }

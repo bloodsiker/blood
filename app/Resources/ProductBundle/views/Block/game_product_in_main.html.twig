@@ -1,0 +1,88 @@
+{% if games %}
+    <div class="games-items top-line">
+        <h4><span>Top Games</span></h4>
+        {% for game in games %}
+            {% if game.products %}
+                <div class="row equal-height equal-height-child">
+                    <div class="game-item col-lg-2 col-sm-4 col-xs-6">
+                        <div class="spacer">
+                            <img src="{{ asset(game.game.image.getPath()) }}" alt="{{ game.game.name }}" class="bg">
+
+                            <div class="game">
+                                <div class="text">
+                                    <a href="buy_cheap_fifa_19_fut_coins/">
+                                        <img src="{{ asset(game.game.image.getPath()) }}" alt="{{ game.game.name }}">
+                                    </a>
+                                    <h2>{{ game.game.name }}</h2>
+                                    <p>Path of Exile currency and item selection with 10 minutes delivery. League selection is available!</p>
+                                </div>
+                            </div>
+                            <div class="btn center">
+                                <a href="{{ path('view_game', { 'slug': game.game.slug }) }}">See all</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% for product in game.products %}
+                        <div class="product-item col-lg-2 col-sm-4 col-xs-6">
+                            <div class="spacer">
+                                {% set discount = product|first.discount ? ((product|first.price - product|first.discount) * 100) / product|first.price  : null %}
+                                {% if discount %}
+                                    <div class="ribbon discount"><div>{{ discount|round }}%</div></div>
+                                {% endif %}
+                                {% if product|first.isHot %}
+                                    <div class="ribbon hot"><div>Hot</div></div>
+                                {% endif %}
+                                <div class="product-media-container">
+                                    <div class="product-media-image">
+                                        <a title="Spartacus Legends" href="{{ path('product_view', {'slug': product|first.item.slug}) }}">
+                                            <img src="{{ asset(product|first.item.image.getPath()) }}" alt="{{ product|first.item.name }}" class="browseProductImage">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="product-descr-container">
+                                    <h6>{{ game.game.name }}</h6>
+                                    <h2><a href="{{ path('product_view', {'slug': product|first.item.slug}) }}">{{ product|first.item.name }}</a></h2>
+                                    <hr class="line">
+                                    <p class="product_s_desc">
+                                        {{ product|first.item.shortDescription|raw }}
+                                    </p>
+                                    <div class="product-price salesprice">
+                                        <div class="price-value">
+                                            <span class="price-desc">From price: </span>
+                                            <span class="{% if product.min_discount %}PricebasePrice{% endif %}">${{ product.min_price|number_format(2, ',') }}</span>
+                                        </div>
+                                        {% if product.min_discount %}
+                                            <div class="price-value">
+                                                <span class="price-desc">Sales price: </span>
+                                                <span class="PricesalesPrice">${{ product.min_discount|number_format(2, ',') }}</span>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <hr class="line item-line">
+                                    <div class="addtocart-area">
+                                        <div class="addtocart-bar">
+                                            <div class="quantity-wrap">
+                                                <span class="quantity-box">
+                                                    <input type="text" class="quantity-input js-recalculate" name="quantity[]" value="1" step="1">
+                                                </span>
+                                                <span class="quantity-controls js-recalculate">
+                                                    <input type="button" class="quantity-controls quantity-plus">
+                                                    <input type="button" class="quantity-controls quantity-minus">
+                                                </span>
+                                            </div>
+                                            <span class="addtocart-button">
+                                                <button class="add-to-cart addtocart-button" title="Add to Cart"></button>
+                                            </span>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}

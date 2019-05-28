@@ -37,6 +37,7 @@ final class Version20190328131754 extends AbstractMigration
         $item->addColumn('slug', 'string', ['length' => 255, 'notnull' => true]);
         $item->addColumn('image_id', 'integer', ['unsigned' => true, 'notnull' => false]);
         $item->addColumn('description', 'text', ['length' => 65535, 'notnull' => true]);
+        $item->addColumn('shortDescription', 'string', ['length' => 255, 'notnull' => true]);
         $item->addColumn('created_at', 'datetime', ['notnull' => true]);
         $item->setPrimaryKey(['id']);
         $item->addForeignKeyConstraint($schema->getTable('media_image'), ['image_id'], ['id']);

@@ -49,6 +49,13 @@ class Item
     /**
      * @var string
      *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $shortDescription;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
@@ -271,5 +278,29 @@ class Item
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    /**
+     * Get shortDescription
+     *
+     * @return string
+     */
+    public function getShortDescription()
+    {
+        return $this->shortDescription;
+    }
+
+    /**
+     * Set shortDescription
+     *
+     * @param string $shortDescription
+     *
+     * @return $this
+     */
+    public function setShortDescription(string $shortDescription)
+    {
+        $this->shortDescription = $shortDescription;
+
+        return $this;
     }
 }

@@ -2,19 +2,17 @@
 
 namespace GameBundle\Entity;
 
+use AppBundle\Traits\OrderNumLogicTrait;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use GenreBundle\Entity\Genre;
-use SeriesBundle\Entity\Series;
-use ShareBundle\Entity\Author;
-use ShareBundle\Entity\ItemCategory;
-use ShareBundle\Entity\Tag;
 
 /**
  * Class GameRepository
  */
 class GameRepository extends EntityRepository
 {
+    use OrderNumLogicTrait;
+
     /**
      * @return QueryBuilder
      */

@@ -67,7 +67,7 @@ class ItemAdmin extends Admin
             ->add('createdAt', DateTimeFilter::class, [
                 'label' => 'item.fields.created_at',
                 'field_type'    => DateTimePickerType::class,
-                'field_options' => array('format' => 'dd.MM.yyyy'),
+                'field_options' => ['format' => 'dd.MM.yyyy'],
             ]);
     }
 
@@ -80,6 +80,10 @@ class ItemAdmin extends Admin
             ->with('form_group.basic', ['class' => 'col-md-8', 'name' => false])
                 ->add('name', TextType::class, [
                     'label' => 'item.fields.name',
+                ])
+                ->add('shortDescription', TextType::class, [
+                    'label' => 'item.fields.short_description',
+                    'required' => false,
                 ])
                 ->add('description', CKEditorType::class, [
                     'label' => 'item.fields.description',

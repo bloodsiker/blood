@@ -28,6 +28,7 @@ item:
         created_at: Дата создания
         image: Изображение
         description: Описание
+        short_description: Краткое описание
         slug: Сегмент URL (slug)
         categories: Категории
         id: ID

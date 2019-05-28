@@ -21,7 +21,7 @@ discount:
         is_main: Отображать на главной
         is_random: Случайные пакеты
         has_pack: Содержит пакеты скидок
-        order_num: Сортировка
+        order_num: Порядок
         image: Изображение
         game: Игра
         created_at: Создано

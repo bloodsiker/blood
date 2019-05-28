@@ -74,6 +74,13 @@ class Game
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
+    protected $showInMain;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
     protected $isHot;
 
     /**
@@ -91,6 +98,13 @@ class Game
     protected $menuHowItWork;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="order_num", type="integer", nullable=false, options={"default": 1})
+     */
+    protected $orderNum;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=false)
@@ -103,6 +117,7 @@ class Game
     public function __construct()
     {
         $this->isActive = true;
+        $this->orderNum = 0;
         $this->createdAt = new \DateTime('now');
     }
 
@@ -384,5 +399,53 @@ class Game
         $this->menuHowItWork = $menuHowItWork;
 
         return $this;
+    }
+
+    /**
+     * Get showInMain
+     *
+     * @return bool
+     */
+    public function isShowInMain()
+    {
+        return $this->showInMain;
+    }
+
+    /**
+     * Set showInMain
+     *
+     * @param bool $showInMain
+     *
+     * @return $this
+     */
+    public function setShowInMain(bool $showInMain)
+    {
+        $this->showInMain = $showInMain;
+
+        return $this;
+    }
+
+    /**
+     * Set orderNum.
+     *
+     * @param int $orderNum
+     *
+     * @return $this
+     */
+    public function setOrderNum($orderNum)
+    {
+        $this->orderNum = $orderNum;
+
+        return $this;
+    }
+
+    /**
+     * Get orderNum.
+     *
+     * @return int
+     */
+    public function getOrderNum()
+    {
+        return $this->orderNum;
     }
 }

@@ -24,8 +24,10 @@ game:
         slug: Сегмент URL (slug)
         is_active: Активно
         is_hot: Hot
+        show_in_main: На главной
         image: Изображение
         genre: Жанр
+        order_num: Порядок
         created_at: Дата создания
         id: ID
 
