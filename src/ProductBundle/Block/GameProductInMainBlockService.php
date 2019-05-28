@@ -83,6 +83,7 @@ class GameProductInMainBlockService extends AbstractAdminBlockService
         $productRepository = $this->entityManager->getRepository(Product::class);
         $gameInMain = $gameRepository->findBy(['isActive' => true, 'showInMain' => true], ['orderNum' => 'ASC']);
         $games = [];
+        $showGames = 0;
         foreach ($gameInMain as $game) {
             $qb = $productRepository->baseProductQueryBuilder();
             $productRepository->filterByGame($qb, $game);
@@ -95,10 +96,12 @@ class GameProductInMainBlockService extends AbstractAdminBlockService
                 ->getResult();
             $games[$game->getId()]['game'] = $game;
             $games[$game->getId()]['products'] = $result;
+            $showGames += count($result);
         }
 
         return $this->renderResponse($blockContext->getTemplate(), [
             'games'      => $games,
+            'showGames'  => $showGames,
             'settings'   => $blockContext->getSettings(),
             'block'      => $blockContext->getBlock(),
         ]);
