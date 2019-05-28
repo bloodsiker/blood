@@ -33,6 +33,27 @@ sonata_admin:
 
 
     dashboard:
+        blocks:
+            - position: left
+              type: sonata.admin.block.admin_list
+              settings:
+                  groups:
+                      - group.game
+                      - group.product
+                      - group.discount
+                      - group.main_image
+                      - group.share
+                      - group.help_center
+
+            - position: right
+              type: sonata.admin.block.admin_list
+              settings:
+                  groups:
+                      - group.media
+                      - group.rtf_block
+                      - group.menu
+                      - group.order
+                      - sonata_page
         groups:
             group.game:
                 label: group.game
@@ -90,6 +111,3 @@ sonata_admin:
                     - sonata.page.admin.site
                     - sonata.page.admin.site_variables
                     - sonata.page.admin.site_variables_placement
-
-        blocks:
-             - { position: center, type: sonata.admin.block.admin_list }
