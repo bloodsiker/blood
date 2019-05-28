@@ -96,7 +96,7 @@ class MainImageAdmin extends Admin
                 ])
                 ->add('description', TextareaType::class, [
                     'label' => 'main_image.fields.description',
-                    'required' => true,
+                    'required' => false,
                     'attr' => [
                         'rows' => 5,
                     ],
