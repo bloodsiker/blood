@@ -1,18 +1,18 @@
 {% set block_ajax_path = block.page is defined ? sonata_page_ajax_url(block) : block_ajax_url(block) %}
 <div class="addtocart-area">
     <div class="addtocart-bar">
-        <div class="quantity-wrap">
+        <div class="quantity-wrap container-recalculate">
             <span class="quantity-box">
-                <input type="text" class="quantity-input js-recalculate" id="product-{{ settings.product.id }}" name="quantity" value="1" step="1">
+                <input type="text" class="quantity-input js-recalculate" name="quantity" value="1" step="1">
             </span>
-            <span class="quantity-controls js-recalculate">
-                <input type="button" onclick="recalculateQuantity({{ settings.product.id }}, '+')" class="quantity-controls quantity-plus">
-                <input type="button" onclick="recalculateQuantity({{ settings.product.id }}, '-')" class="quantity-controls quantity-minus">
+            <span class="quantity-controls">
+                <input type="button" data-operator="+" class="quantity-controls js-recalculate quantity-plus">
+                <input type="button" data-operator="-" class="quantity-controls js-recalculate quantity-minus">
             </span>
         </div>
         <span class="addtocart-button">
             <button class="show-modal-price addtocart-button"
-                    data-id="{{ settings.product.id }}"
+                    data-id="{{ settings.product.item.id }}"
                     data-game="{{ settings.product.server.game.id }}"
                     data-url="{{ block_ajax_path }}"
                     data-action="{{ constant('AppBundle\\Block\\CartBlockService::ACTION_MODAL_PRICE_IN_SERVER') }}"

@@ -46,27 +46,6 @@ class PackHasItem
     protected $orderNum;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(type="float", nullable=false, options={"default": 0})
-     */
-    protected $price;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer", nullable=false, options={"default": 0})
-     */
-    protected $available;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    protected $isHot;
-
-    /**
      * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false)
@@ -79,8 +58,6 @@ class PackHasItem
     public function __construct()
     {
         $this->orderNum = 0;
-        $this->price = 0;
-        $this->available = 1;
         $this->isActive = true;
     }
 
@@ -174,78 +151,6 @@ class PackHasItem
     public function getProduct()
     {
         return $this->product;
-    }
-
-    /**
-     * Get price
-     *
-     * @return int
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    /**
-     * Set price
-     *
-     * @param float $price
-     *
-     * @return $this
-     */
-    public function setPrice(float $price)
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    /**
-     * Get available
-     *
-     * @return int
-     */
-    public function getAvailable()
-    {
-        return $this->available;
-    }
-
-    /**
-     * Set available
-     *
-     * @param int $available
-     *
-     * @return $this
-     */
-    public function setAvailable(int $available)
-    {
-        $this->available = $available;
-
-        return $this;
-    }
-
-    /**
-     * Get isHot
-     *
-     * @return bool
-     */
-    public function getIsHot()
-    {
-        return $this->isHot;
-    }
-
-    /**
-     * Set isHot
-     *
-     * @param bool $isHot
-     *
-     * @return $this
-     */
-    public function setIsHot(bool $isHot)
-    {
-        $this->isHot = $isHot;
-
-        return $this;
     }
 
     /**

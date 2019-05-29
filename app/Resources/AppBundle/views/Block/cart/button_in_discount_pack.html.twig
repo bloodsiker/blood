@@ -1,0 +1,9 @@
+{% set block_ajax_path = block.page is defined ? sonata_page_ajax_url(block) : block_ajax_url(block) %}
+
+<button type="submit" class="add-to-cart btn-cart center-block"
+        data-id="{{ settings.product.id }}"
+        data-url="{{ block_ajax_path }}"
+        data-quantity="1"
+        data-product-type="{{ constant('AppBundle\\Services\\Cart::TYPE_DISCOUNT') }}"
+        data-action="{{ constant('AppBundle\\Block\\CartBlockService::ACTION_ADD') }}"
+        title="Add to cart">Add to cart</button>

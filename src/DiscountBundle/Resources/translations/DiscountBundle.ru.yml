@@ -45,9 +45,6 @@ pack:
 pack_has_item:
     fields:
         id: ID
-        product: Предмет
-        available: Количество
-        price: Цена
-        is_hot: Hot
+        product: Итем
         is_active: Активен
         order_num: ''

@@ -2,6 +2,7 @@
 
 namespace DiscountBundle\Block;
 
+use DiscountBundle\Entity\Discount;
 use Doctrine\ORM\EntityManager;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Block\Service\AbstractAdminBlockService;
@@ -57,6 +58,8 @@ class DiscountBlockService extends AbstractAdminBlockService
     public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'homepage' => false,
+            'game'     => null,
             'template' => 'DiscountBundle:Block:discount_pack.html.twig',
         ]);
     }
@@ -75,10 +78,47 @@ class DiscountBlockService extends AbstractAdminBlockService
             return new Response();
         }
 
+        $discountRepository = $this->entityManager->getRepository(Discount::class);
+
+        $discountList = [];
+
+        $homepage = $blockContext->getSetting('homepage');
+        if ($homepage) {
+            $discountList = $discountRepository->findBy(['isActive' => true, 'isMain' => true]);
+        }
+
+        $game = $blockContext->getSetting('game');
+        if ($game) {
+            $discountList = $discountRepository->findBy(['isActive' => true, 'game' => $game]);
+        }
+
+        $list = [];
+        foreach ($discountList as $discount) {
+            $list[$discount->getId()]['discount'] = $discount;
+
+            $discountHasPack = $discount->getDiscountHasPacks()->getValues();
+            array_map(function ($key, $pack) use (&$discountHasPack) {
+                if (!$pack->getIsActive()) {
+                    unset($discountHasPack[$key]);
+                }
+            }, array_keys($discountHasPack), $discountHasPack);
+
+            if (count($discountHasPack > 2)) {
+                if ($discount->getIsRandom()) {
+                    shuffle($discountHasPack);
+                    $list[$discount->getId()]['packs'] = array_slice($discountHasPack, 0, 2);
+                } else {
+                    $list[$discount->getId()]['packs'] = array_slice($discountHasPack, 0, 2);
+                }
+            } else {
+                $list[$discount->getId()]['packs'] = $discountHasPack;
+            }
+        }
 
         return $this->renderResponse($blockContext->getTemplate(), [
-            'settings'   => $blockContext->getSettings(),
-            'block'      => $blockContext->getBlock(),
+            'discountList' => $list,
+            'settings'     => $blockContext->getSettings(),
+            'block'        => $blockContext->getBlock(),
         ]);
     }
 }

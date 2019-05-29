@@ -298,8 +298,8 @@ hr.line {
     top: 0;
     width: 100%;
     z-index: -1;
-     margin-right: 0;
-     margin-left: 0;
+    margin-right: 0;
+    margin-left: 0;
 }
 .wrap-bg-container {
     padding: 0;
@@ -553,7 +553,7 @@ hr.line {
 }
 .ribbon.hot div {
     width: 36px;
-    background: url(../img/icons/hot.png) center 8px no-repeat;
+    background: url(../assets/images/icons/hot.png) center 8px no-repeat;
     background-size: 17px;
     padding: 32px 0 0 0;
     text-align: center;
@@ -567,7 +567,7 @@ hr.line {
 }
 .ribbon.discount div {
     width: 36px;
-    background: url(../img/icons/discount.png) center 6px no-repeat;
+    background: url(../assets/images/icons/discount.png) center 6px no-repeat;
     background-size: 17px;
     padding: 33px 0 0 0;
     text-align: center;
@@ -720,7 +720,7 @@ span.PricesalesPrice {
     vertical-align: middle;
 }
 .spacer .addtocart-bar .quantity-controls input.quantity-plus {
-    background: url(../img/icons/ico-plus.png) no-repeat center center rgba(0,0,0,0.3);
+    background: url(../assets/images/icons/ico-plus.png) no-repeat center center rgba(0,0,0,0.3);
     background-color: transparent \9;
     box-sizing: border-box;
     border: 0;
@@ -731,7 +731,7 @@ span.PricesalesPrice {
     width: 16px;
 }
 .spacer .addtocart-bar .quantity-controls input.quantity-minus {
-    background: url(../img/icons/ico-minus.png) no-repeat center center rgba(0,0,0,0.3);
+    background: url(../assets/images/icons/ico-minus.png) no-repeat center center rgba(0,0,0,0.3);
     background-color: transparent \9;
     box-sizing: border-box;
     border: 0;
@@ -754,7 +754,7 @@ span.PricesalesPrice {
     color: #ffffff;
     width: 43px;
     height: 37px;
-    background-image: url(../img/icons/ico-cart-white.png);
+    background-image: url(../assets/images/icons/ico-cart-white.png);
     background-color: #182027;
     background-position: center center;
     background-repeat: no-repeat;
@@ -789,7 +789,7 @@ span.PricesalesPrice {
     padding: 0;
 }
 .discount-price li {
-   display: inline-block;
+    display: inline-block;
     padding: 2px 15px;
 }
 .discount-price .PricesalesPrice {
@@ -887,7 +887,7 @@ span.PricesalesPrice {
 /* Games page */
 .wrap-inner-bg {
     min-height: 230px;
-    background: url(../img/bg1.jpg) rgb(247, 248, 250) center repeat-x;
+    background: url(../assets/images/bg1.jpg) rgb(247, 248, 250) center repeat-x;
     transition: all 0.6s ease 0s;
     margin-top: -27px;
     width: 100%;
@@ -991,8 +991,8 @@ span.PricesalesPrice {
 
 .navbar-inverse .navbar-nav > li > a {
     -webkit-transition: background-color 0.5s;
-         -o-transition: background-color 0.5s;
-            transition: background-color 0.5s;
+    -o-transition: background-color 0.5s;
+    transition: background-color 0.5s;
 }
 
 .navbar-inverse .navbar-nav > li > a:hover,
@@ -1135,16 +1135,16 @@ section {
 
 .film-news h3 > a {
     -webkit-transition: color 0.25s ease;
-         -o-transition: color 0.25s ease;
-            transition: color 0.25s ease;
+    -o-transition: color 0.25s ease;
+    transition: color 0.25s ease;
 }
 
 .film-news .thumbnail {
     margin-bottom: 0;
 
     -webkit-transition: background-color 0.25s ease;
-         -o-transition: background-color 0.25s ease;
-            transition: background-color 0.25s ease;
+    -o-transition: background-color 0.25s ease;
+    transition: background-color 0.25s ease;
 }
 
 .film-news .btn-warning {
@@ -1153,8 +1153,8 @@ section {
     margin-bottom: 30px;
 
     -webkit-transition: background-color 0.25s ease;
-         -o-transition: background-color 0.25s ease;
-            transition: background-color 0.25s ease;
+    -o-transition: background-color 0.25s ease;
+    transition: background-color 0.25s ease;
 }
 
 .film-info {
@@ -1232,8 +1232,8 @@ section {
     margin: 0 10px 10px 0;
 
     -webkit-transition: background-color 0.25s ease;
-         -o-transition: background-color 0.25s ease;
-            transition: background-color 0.25s ease;
+    -o-transition: background-color 0.25s ease;
+    transition: background-color 0.25s ease;
 }
 
 .site-news-item__image img {
@@ -1259,8 +1259,8 @@ section {
     height: 50px;
 
     -webkit-transition: color 0.25s ease;
-         -o-transition: color 0.25s ease;
-            transition: color 0.25s ease;
+    -o-transition: color 0.25s ease;
+    transition: color 0.25s ease;
 
     color: #165690;
 
@@ -1388,7 +1388,7 @@ section {
 }
 
 @media (min-width: 768px) {
-    
+
 }
 
 @media (max-width: 767px) {

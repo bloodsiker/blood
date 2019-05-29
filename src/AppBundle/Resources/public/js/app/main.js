@@ -22,17 +22,23 @@ $(document).on('click', function (e) {
 });
 
 /* recalculate quantity items */
-let recalculateQuantity = function (id, action) {
-    let quantityInput = $('#product-'+id),
+$('.container-recalculate').on('click', '.js-recalculate', function () {
+    let _this = $(this),
+        operator = _this.data('operator');
+
+    let parent = _this.parent().parent(),
+        quantityInput = parent.find("input[name='quantity']"),
         quantity = parseInt(quantityInput.val());
-    if ('-' === action) {
+    console.log(parent, quantityInput, quantity);
+
+    if ('-' === operator) {
         if (quantity > 1) {
             quantityInput.val(--quantity)
         }
-    } else if ('+' === action) {
+    } else if ('+' === operator) {
         quantityInput.val(++quantity)
     }
-};
+});
 
 /* Cart modal */
 $('#show-head-cart').on('click', function () {
@@ -74,7 +80,7 @@ $('.show-modal-price').on('click', function () {
 });
 
 /* Add item to cart */
-$('#modal-add-cart').on('click','.add-to-cart', function () {
+$('.container-add-cart').on('click','.add-to-cart', function () {
     let _this = $(this),
         item_id = _this.data('id'),
         product_type = _this.data('product-type'),

@@ -4,6 +4,10 @@ namespace ProductBundle\Block;
 
 use AppBundle\Services\Cart;
 use Doctrine\ORM\EntityManager;
+use GameBundle\Entity\Game;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
+use ProductBundle\Entity\Product;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Block\Service\AbstractAdminBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
@@ -59,7 +63,11 @@ class ProductInMainBlockService extends AbstractAdminBlockService
     public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'template' => 'ProductBundle:Block:product_in_main.html.twig',
+            'items_count' => 18,
+            'page'        => 1,
+            'game'        => null,
+            'category'    => null,
+            'template'    => 'ProductBundle:Block:product_in_main.html.twig',
         ]);
     }
 
@@ -77,9 +85,31 @@ class ProductInMainBlockService extends AbstractAdminBlockService
             return new Response();
         }
 
+        $limit = (int) $blockContext->getSetting('items_count');
+        $page = (int) $blockContext->getSetting('page');
+
+        $gameRepository = $this->entityManager->getRepository(Game::class);
+        $productRepository = $this->entityManager->getRepository(Product::class);
+
+        $qb = $productRepository->baseProductQueryBuilder();
+
+        if ($blockContext->getSetting('game')) {
+            $productRepository->filterByGame($qb, $blockContext->getSetting('game'));
+        }
+
+        if ($blockContext->getSetting('category')) {
+            $productRepository->filterByCategory($qb, $blockContext->getSetting('category'));
+        }
+
+        $result = $qb->addSelect('MIN(p.price) as min_price, MIN(p.discount) as min_discount')
+            ->groupBy('p.item')
+            ->setFirstResult(0)
+            ->setMaxResults(18)
+            ->getQuery()
+            ->getResult();
 
         return $this->renderResponse($blockContext->getTemplate(), [
-            'products'   => $products ?? [],
+            'products'   => $result,
             'settings'   => $blockContext->getSettings(),
             'block'      => $blockContext->getBlock(),
         ]);

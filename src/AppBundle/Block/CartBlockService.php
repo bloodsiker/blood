@@ -23,6 +23,7 @@ class CartBlockService extends AbstractAdminBlockService
 {
     const TEMPLATE_BUTTON_HEAD = 'AppBundle:Block/cart:button_header.html.twig';
     const TEMPLATE_BUTTON_IN_ITEM  = 'AppBundle:Block/cart:button_in_item.html.twig';
+    const TEMPLATE_BUTTON_IN_DISCOUNT_PACK  = 'AppBundle:Block/cart:button_in_discount_pack.html.twig';
     const TEMPLATE_CART_MODAL  = 'AppBundle:Block/cart:modal_cart.html.twig';
     const TEMPLATE_MODAL_PRICE_IN_SERVER  = 'AppBundle:Block/cart:modal_price_in_server.html.twig';
 
@@ -133,7 +134,6 @@ class CartBlockService extends AbstractAdminBlockService
                 case self::ACTION_MODAL_PRICE_IN_SERVER:
                     $priceInServer = $this->getProductPriceInServers($item, $game);
                     $blockContext->setSetting('template', self::TEMPLATE_MODAL_PRICE_IN_SERVER);
-                    dump($priceInServer);
                     break;
                 default:
                     throw new \Exception('Undefined action');

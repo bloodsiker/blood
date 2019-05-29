@@ -30,9 +30,6 @@ class PackHasItemAdmin extends Admin
             ->add('pack', null, [
                 'label' => 'pack_has_item.fields.pack',
             ])
-            ->add('isHot', null, [
-                'label' => 'pack_has_item.fields.is_hot',
-            ])
             ->add('isActive', null, [
                 'label' => 'pack_has_item.fields.is_active',
             ])
@@ -69,19 +66,6 @@ class PackHasItemAdmin extends Admin
                 'required' => true,
                 'btn_delete' => false,
             ], ['link_parameters' => $linkParameters])
-            ->add('available', IntegerType::class, [
-                'label' => 'pack_has_item.fields.available',
-                'required' => false,
-            ])
-            ->add('price', MoneyType::class, [
-                'label' => 'pack_has_item.fields.price',
-                'currency' => 'usd',
-                'required' => false,
-            ])
-            ->add('isHot', null, [
-                'label' => 'pack_has_item.fields.is_hot',
-                'required' => false,
-            ])
             ->add('isActive', null, [
                 'label' => 'pack_has_item.fields.is_active',
                 'required' => false,

@@ -10,7 +10,7 @@
 
                             <div class="game">
                                 <div class="text">
-                                    <a href="buy_cheap_fifa_19_fut_coins/">
+                                    <a href="{{ path('view_game', { 'slug': game.game.slug }) }}">
                                         <img src="{{ asset(game.game.image.getPath()) }}" alt="{{ game.game.name }}">
                                     </a>
                                     <h2>{{ game.game.name }}</h2>
@@ -41,7 +41,7 @@
                                     </div>
                                 </div>
                                 <div class="product-descr-container">
-                                    <h6>{{ game.game.name }}</h6>
+                                    <h6>{{ product|first.server.game.name }}</h6>
                                     <h2><a href="{{ path('product_view', {'id': product|first.item.id, 'slug': product|first.item.slug}) }}">{{ product|first.item.name }}</a></h2>
                                     <hr class="line">
                                     <p class="product_s_desc">

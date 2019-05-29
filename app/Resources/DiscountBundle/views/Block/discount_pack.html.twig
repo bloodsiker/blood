@@ -1,153 +1,156 @@
-<div class="games-items top-line">
-    <h4><span>Discount packs</span></h4>
-    <div class="row equal-height equal-height-child">
-        <div class="discount-pack">
-            <div class="item-padding col-lg-5 col-sm-12 col-xs-12">
-                <div class="text-center">
-                    <h3>Synthesis HC Discount Pack!</h3>
-                </div>
-                <div class="product-item col-lg-6 col-sm-6 col-xs-6">
-                    <div class="spacer">
-                        <div class="ribbon hot"><div>Hot</div></div>
-                        <div class="product-media-container">
-                            <div class="product-media-image">
-                                <a title="Spartacus Legends" href="#">
-                                    <img src="assets/img/product/860.png" alt="spartacus_legends" class="browseProductImage">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="product-descr-container">
-                            <h6>DIABLO 3 ROS</h6>
-                            <h2><a href="#">1 Diablo 3 RoS Ramaladni's Gift</a></h2>
-                            <hr class="line">
-                            <p class="product_s_desc">
-                                Diablo 3 ROS Ramaladni's Gift is an account bound item...
-                            </p>
-                            <div class="product-price salesprice">
-                                <div class="price-value"><span class="price-desc">Base price: </span><span
-                                            class="PricebasePrice">$20.0</span></div>
-                                <span class="price-crossed"></span>
-                                <div class="price-value"><span class="price-desc">Sales price: </span><span
-                                            class="PricesalesPrice">$20.0</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+{% if discountList %}
+    <div class="games-items top-line">
+        <h4><span>Discount packs</span></h4>
+        {% for discountP in discountList %}
+            <div class="row equal-height equal-height-child">
+                <div class="discount-pack container-add-cart">
+                    <div class="item-padding col-lg-5 col-sm-12 col-xs-12">
 
-                <div class="product-item col-lg-6 col-sm-6 col-xs-6">
-                    <div class="spacer">
-                        <div class="ribbon discount"><div>25%</div></div>
-                        <div class="ribbon hot"><div>Hot</div></div>
-                        <div class="product-media-container">
-                            <div class="product-media-image">
-                                <a title="Spartacus Legends" href="#">
-                                    <img src="assets/img/product/080.png" alt="spartacus_legends" class="browseProductImage">
-                                </a>
+                        {% if discountP.packs[0] is defined %}
+                            <div class="text-center">
+                                <h3>{{ discountP.packs[0].pack.name }}</h3>
                             </div>
-                        </div>
-                        <div class="product-descr-container">
-                            <h6>DIABLO 3 ROS</h6>
-                            <h2><a href="#">5000 Diablo 3 RoS Veiled Crystals</a></h2>
-                            <hr class="line">
-                            <p class="product_s_desc">
-                                Veiled Crystal is a rare crafting material, obtained...
-                            </p>
-                            <div class="product-price salesprice">
-                                <div class="price-value"><span class="price-desc">Base price: </span><span
-                                            class="PricebasePrice">$20.0</span></div>
-                                <span class="price-crossed"></span>
-                                <div class="price-value"><span class="price-desc">Sales price: </span><span
-                                            class="PricesalesPrice">$20.0</span></div>
+
+                            {% for pack in discountP.packs[0].pack.packHasItems %}
+                                <div class="product-item col-lg-6 col-sm-6 col-xs-6">
+                                    <div class="spacer">
+                                        {% set discount = pack.product.discount ? ((pack.product.price - pack.product.discount) * 100) / pack.product.price  : null %}
+                                        {% if discount %}
+                                            <div class="ribbon discount"><div>{{ discount|round }}%</div></div>
+                                        {% endif %}
+                                        {% if pack.product.isHot %}
+                                            <div class="ribbon hot"><div>Hot</div></div>
+                                        {% endif %}
+                                        <div class="product-media-container">
+                                            <div class="product-media-image">
+                                                <a title="Spartacus Legends" href="{{ path('product_view', {'id': pack.product.item.id, 'slug': pack.product.item.slug}) }}">
+                                                    <img src="{{ asset(pack.product.item.image.path) }}" alt="spartacus_legends" class="browseProductImage">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="product-descr-container">
+                                            <h6>{{ pack.product.server.game.name }}</h6>
+                                            <h2><a href="{{ path('product_view', {'id': pack.product.item.id, 'slug': pack.product.item.slug}) }}">{{ pack.product.item.name }}</a></h2>
+                                            <hr class="line">
+                                            <p class="product_s_desc">
+                                                {{ pack.product.item.shortDescription }}
+                                            </p>
+                                            <div class="product-price salesprice">
+                                                <div class="price-value">
+                                                    <span class="price-desc">Base price: </span>
+                                                    <span class="{% if pack.product.discount %}PricebasePrice{% endif %}">${{ pack.product.price|number_format(2, ',') }}</span>
+                                                </div>
+                                                {% if pack.product.discount %}
+                                                    <div class="price-value">
+                                                        <span class="price-desc">Sales price: </span>
+                                                        <span class="PricesalesPrice">${{ pack.product.discount|number_format(2, ',') }}</span>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                            <div class="item-padding col-lg-12 col-sm-12 col-xs-12">
+                                <ul class="discount-price text-center">
+                                    <li><span class="PricesalesPrice">$90</span></li>
+                                    <li><span class="PricebasePrice">$115</span></li>
+                                </ul>
+                                {{
+                                sonata_block_render(
+                                    { 'type': 'app.block.service.cart' },
+                                    {
+                                        'product': discountP.packs[0].pack,
+                                        'template': constant('AppBundle\\Block\\CartBlockService::TEMPLATE_BUTTON_IN_DISCOUNT_PACK')
+                                    }
+                                )
+                                }}
                             </div>
+
+                        {% endif %}
+                    </div>
+
+
+                    <div class="product-item col-lg-2 col-sm-12 col-xs-12">
+                        <div class="discount-logo center-block">
+                            <a href="{{ path('view_game', {'slug': discountP.discount.game.slug}) }}">
+                                <img src="{{ asset(discountP.discount.image.path) }}" alt="{{ discountP.discount.name }}">
+                            </a>
                         </div>
                     </div>
-                </div>
-                <div class="item-padding col-lg-12 col-sm-12 col-xs-12">
-                    <ul class="discount-price text-center">
-                        <li><span class="PricesalesPrice">$90</span></li>
-                        <li><span class="PricebasePrice">$115</span></li>
-                    </ul>
-                    <button type="submit" class="btn-cart center-block">Add to cart</button>
+
+                    <div class="item-padding col-lg-5 col-sm-12 col-xs-12">
+
+                        {% if discountP.packs[1] is defined %}
+
+                            <div class="text-center">
+                                <h3>{{ discountP.packs[1].pack.name }}</h3>
+                            </div>
+
+                            {% for pack in discountP.packs[1].pack.packHasItems %}
+                                <div class="product-item col-lg-6 col-sm-6 col-xs-6">
+                                    <div class="spacer">
+                                        {% set discount = pack.product.discount ? ((pack.product.price - pack.product.discount) * 100) / pack.product.price  : null %}
+                                        {% if discount %}
+                                            <div class="ribbon discount"><div>{{ discount|round }}%</div></div>
+                                        {% endif %}
+                                        {% if pack.product.isHot %}
+                                            <div class="ribbon hot"><div>Hot</div></div>
+                                        {% endif %}
+                                        <div class="product-media-container">
+                                            <div class="product-media-image">
+                                                <a title="Spartacus Legends" href="{{ path('product_view', {'id': pack.product.item.id, 'slug': pack.product.item.slug}) }}">
+                                                    <img src="{{ asset(pack.product.item.image.path) }}" alt="spartacus_legends" class="browseProductImage">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="product-descr-container">
+                                            <h6>{{ pack.product.server.game.name }}</h6>
+                                            <h2><a href="{{ path('product_view', {'id': pack.product.item.id, 'slug': pack.product.item.slug}) }}">{{ pack.product.item.name }}</a></h2>
+                                            <hr class="line">
+                                            <p class="product_s_desc">
+                                                {{ pack.product.item.shortDescription }}
+                                            </p>
+                                            <div class="product-price salesprice">
+                                                <div class="price-value">
+                                                    <span class="price-desc">Base price: </span>
+                                                    <span class="{% if pack.product.discount %}PricebasePrice{% endif %}">${{ pack.product.price|number_format(2, ',') }}</span>
+                                                </div>
+                                                {% if pack.product.discount %}
+                                                    <div class="price-value">
+                                                        <span class="price-desc">Sales price: </span>
+                                                        <span class="PricesalesPrice">${{ pack.product.discount|number_format(2, ',') }}</span>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                            <div class="item-padding col-lg-12 col-sm-12 col-xs-12">
+                                <ul class="discount-price text-center">
+                                    <li><span class="PricesalesPrice">$90</span></li>
+                                    <li><span class="PricebasePrice">$115</span></li>
+                                </ul>
+
+                                {{
+                                sonata_block_render(
+                                    { 'type': 'app.block.service.cart' },
+                                    {
+                                        'product': discountP.packs[1].pack,
+                                        'template': constant('AppBundle\\Block\\CartBlockService::TEMPLATE_BUTTON_IN_DISCOUNT_PACK')
+                                    }
+                                )
+                                }}
+                            </div>
+
+                        {% endif %}
+                    </div>
+
                 </div>
             </div>
-
-
-            <div class="product-item col-lg-2 col-sm-12 col-xs-12">
-                <div class="discount-logo center-block">
-                    <a href="">
-                        <img src="assets/img/ascendancy_logo.png" alt="">
-                    </a>
-                </div>
-            </div>
-
-            <div class="item-padding col-lg-5 col-sm-12 col-xs-12">
-                <div class="text-center">
-                    <h3>Synthesis SC Discount Pack!</h3>
-                </div>
-                <div class="product-item col-lg-6 col-sm-6 col-xs-6">
-                    <div class="spacer">
-                        <div class="ribbon discount"><div>25%</div></div>
-                        <div class="product-media-container">
-                            <div class="product-media-image">
-                                <a title="Spartacus Legends" href="#">
-                                    <img src="assets/img/product/946.jpg" alt="spartacus_legends" class="browseProductImage">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="product-descr-container">
-                            <h6>DIABLO 3 ROS</h6>
-                            <h2><a href="#">100 Diablo 3 RoS Imperial Gems of Each Type</a></h2>
-                            <hr class="line">
-                            <p class="product_s_desc">
-                                In Diablo 3 there five types of regular gems and...
-                            </p>
-                            <div class="product-price salesprice">
-                                <div class="price-value"><span class="price-desc">Base price: </span><span
-                                            class="PricebasePrice">$20.0</span></div>
-                                <span class="price-crossed"></span>
-                                <div class="price-value"><span class="price-desc">Sales price: </span><span
-                                            class="PricesalesPrice">$20.0</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-item col-lg-6 col-sm-6 col-xs-6">
-                    <div class="spacer">
-                        <div class="product-media-container">
-                            <div class="product-media-image">
-                                <a title="Spartacus Legends" href="#">
-                                    <img src="assets/img/product/160.png" alt="spartacus_legends" class="browseProductImage">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="product-descr-container">
-                            <h6>DIABLO 3 ROS</h6>
-                            <h2><a href="#">Starmetal Kukri - Normal quality</a></h2>
-                            <hr class="line">
-                            <p class="product_s_desc">
-                                Damage...
-                            </p>
-                            <div class="product-price salesprice">
-                                <div class="price-value"><span class="price-desc">Base price: </span><span
-                                            class="PricebasePrice">$20.0</span></div>
-                                <span class="price-crossed"></span>
-                                <div class="price-value"><span class="price-desc">Sales price: </span><span
-                                            class="PricesalesPrice">$20.0</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item-padding col-lg-12 col-sm-12 col-xs-12">
-                    <ul class="discount-price text-center">
-                        <li><span class="PricesalesPrice">$100</span></li>
-                        <li><span class="PricebasePrice">$135</span></li>
-                    </ul>
-                    <button type="submit" class="btn-cart center-block">Add to cart</button>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
-
-</div>
+{% endif %}

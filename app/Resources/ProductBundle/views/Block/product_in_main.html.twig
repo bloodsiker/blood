@@ -1,608 +1,84 @@
-<div class="games-items top-line">
-    <h4><span>Games Items</span></h4>
-    <div class="row filter-holder">
-        <div class="filter-holder-left col-lg-6 col-sm-6 col-xs-12">
-            <label>SELECT GAME</label>
-            <select class="item-filter" data-placeholder="Select a game">
-                <option></option>
-                <option>Fifa 19</option>
-                <option>Counter Strike</option>
-                <option>Diablo 2</option>
-                <option>Diablo3 Ros</option>
-                <option>Path of Exile</option>
-            </select>
+{% if products %}
+    <div class="games-items top-line">
+        <h4><span>Games Items</span></h4>
+        <div class="row filter-holder">
+            <div class="filter-holder-left col-lg-6 col-sm-6 col-xs-12">
+                <label>SELECT GAME</label>
+                <select class="item-filter" data-placeholder="Select a game">
+                    <option></option>
+                    <option>Fifa 19</option>
+                    <option>Counter Strike</option>
+                    <option>Diablo 2</option>
+                    <option>Diablo3 Ros</option>
+                    <option>Path of Exile</option>
+                </select>
+            </div>
+
+            <div class="filter-holder-right col-lg-6 col-sm-6 col-xs-12">
+                <label>ITEM CATEGORY</label>
+                <select class="item-filter" data-placeholder="Select a category">
+                    <option>All</option>
+                    <option>Currency</option>
+                    <option>Rune</option>
+                    <option>Set</option>
+                    <option>Gem</option>
+                </select>
+            </div>
         </div>
 
-        <div class="filter-holder-right col-lg-6 col-sm-6 col-xs-12">
-            <label>ITEM CATEGORY</label>
-            <select class="item-filter" data-placeholder="Select a category">
-                <option>All</option>
-                <option>Currency</option>
-                <option>Rune</option>
-                <option>Set</option>
-                <option>Gem</option>
-            </select>
+        <div class="row equal-height equal-height-child">
+            {% for product in products %}
+                <div class="product-item col-lg-2 col-sm-4 col-xs-6">
+                    <div class="spacer">
+                        {% set discount = product|first.discount ? ((product|first.price - product|first.discount) * 100) / product|first.price  : null %}
+                        {% if discount %}
+                            <div class="ribbon discount"><div>{{ discount|round }}%</div></div>
+                        {% endif %}
+                        {% if product|first.isHot %}
+                            <div class="ribbon hot"><div>Hot</div></div>
+                        {% endif %}
+                        <div class="product-media-container">
+                            <div class="product-media-image">
+                                <a title="Spartacus Legends" href="{{ path('product_view', {'id': product|first.item.id, 'slug': product|first.item.slug}) }}">
+                                    <img src="{{ asset(product|first.item.image.getPath()) }}" alt="{{ product|first.item.name }}" class="browseProductImage">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="product-descr-container">
+                            <h6>{{ product|first.server.game.name }}</h6>
+                            <h2><a href="{{ path('product_view', {'id': product|first.item.id, 'slug': product|first.item.slug}) }}">{{ product|first.item.name }}</a></h2>
+                            <hr class="line">
+                            <p class="product_s_desc">
+                                {{ product|first.item.shortDescription|raw }}
+                            </p>
+                            <div class="product-price salesprice">
+                                <div class="price-value">
+                                    <span class="price-desc">From price: </span>
+                                    <span class="{% if product.min_discount %}PricebasePrice{% endif %}">${{ product.min_price|number_format(2, ',') }}</span>
+                                </div>
+                                {% if product.min_discount %}
+                                    <div class="price-value">
+                                        <span class="price-desc">Sales price: </span>
+                                        <span class="PricesalesPrice">${{ product.min_discount|number_format(2, ',') }}</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <hr class="line item-line">
+
+                            {{
+                            sonata_block_render(
+                                { 'type': 'app.block.service.cart' },
+                                {
+                                    'product': product|first,
+                                    'template': constant('AppBundle\\Block\\CartBlockService::TEMPLATE_BUTTON_IN_ITEM')
+                                }
+                            )
+                            }}
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
-
-    <div class="row equal-height equal-height-child">
-        <div class="product-item col-lg-2 col-sm-4 col-xs-6">
-            <div class="spacer">
-                <div class="ribbon hot"><div>Hot</div></div>
-                <div class="product-media-container">
-                    <div class="product-media-image">
-                        <a title="Spartacus Legends" href="#">
-                            <img src="assets/img/product/860.png" alt="spartacus_legends" class="browseProductImage">
-                        </a>
-                    </div>
-                </div>
-                <div class="product-descr-container">
-                    <h6>DIABLO 3 ROS</h6>
-                    <h2><a href="#">1 Diablo 3 RoS Ramaladni's Gift</a></h2>
-                    <hr class="line">
-                    <p class="product_s_desc">
-                        Diablo 3 ROS Ramaladni's Gift is an account bound item...
-                    </p>
-                    <div class="product-price salesprice">
-                        <div class="price-value"><span class="price-desc">Base price: </span><span
-                                    class="PricebasePrice">$20.0</span></div>
-                        <span class="price-crossed"></span>
-                        <div class="price-value"><span class="price-desc">Sales price: </span><span
-                                    class="PricesalesPrice">$20.0</span></div>
-                    </div>
-                    <hr class="line item-line">
-                    <div class="addtocart-area">
-                        <div class="addtocart-bar">
-                            <div class="quantity-wrap">
-                                            <span class="quantity-box">
-                                                <input type="text" class="quantity-input js-recalculate" name="quantity[]"
-                                                       data-errstr="You can buy this product only in multiples of %s pieces!" value="1" init="1"
-                                                       step="1">
-                                            </span>
-                                <span class="quantity-controls js-recalculate">
-                                                <input type="button" class="quantity-controls quantity-plus">
-                                                <input type="button" class="quantity-controls quantity-minus">
-                                            </span>
-                            </div>
-                            <span class="addtocart-button">
-                                            <button class="add-to-cart addtocart-button" title="Add to Cart"></button>
-                                        </span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="product-item col-lg-2 col-sm-4 col-xs-6">
-            <div class="spacer">
-                <div class="ribbon discount"><div>25%</div></div>
-                <div class="ribbon hot"><div>Hot</div></div>
-                <div class="product-media-container">
-                    <div class="product-media-image">
-                        <a title="Spartacus Legends" href="#">
-                            <img src="assets/img/product/080.png" alt="spartacus_legends" class="browseProductImage">
-                        </a>
-                    </div>
-                </div>
-                <div class="product-descr-container">
-                    <h6>DIABLO 3 ROS</h6>
-                    <h2><a href="#">5000 Diablo 3 RoS Veiled Crystals</a></h2>
-                    <hr class="line">
-                    <p class="product_s_desc">
-                        Veiled Crystal is a rare crafting material, obtained...
-                    </p>
-                    <div class="product-price salesprice">
-                        <div class="price-value"><span class="price-desc">Base price: </span><span
-                                    class="PricebasePrice">$20.0</span></div>
-                        <span class="price-crossed"></span>
-                        <div class="price-value"><span class="price-desc">Sales price: </span><span
-                                    class="PricesalesPrice">$20.0</span></div>
-                    </div>
-                    <hr class="line item-line">
-                    <div class="addtocart-area">
-                        <div class="addtocart-bar">
-                            <div class="quantity-wrap">
-                                            <span class="quantity-box">
-                                                <input type="text" class="quantity-input js-recalculate" name="quantity[]"
-                                                       data-errstr="You can buy this product only in multiples of %s pieces!" value="1" init="1"
-                                                       step="1">
-                                            </span>
-                                <span class="quantity-controls js-recalculate">
-                                                <input type="button" class="quantity-controls quantity-plus">
-                                                <input type="button" class="quantity-controls quantity-minus">
-                                            </span>
-                            </div>
-                            <span class="addtocart-button">
-                                            <button class="add-to-cart addtocart-button" title="Add to Cart"></button>
-                                        </span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="product-item col-lg-2 col-sm-4 col-xs-6">
-            <div class="spacer">
-                <div class="ribbon discount"><div>25%</div></div>
-                <div class="ribbon hot"><div>Hot</div></div>
-                <div class="product-media-container">
-                    <div class="product-media-image">
-                        <a title="Spartacus Legends" href="#">
-                            <img src="assets/img/product/964.png" alt="spartacus_legends" class="browseProductImage">
-                        </a>
-                    </div>
-                </div>
-                <div class="product-descr-container">
-                    <h6>DIABLO 3 ROS</h6>
-                    <h2><a href="#">100 Diablo 3 RoS Unidentified Legendary...</a></h2>
-                    <hr class="line">
-                    <p class="product_s_desc">
-                        Estimated Service Time: 6 Hours...
-                    </p>
-                    <div class="product-price salesprice">
-                        <div class="price-value"><span class="price-desc">Base price: </span><span
-                                    class="PricebasePrice">$20.0</span></div>
-                        <span class="price-crossed"></span>
-                        <div class="price-value"><span class="price-desc">Sales price: </span><span
-                                    class="PricesalesPrice">$20.0</span></div>
-                    </div>
-                    <hr class="line item-line">
-                    <div class="addtocart-area">
-                        <div class="addtocart-bar">
-                            <div class="quantity-wrap">
-                                            <span class="quantity-box">
-                                                <input type="text" class="quantity-input js-recalculate" name="quantity[]"
-                                                       data-errstr="You can buy this product only in multiples of %s pieces!" value="1" init="1"
-                                                       step="1">
-                                            </span>
-                                <span class="quantity-controls js-recalculate">
-                                                <input type="button" class="quantity-controls quantity-plus">
-                                                <input type="button" class="quantity-controls quantity-minus">
-                                            </span>
-                            </div>
-                            <span class="addtocart-button">
-                                            <button class="add-to-cart addtocart-button" title="Add to Cart"></button>
-                                        </span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="product-item col-lg-2 col-sm-4 col-xs-6">
-            <div class="spacer">
-                <div class="ribbon hot"><div>Hot</div></div>
-                <div class="product-media-container">
-                    <div class="product-media-image">
-                        <a title="Spartacus Legends" href="#">
-                            <img src="assets/img/product/860.png" alt="spartacus_legends" class="browseProductImage">
-                        </a>
-                    </div>
-                </div>
-                <div class="product-descr-container">
-                    <h6>DIABLO 3 ROS</h6>
-                    <h2><a href="#">1 Diablo 3 RoS Ramaladni's Gift</a></h2>
-                    <hr class="line">
-                    <p class="product_s_desc">
-                        Diablo 3 ROS Ramaladni's Gift is an account bound item...
-                    </p>
-                    <div class="product-price salesprice">
-                        <div class="price-value"><span class="price-desc">Base price: </span><span
-                                    class="PricebasePrice">$20.0</span></div>
-                        <span class="price-crossed"></span>
-                        <div class="price-value"><span class="price-desc">Sales price: </span><span
-                                    class="PricesalesPrice">$20.0</span></div>
-                    </div>
-                    <hr class="line item-line">
-                    <div class="addtocart-area">
-                        <div class="addtocart-bar">
-                            <div class="quantity-wrap">
-                                            <span class="quantity-box">
-                                                <input type="text" class="quantity-input js-recalculate" name="quantity[]"
-                                                       data-errstr="You can buy this product only in multiples of %s pieces!" value="1" init="1"
-                                                       step="1">
-                                            </span>
-                                <span class="quantity-controls js-recalculate">
-                                                <input type="button" class="quantity-controls quantity-plus">
-                                                <input type="button" class="quantity-controls quantity-minus">
-                                            </span>
-                            </div>
-                            <span class="addtocart-button">
-                                            <button class="add-to-cart addtocart-button" title="Add to Cart"></button>
-                                        </span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="product-item col-lg-2 col-sm-4 col-xs-6">
-            <div class="spacer">
-                <div class="ribbon discount"><div>25%</div></div>
-                <div class="product-media-container">
-                    <div class="product-media-image">
-                        <a title="Spartacus Legends" href="#">
-                            <img src="assets/img/product/946.jpg" alt="spartacus_legends" class="browseProductImage">
-                        </a>
-                    </div>
-                </div>
-                <div class="product-descr-container">
-                    <h6>DIABLO 3 ROS</h6>
-                    <h2><a href="#">100 Diablo 3 RoS Imperial Gems of Each Type</a></h2>
-                    <hr class="line">
-                    <p class="product_s_desc">
-                        In Diablo 3 there five types of regular gems and...
-                    </p>
-                    <div class="product-price salesprice">
-                        <div class="price-value"><span class="price-desc">Base price: </span><span
-                                    class="PricebasePrice">$20.0</span></div>
-                        <span class="price-crossed"></span>
-                        <div class="price-value"><span class="price-desc">Sales price: </span><span
-                                    class="PricesalesPrice">$20.0</span></div>
-                    </div>
-                    <hr class="line item-line">
-                    <div class="addtocart-area">
-                        <div class="addtocart-bar">
-                            <div class="quantity-wrap">
-                                            <span class="quantity-box">
-                                                <input type="text" class="quantity-input js-recalculate" name="quantity[]"
-                                                       data-errstr="You can buy this product only in multiples of %s pieces!" value="1" init="1"
-                                                       step="1">
-                                            </span>
-                                <span class="quantity-controls js-recalculate">
-                                                <input type="button" class="quantity-controls quantity-plus">
-                                                <input type="button" class="quantity-controls quantity-minus">
-                                            </span>
-                            </div>
-                            <span class="addtocart-button">
-                                            <button class="add-to-cart addtocart-button" title="Add to Cart"></button>
-                                        </span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="product-item col-lg-2 col-sm-4 col-xs-6">
-            <div class="spacer">
-                <div class="product-media-container">
-                    <div class="product-media-image">
-                        <a title="Spartacus Legends" href="#">
-                            <img src="assets/img/product/160.png" alt="spartacus_legends" class="browseProductImage">
-                        </a>
-                    </div>
-                </div>
-                <div class="product-descr-container">
-                    <h6>DIABLO 3 ROS</h6>
-                    <h2><a href="#">Starmetal Kukri - Normal quality</a></h2>
-                    <hr class="line">
-                    <p class="product_s_desc">
-                        Damage...
-                    </p>
-                    <div class="product-price salesprice">
-                        <div class="price-value"><span class="price-desc">Base price: </span><span
-                                    class="PricebasePrice">$20.0</span></div>
-                        <span class="price-crossed"></span>
-                        <div class="price-value"><span class="price-desc">Sales price: </span><span
-                                    class="PricesalesPrice">$20.0</span></div>
-                    </div>
-                    <hr class="line item-line">
-                    <div class="addtocart-area">
-                        <div class="addtocart-bar">
-                            <div class="quantity-wrap">
-                                            <span class="quantity-box">
-                                                <input type="text" class="quantity-input js-recalculate" name="quantity[]"
-                                                       data-errstr="You can buy this product only in multiples of %s pieces!" value="1" init="1"
-                                                       step="1">
-                                            </span>
-                                <span class="quantity-controls js-recalculate">
-                                                <input type="button" class="quantity-controls quantity-plus">
-                                                <input type="button" class="quantity-controls quantity-minus">
-                                            </span>
-                            </div>
-                            <span class="addtocart-button">
-                                            <button class="add-to-cart addtocart-button" title="Add to Cart"></button>
-                                        </span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="product-item col-lg-2 col-sm-4 col-xs-6">
-            <div class="spacer">
-                <div class="ribbon hot"><div>Hot</div></div>
-                <div class="product-media-container">
-                    <div class="product-media-image">
-                        <a title="Spartacus Legends" href="#">
-                            <img src="assets/img/product/860.png" alt="spartacus_legends" class="browseProductImage">
-                        </a>
-                    </div>
-                </div>
-                <div class="product-descr-container">
-                    <h6>DIABLO 3 ROS</h6>
-                    <h2><a href="#">1 Diablo 3 RoS Ramaladni's Gift</a></h2>
-                    <hr class="line">
-                    <p class="product_s_desc">
-                        Diablo 3 ROS Ramaladni's Gift is an account bound item...
-                    </p>
-                    <div class="product-price salesprice">
-                        <div class="price-value"><span class="price-desc">Base price: </span><span
-                                    class="PricebasePrice">$20.0</span></div>
-                        <span class="price-crossed"></span>
-                        <div class="price-value"><span class="price-desc">Sales price: </span><span
-                                    class="PricesalesPrice">$20.0</span></div>
-                    </div>
-                    <hr class="line item-line">
-                    <div class="addtocart-area">
-                        <div class="addtocart-bar">
-                            <div class="quantity-wrap">
-                                            <span class="quantity-box">
-                                                <input type="text" class="quantity-input js-recalculate" name="quantity[]"
-                                                       data-errstr="You can buy this product only in multiples of %s pieces!" value="1" init="1"
-                                                       step="1">
-                                            </span>
-                                <span class="quantity-controls js-recalculate">
-                                                <input type="button" class="quantity-controls quantity-plus">
-                                                <input type="button" class="quantity-controls quantity-minus">
-                                            </span>
-                            </div>
-                            <span class="addtocart-button">
-                                            <button class="add-to-cart addtocart-button" title="Add to Cart"></button>
-                                        </span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="product-item col-lg-2 col-sm-4 col-xs-6">
-            <div class="spacer">
-                <div class="ribbon discount"><div>25%</div></div>
-                <div class="ribbon hot"><div>Hot</div></div>
-                <div class="product-media-container">
-                    <div class="product-media-image">
-                        <a title="Spartacus Legends" href="#">
-                            <img src="assets/img/product/080.png" alt="spartacus_legends" class="browseProductImage">
-                        </a>
-                    </div>
-                </div>
-                <div class="product-descr-container">
-                    <h6>DIABLO 3 ROS</h6>
-                    <h2><a href="#">5000 Diablo 3 RoS Veiled Crystals</a></h2>
-                    <hr class="line">
-                    <p class="product_s_desc">
-                        Veiled Crystal is a rare crafting material, obtained...
-                    </p>
-                    <div class="product-price salesprice">
-                        <div class="price-value"><span class="price-desc">Base price: </span><span
-                                    class="PricebasePrice">$20.0</span></div>
-                        <span class="price-crossed"></span>
-                        <div class="price-value"><span class="price-desc">Sales price: </span><span
-                                    class="PricesalesPrice">$20.0</span></div>
-                    </div>
-                    <hr class="line item-line">
-                    <div class="addtocart-area">
-                        <div class="addtocart-bar">
-                            <div class="quantity-wrap">
-                                            <span class="quantity-box">
-                                                <input type="text" class="quantity-input js-recalculate" name="quantity[]"
-                                                       data-errstr="You can buy this product only in multiples of %s pieces!" value="1" init="1"
-                                                       step="1">
-                                            </span>
-                                <span class="quantity-controls js-recalculate">
-                                                <input type="button" class="quantity-controls quantity-plus">
-                                                <input type="button" class="quantity-controls quantity-minus">
-                                            </span>
-                            </div>
-                            <span class="addtocart-button">
-                                            <button class="add-to-cart addtocart-button" title="Add to Cart"></button>
-                                        </span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="product-item col-lg-2 col-sm-4 col-xs-6">
-            <div class="spacer">
-                <div class="ribbon discount"><div>25%</div></div>
-                <div class="ribbon hot"><div>Hot</div></div>
-                <div class="product-media-container">
-                    <div class="product-media-image">
-                        <a title="Spartacus Legends" href="#">
-                            <img src="assets/img/product/964.png" alt="spartacus_legends" class="browseProductImage">
-                        </a>
-                    </div>
-                </div>
-                <div class="product-descr-container">
-                    <h6>DIABLO 3 ROS</h6>
-                    <h2><a href="#">100 Diablo 3 RoS Unidentified Legendary...</a></h2>
-                    <hr class="line">
-                    <p class="product_s_desc">
-                        Estimated Service Time: 6 Hours...
-                    </p>
-                    <div class="product-price salesprice">
-                        <div class="price-value"><span class="price-desc">Base price: </span><span
-                                    class="PricebasePrice">$20.0</span></div>
-                        <span class="price-crossed"></span>
-                        <div class="price-value"><span class="price-desc">Sales price: </span><span
-                                    class="PricesalesPrice">$20.0</span></div>
-                    </div>
-                    <hr class="line item-line">
-                    <div class="addtocart-area">
-                        <div class="addtocart-bar">
-                            <div class="quantity-wrap">
-                                            <span class="quantity-box">
-                                                <input type="text" class="quantity-input js-recalculate" name="quantity[]"
-                                                       data-errstr="You can buy this product only in multiples of %s pieces!" value="1" init="1"
-                                                       step="1">
-                                            </span>
-                                <span class="quantity-controls js-recalculate">
-                                                <input type="button" class="quantity-controls quantity-plus">
-                                                <input type="button" class="quantity-controls quantity-minus">
-                                            </span>
-                            </div>
-                            <span class="addtocart-button">
-                                            <button class="add-to-cart addtocart-button" title="Add to Cart"></button>
-                                        </span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="product-item col-lg-2 col-sm-4 col-xs-6">
-            <div class="spacer">
-                <div class="ribbon hot"><div>Hot</div></div>
-                <div class="product-media-container">
-                    <div class="product-media-image">
-                        <a title="Spartacus Legends" href="#">
-                            <img src="assets/img/product/860.png" alt="spartacus_legends" class="browseProductImage">
-                        </a>
-                    </div>
-                </div>
-                <div class="product-descr-container">
-                    <h6>DIABLO 3 ROS</h6>
-                    <h2><a href="#">1 Diablo 3 RoS Ramaladni's Gift</a></h2>
-                    <hr class="line">
-                    <p class="product_s_desc">
-                        Diablo 3 ROS Ramaladni's Gift is an account bound item...
-                    </p>
-                    <div class="product-price salesprice">
-                        <div class="price-value"><span class="price-desc">Base price: </span><span
-                                    class="PricebasePrice">$20.0</span></div>
-                        <span class="price-crossed"></span>
-                        <div class="price-value"><span class="price-desc">Sales price: </span><span
-                                    class="PricesalesPrice">$20.0</span></div>
-                    </div>
-                    <hr class="line item-line">
-                    <div class="addtocart-area">
-                        <div class="addtocart-bar">
-                            <div class="quantity-wrap">
-                                            <span class="quantity-box">
-                                                <input type="text" class="quantity-input js-recalculate" name="quantity[]"
-                                                       data-errstr="You can buy this product only in multiples of %s pieces!" value="1" init="1"
-                                                       step="1">
-                                            </span>
-                                <span class="quantity-controls js-recalculate">
-                                                <input type="button" class="quantity-controls quantity-plus">
-                                                <input type="button" class="quantity-controls quantity-minus">
-                                            </span>
-                            </div>
-                            <span class="addtocart-button">
-                                            <button class="add-to-cart addtocart-button" title="Add to Cart"></button>
-                                        </span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="product-item col-lg-2 col-sm-4 col-xs-6">
-            <div class="spacer">
-                <div class="ribbon discount"><div>25%</div></div>
-                <div class="product-media-container">
-                    <div class="product-media-image">
-                        <a title="Spartacus Legends" href="#">
-                            <img src="assets/img/product/946.jpg" alt="spartacus_legends" class="browseProductImage">
-                        </a>
-                    </div>
-                </div>
-                <div class="product-descr-container">
-                    <h6>DIABLO 3 ROS</h6>
-                    <h2><a href="#">100 Diablo 3 RoS Imperial Gems of Each Type</a></h2>
-                    <hr class="line">
-                    <p class="product_s_desc">
-                        In Diablo 3 there five types of regular gems and...
-                    </p>
-                    <div class="product-price salesprice">
-                        <div class="price-value"><span class="price-desc">Base price: </span><span
-                                    class="PricebasePrice">$20.0</span></div>
-                        <span class="price-crossed"></span>
-                        <div class="price-value"><span class="price-desc">Sales price: </span><span
-                                    class="PricesalesPrice">$20.0</span></div>
-                    </div>
-                    <hr class="line item-line">
-                    <div class="addtocart-area">
-                        <div class="addtocart-bar">
-                            <div class="quantity-wrap">
-                                            <span class="quantity-box">
-                                                <input type="text" class="quantity-input js-recalculate" name="quantity[]"
-                                                       data-errstr="You can buy this product only in multiples of %s pieces!" value="1" init="1"
-                                                       step="1">
-                                            </span>
-                                <span class="quantity-controls js-recalculate">
-                                                <input type="button" class="quantity-controls quantity-plus">
-                                                <input type="button" class="quantity-controls quantity-minus">
-                                            </span>
-                            </div>
-                            <span class="addtocart-button">
-                                            <button class="add-to-cart addtocart-button" title="Add to Cart"></button>
-                                        </span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="product-item col-lg-2 col-sm-4 col-xs-6">
-            <div class="spacer">
-                <div class="product-media-container">
-                    <div class="product-media-image">
-                        <a title="Spartacus Legends" href="#">
-                            <img src="assets/img/product/160.png" alt="spartacus_legends" class="browseProductImage">
-                        </a>
-                    </div>
-                </div>
-                <div class="product-descr-container">
-                    <h6>DIABLO 3 ROS</h6>
-                    <h2><a href="#">Starmetal Kukri - Normal quality</a></h2>
-                    <hr class="line">
-                    <p class="product_s_desc">
-                        Damage...
-                    </p>
-                    <div class="product-price salesprice">
-                        <div class="price-value"><span class="price-desc">Base price: </span><span
-                                    class="PricebasePrice">$20.0</span></div>
-                        <span class="price-crossed"></span>
-                        <div class="price-value"><span class="price-desc">Sales price: </span><span
-                                    class="PricesalesPrice">$20.0</span></div>
-                    </div>
-                    <hr class="line item-line">
-                    <div class="addtocart-area">
-                        <div class="addtocart-bar">
-                            <div class="quantity-wrap">
-                                            <span class="quantity-box">
-                                                <input type="text" class="quantity-input js-recalculate" name="quantity"
-                                                       data-errstr="You can buy this product only in multiples of %s pieces!" value="1" init="1"
-                                                       step="1">
-                                            </span>
-                                <span class="quantity-controls js-recalculate">
-                                                <input type="button" onclick="quantity.value=parseInt(quantity.value)+1" class="quantity-controls quantity-plus">
-                                                <input type="button" onclick="quantity.value=quantity.value <= 1 ? 1 :parseInt(quantity.value)-1" class="quantity-controls quantity-minus">
-                                            </span>
-                            </div>
-                            <span class="addtocart-button">
-                                            <button class="add-to-cart addtocart-button" title="Add to Cart"></button>
-                                        </span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
+{% endif %}
