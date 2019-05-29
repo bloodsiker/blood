@@ -21,7 +21,6 @@ $(document).on('click', function (e) {
     }
 });
 
-/* recalculate quantity items */
 $('.container-recalculate').on('click', '.js-recalculate', function () {
     let _this = $(this),
         operator = _this.data('operator');
@@ -29,7 +28,6 @@ $('.container-recalculate').on('click', '.js-recalculate', function () {
     let parent = _this.parent().parent(),
         quantityInput = parent.find("input[name='quantity']"),
         quantity = parseInt(quantityInput.val());
-    console.log(parent, quantityInput, quantity);
 
     if ('-' === operator) {
         if (quantity > 1) {
