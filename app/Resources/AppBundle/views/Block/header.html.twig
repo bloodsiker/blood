@@ -18,7 +18,8 @@
             <div class="head-cart">
                 {{
                 sonata_block_render(
-                    { 'type': 'app.block.service.cart' }
+                    { 'type': 'app.block.service.cart' },
+                    { 'template': constant('AppBundle\\Block\\CartBlockService::TEMPLATE_BUTTON_HEAD') }
                 )
                 }}
             </div>

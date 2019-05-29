@@ -1,0 +1,32 @@
+{% set block_ajax_path = block.page is defined ? sonata_page_ajax_url(block) : block_ajax_url(block) %}
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Price in server/platform</h4>
+        </div>
+        <div class="modal-body">
+            {% for sPrice in priceInServer %}
+                <div class="row modal-line">
+                    <div class="col-md-8">
+                        <div class="name-server">{{ sPrice.server.name }}</div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="price-server">${{ sPrice.price|number_format(2, ',') }}</div>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="add-to-cart addtocart-button"
+                                data-id="{{ sPrice.id }}"
+                                data-url="{{ block_ajax_path }}"
+                                data-quantity="{{ count }}"
+                                data-product-type="{{ constant('AppBundle\\Services\\Cart::TYPE_PRODUCT') }}"
+                                data-action="{{ constant('AppBundle\\Block\\CartBlockService::ACTION_ADD') }}"></button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

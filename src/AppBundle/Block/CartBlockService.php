@@ -3,11 +3,15 @@
 namespace AppBundle\Block;
 
 use AppBundle\Services\Cart;
+use Doctrine\ORM\EntityManager;
+use GameBundle\Entity\Game;
+use ProductBundle\Entity\Product;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Block\Service\AbstractAdminBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,13 +21,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CartBlockService extends AbstractAdminBlockService
 {
-    const TEMPLATE_BUTTON = 'AppBundle:cart:button.html.twig';
-    const TEMPLATE_MODAL  = 'AppBundle:cart:modal.html.twig';
+    const TEMPLATE_BUTTON_HEAD = 'AppBundle:Block/cart:button_header.html.twig';
+    const TEMPLATE_BUTTON_IN_ITEM  = 'AppBundle:Block/cart:button_in_item.html.twig';
+    const TEMPLATE_CART_MODAL  = 'AppBundle:Block/cart:modal_cart.html.twig';
+    const TEMPLATE_MODAL_PRICE_IN_SERVER  = 'AppBundle:Block/cart:modal_price_in_server.html.twig';
 
     const ACTION_ADD = 'add.cart';
     const ACTION_REMOVE = 'remove.cart';
     const ACTION_CLEAR = 'clear.cart';
     const ACTION_SHOW = 'show.cart';
+    const ACTION_MODAL_PRICE_IN_SERVER = 'show.modal.price';
 
     /**
      * @var RequestStack
@@ -36,19 +43,26 @@ class CartBlockService extends AbstractAdminBlockService
     private $cart;
 
     /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    /**
      * CartBlockService constructor.
      *
      * @param string          $name
      * @param EngineInterface $templating
      * @param Cart            $cart
      * @param RequestStack    $request
+     * @param EntityManager   $entityManager
      */
-    public function __construct($name, EngineInterface $templating, Cart $cart, RequestStack $request)
+    public function __construct($name, EngineInterface $templating, Cart $cart, RequestStack $request, EntityManager $entityManager)
     {
         parent::__construct($name, $templating);
 
         $this->cart = $cart;
         $this->request  = $request;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -73,7 +87,8 @@ class CartBlockService extends AbstractAdminBlockService
     public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'template' => self::TEMPLATE_BUTTON,
+            'product'     => null,
+            'template'    => self::TEMPLATE_CART_MODAL,
         ]);
     }
 
@@ -93,19 +108,21 @@ class CartBlockService extends AbstractAdminBlockService
 
         $request = $this->request->getCurrentRequest();
 
-        $type = Cart::TYPE_PRODUCT;
-        $action = self::ACTION_ADD;
-        $id = 366;
-        $count = 11;
+        $type = $request->get('product_type');
+        $action = $request->get('action');
+        $item = $request->get('item_id');
+        $count = $request->get('quantity');
+        $game = $request->get('game_id');
 
         if ($request->isXmlHttpRequest()) {
 
             switch ($action) {
                 case self::ACTION_ADD:
-                    $this->addToCart($type, $id, $count);
+                    $countItems = $this->addToCart($type, $item, $count);
+                    return new JsonResponse(['code' => 200, 'count' => $countItems]);
                     break;
                 case self::ACTION_REMOVE:
-                    $this->removeProductFromCart($type, $id);
+                    $this->removeProductFromCart($type, $item);
                     break;
                 case self::ACTION_CLEAR:
                     $this->clearCart();
@@ -113,16 +130,23 @@ class CartBlockService extends AbstractAdminBlockService
                 case self::ACTION_SHOW:
                     $products = $this->getProductInfoFromCart();
                     break;
+                case self::ACTION_MODAL_PRICE_IN_SERVER:
+                    $priceInServer = $this->getProductPriceInServers($item, $game);
+                    $blockContext->setSetting('template', self::TEMPLATE_MODAL_PRICE_IN_SERVER);
+                    dump($priceInServer);
+                    break;
                 default:
                     throw new \Exception('Undefined action');
             }
         }
 
-        return $this->renderResponse($request->isXmlHttpRequest() ? self::TEMPLATE_MODAL : $blockContext->getTemplate(), [
-            'countItems' => $this->cart->countItems(),
-            'products'   => $products ?? [],
-            'settings'   => $blockContext->getSettings(),
-            'block'      => $blockContext->getBlock(),
+        return $this->renderResponse($blockContext->getTemplate(), [
+            'countItems'    => $this->cart->countItems(),
+            'products'      => $products ?? [],
+            'priceInServer' => $priceInServer ?? [],
+            'count'         => $count,
+            'settings'      => $blockContext->getSettings(),
+            'block'         => $blockContext->getBlock(),
         ]);
     }
 
@@ -133,25 +157,53 @@ class CartBlockService extends AbstractAdminBlockService
      * @param int    $id
      * @param int    $count
      *
+     * @return mixed
+     *
      * @throws \Exception
      */
     private function addToCart($type, int $id, int $count)
     {
         switch ($type) {
             case Cart::TYPE_PRODUCT:
-                $this->cart->addProductToCart(Cart::TYPE_PRODUCT, $id, $count);
+                $countItem = $this->cart->addProductToCart(Cart::TYPE_PRODUCT, $id, $count);
                 break;
             case Cart::TYPE_DISCOUNT:
-                $this->cart->addProductToCart(Cart::TYPE_DISCOUNT, $id, $count);
+                $countItem = $this->cart->addProductToCart(Cart::TYPE_DISCOUNT, $id, $count);
                 break;
             default:
                 throw new \Exception('Undefined type product');
         }
+
+        return $countItem;
     }
 
+    /**
+     * @return array
+     */
     private function getProductInfoFromCart()
     {
         return $this->cart->getProductsInfo();
+    }
+
+    /**
+     * @param $item
+     * @param $game
+     *
+     * @return mixed
+     */
+    private function getProductPriceInServers($item, $game)
+    {
+        $productRepository = $this->entityManager->getRepository(Product::class);
+        $gameRepository = $this->entityManager->getRepository(Game::class);
+
+        $game = $gameRepository->find($game);
+
+        $qb = $productRepository->baseProductQueryBuilder();
+        $productRepository->filterByGame($qb, $game);
+
+        return $qb->andWhere('p.item = :item')->setParameter('item', $item)
+            ->getQuery()
+            ->getResult();
     }
 
     /**

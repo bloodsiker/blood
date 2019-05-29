@@ -1,46 +1,106 @@
-$(function () {
-    $('.btn-search').click(function () {
-        $('.head-search').toggleClass('btn-open');
-        $('.head-right').toggleClass('btn-open');
-        if ($('.head-search').hasClass('btn-open')) {
-            $('#mod-search-searchword').focus();
+alertify.defaults = {
+    notifier:{
+        delay:5,
+        position:'top-right',
+    },
+};
+
+
+$('.btn-search').click(function () {
+    $('.head-search').toggleClass('btn-open');
+    $('.head-right').toggleClass('btn-open');
+    if ($('.head-search').hasClass('btn-open')) {
+        $('#mod-search-searchword').focus();
+    }
+});
+$(document).on('click', function (e) {
+    if ($(e.target).closest(".btn-search").length === 1 || $(e.target).closest("#mod-search-searchword").length === 1) {
+        e.stopPropagation();
+    } else {
+        $('.head-search').removeClass('btn-open');
+    }
+});
+
+/* recalculate quantity items */
+let recalculateQuantity = function (id, action) {
+    let quantityInput = $('#product-'+id),
+        quantity = parseInt(quantityInput.val());
+    if ('-' === action) {
+        if (quantity > 1) {
+            quantityInput.val(--quantity)
+        }
+    } else if ('+' === action) {
+        quantityInput.val(++quantity)
+    }
+};
+
+/* Cart modal */
+$('#show-head-cart').on('click', function () {
+    let _this = $(this),
+        url = _this.data('url'),
+        action = _this.data('action');
+
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: { action: action },
+        success: function (response) {
+            let modalCart = $('#modal-cart');
+            modalCart.html(response);
+            modalCart.modal('show');
         }
     });
-    $(document).on('click', function (e) {
-        if ($(e.target).closest(".btn-search").length === 1 || $(e.target).closest("#mod-search-searchword").length === 1) {
-            e.stopPropagation();
-        } else {
-            $('.head-search').removeClass('btn-open');
+});
+
+/* Show modal price */
+$('.show-modal-price').on('click', function () {
+    let _this = $(this),
+        item_id = _this.data('id'),
+        game_id = _this.data('game'),
+        url = _this.data('url'),
+        action = _this.data('action'),
+        quantity = $("#product-"+item_id).val();
+
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: { action: action, item_id: item_id, game_id: game_id, quantity: quantity },
+        success: function (response) {
+            let modalPrice = $('#modal-add-cart');
+            modalPrice.html(response);
+            modalPrice.modal('show');
         }
     });
+});
 
-    /* Cart modal */
-    $('#show-head-cart').on('click', function () {
-        let _this = $(this),
-            url = _this.data('url'),
-            action = _this.data('action');
+/* Add item to cart */
+$('#modal-add-cart').on('click','.add-to-cart', function () {
+    let _this = $(this),
+        item_id = _this.data('id'),
+        product_type = _this.data('product-type'),
+        url = _this.data('url'),
+        action = _this.data('action'),
+        quantity = _this.data('quantity');
 
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: { action: action },
-            success: function (response) {
-                let modalCart = $('#modal-cart');
-                modalCart.html(response);
-                modalCart.modal('show');
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: { action: action, item_id: item_id, product_type: product_type, quantity: quantity },
+        success: function (response) {
+            if (200 === response.code) {
+                let countItemInCart = $('#show-head-cart');
+                countItemInCart.find('.total-product').html(response.count);
+                alertify.success('Item successfully added to cart');
+            } else {
+                alertify.error('Error adding item to cart');
             }
-        });
+        }
     });
+});
 
-    /* Add to cart modal */
-    $('.add-to-cart').on('click', function () {
-        $('#modal-add-cart').modal('show');
-    });
-
-    /* Select */
-    $(document).ready(function() {
-        $('.item-filter').select2({
-            minimumResultsForSearch: -1
-        });
+/* Select */
+$(document).ready(function() {
+    $('.item-filter').select2({
+        minimumResultsForSearch: -1
     });
 });
