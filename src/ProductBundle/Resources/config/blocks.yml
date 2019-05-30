@@ -13,6 +13,7 @@ services:
       arguments:
         - product.block.in_main
         - '@templating'
+        - '@request_stack'
         - '@app.entity_manager'
       tags:
         - { name: sonata.block }

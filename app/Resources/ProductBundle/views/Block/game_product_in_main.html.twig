@@ -24,56 +24,7 @@
                     </div>
 
                     {% for product in game.products %}
-                        <div class="product-item col-lg-2 col-sm-4 col-xs-6">
-                            <div class="spacer">
-                                {% set discount = product|first.discount ? ((product|first.price - product|first.discount) * 100) / product|first.price  : null %}
-                                {% if discount %}
-                                    <div class="ribbon discount"><div>{{ discount|round }}%</div></div>
-                                {% endif %}
-                                {% if product|first.isHot %}
-                                    <div class="ribbon hot"><div>Hot</div></div>
-                                {% endif %}
-                                <div class="product-media-container">
-                                    <div class="product-media-image">
-                                        <a title="Spartacus Legends" href="{{ path('product_view', {'id': product|first.item.id, 'slug': product|first.item.slug}) }}">
-                                            <img src="{{ asset(product|first.item.image.getPath()) }}" alt="{{ product|first.item.name }}" class="browseProductImage">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="product-descr-container">
-                                    <h6>{{ product|first.server.game.name }}</h6>
-                                    <h2><a href="{{ path('product_view', {'id': product|first.item.id, 'slug': product|first.item.slug}) }}">{{ product|first.item.name }}</a></h2>
-                                    <hr class="line">
-                                    <p class="product_s_desc">
-                                        {{ product|first.item.shortDescription|raw }}
-                                    </p>
-                                    <div class="product-price salesprice">
-                                        <div class="price-value">
-                                            <span class="price-desc">From price: </span>
-                                            <span class="{% if product.min_discount %}PricebasePrice{% endif %}">${{ product.min_price|number_format(2, ',') }}</span>
-                                        </div>
-                                        {% if product.min_discount %}
-                                            <div class="price-value">
-                                                <span class="price-desc">Sales price: </span>
-                                                <span class="PricesalesPrice">${{ product.min_discount|number_format(2, ',') }}</span>
-                                            </div>
-                                        {% endif %}
-                                    </div>
-                                    <hr class="line item-line">
-
-                                    {{
-                                    sonata_block_render(
-                                        { 'type': 'app.block.service.cart' },
-                                        {
-                                            'product': product|first,
-                                            'template': constant('AppBundle\\Block\\CartBlockService::TEMPLATE_BUTTON_IN_ITEM')
-                                        }
-                                    )
-                                    }}
-
-                                </div>
-                            </div>
-                        </div>
+                        {% include 'ProductBundle:Block/include:item.html.twig' with product %}
                     {% endfor %}
                 </div>
             {% endif %}

@@ -115,7 +115,7 @@ class CartBlockService extends AbstractAdminBlockService
         $count = $request->get('quantity');
         $game = $request->get('game_id');
 
-        if ($request->isXmlHttpRequest()) {
+        if ($request->isXmlHttpRequest() && $action) {
 
             switch ($action) {
                 case self::ACTION_ADD:

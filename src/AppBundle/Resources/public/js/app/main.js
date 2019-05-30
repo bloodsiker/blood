@@ -21,7 +21,7 @@ $(document).on('click', function (e) {
     }
 });
 
-$('.container-recalculate').on('click', '.js-recalculate', function () {
+$('.container-recalculate').on('click', '.btn-recalculate', function () {
     let _this = $(this),
         operator = _this.data('operator');
 
@@ -57,7 +57,8 @@ $('#show-head-cart').on('click', function () {
 });
 
 /* Show modal price */
-$('.show-modal-price').on('click', function () {
+$('.addtocart-area').on('click', '.show-modal-price', function () {
+
     let _this = $(this),
         item_id = _this.data('id'),
         game_id = _this.data('game'),
@@ -107,4 +108,38 @@ $(document).ready(function() {
     $('.item-filter').select2({
         minimumResultsForSearch: -1
     });
+
+    $('.filter-category').select2();
 });
+
+$('.filter-game').on('select2:select', function (e) {
+    let _this = $(this),
+        url = _this.data('url'),
+        category = $('.filter-category').val(),
+        game = e.params.data.id,
+        filter = {game: game, category: category};
+
+    getAjaxProduct(url, filter);
+});
+
+$('.filter-category').on('select2:select', function (e) {
+    let _this = $(this),
+        url = _this.data('url'),
+        category = e.params.data.id,
+        game = $('.filter-game').val(),
+        filter = {category: category, game: game};
+
+    getAjaxProduct(url, filter);
+});
+
+let getAjaxProduct = function (url, filter) {
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: filter,
+        success: function (response) {
+            let container = $('#container-product');
+            container.html(response);
+        }
+    });
+};
