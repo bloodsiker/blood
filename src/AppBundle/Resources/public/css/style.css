@@ -720,6 +720,7 @@ span.PricesalesPrice {
     vertical-align: middle;
 }
 .spacer .addtocart-bar .quantity-controls input.quantity-plus {
+    position: relative;
     background: url(../assets/images/icons/ico-plus.png) no-repeat center center rgba(0,0,0,0.3);
     background-color: transparent \9;
     box-sizing: border-box;
@@ -731,6 +732,7 @@ span.PricesalesPrice {
     width: 16px;
 }
 .spacer .addtocart-bar .quantity-controls input.quantity-minus {
+    position: relative;
     background: url(../assets/images/icons/ico-minus.png) no-repeat center center rgba(0,0,0,0.3);
     background-color: transparent \9;
     box-sizing: border-box;
@@ -746,8 +748,8 @@ span.PricesalesPrice {
     right: 15px;
 }
 .spacer .addtocart-bar button.addtocart-button,
-.default-modal .modal-body button.addtocart-button
-{
+.default-modal .modal-body button.addtocart-button {
+    position: relative;
     border-radius: 3px;
     text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
     box-shadow: none;
@@ -760,6 +762,13 @@ span.PricesalesPrice {
     background-repeat: no-repeat;
     background-size: 20px;
     border: 1px solid rgba(255,255,255,0.1);
+}
+.spacer .addtocart-bar .quantity-controls input.quantity-plus:active,
+.spacer .addtocart-bar .quantity-controls input.quantity-minus:active,
+.spacer .addtocart-bar button.addtocart-button:active,
+.default-modal .modal-body button.addtocart-button:active,
+.btn-cart:active{
+    top: .1em;
 }
 
 /* Discount pack */
@@ -799,6 +808,7 @@ span.PricesalesPrice {
     font-size: 15px;
 }
 .btn-cart {
+    position: relative;
     border-radius: 3px;
     text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
     padding: 10px 50px;
@@ -882,6 +892,15 @@ span.PricesalesPrice {
     height: 38px !important;
     right: 11px !important;
 }
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    color: #131c27;
+}
+.title_not_found {
+    font-size: 32px;
+    margin: 90px 0;
+    border: 1px solid #ccc;
+    padding: 30px; border-radius: 3px;
+}
 
 
 /* Games page */
@@ -944,6 +963,10 @@ span.PricesalesPrice {
 }
 .default-modal .modal-header .modal-title {
     font-size: 14px;
+}
+.default-modal .modal-header .modal-title span {
+    color: #18c75d;
+    font-size: 12px;
 }
 .default-modal .modal-header .close {
     color: #fff;

@@ -21,7 +21,7 @@ $(document).on('click', function (e) {
     }
 });
 
-$('.container-recalculate').on('click', '.btn-recalculate', function () {
+$('.row').on('click', '.btn-recalculate', function () {
     let _this = $(this),
         operator = _this.data('operator');
 
@@ -57,14 +57,15 @@ $('#show-head-cart').on('click', function () {
 });
 
 /* Show modal price */
-$('.addtocart-area').on('click', '.show-modal-price', function () {
+$('.row').on('click', '.show-modal-price', function () {
 
     let _this = $(this),
         item_id = _this.data('id'),
         game_id = _this.data('game'),
         url = _this.data('url'),
         action = _this.data('action'),
-        quantity = $("#product-"+item_id).val();
+        parent = _this.parent().parent(),
+        quantity = parent.find("input[name='quantity']").val();
 
     $.ajax({
         type: 'POST',

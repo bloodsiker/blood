@@ -3,5 +3,7 @@
         {% include 'ProductBundle:Block/include:item.html.twig' %}
     {% endfor %}
 {% else %}
-    <h2>Oppsss, not found items</h2>
+    <div class="col-sm-12 text-center">
+        <h2 class="title_not_found">Ooopppsss, not found items</h2>
+    </div>
 {% endif %}

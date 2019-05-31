@@ -132,6 +132,8 @@ class CartBlockService extends AbstractAdminBlockService
                     $products = $this->getProductInfoFromCart();
                     break;
                 case self::ACTION_MODAL_PRICE_IN_SERVER:
+                    $productRepository = $this->entityManager->getRepository(Product::class);
+                    $item = $productRepository->find($item);
                     $priceInServer = $this->getProductPriceInServers($item, $game);
                     $blockContext->setSetting('template', self::TEMPLATE_MODAL_PRICE_IN_SERVER);
                     break;
@@ -145,6 +147,7 @@ class CartBlockService extends AbstractAdminBlockService
             'products'      => $products ?? [],
             'priceInServer' => $priceInServer ?? [],
             'count'         => $count,
+            'item'          => $item,
             'settings'      => $blockContext->getSettings(),
             'block'         => $blockContext->getBlock(),
         ]);
