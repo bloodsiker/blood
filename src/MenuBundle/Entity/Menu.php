@@ -103,6 +103,14 @@ class Menu
     protected $children;
 
     /**
+     * @var \GameBundle\Entity\Game
+     *
+     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\Game")
+     * @ORM\JoinColumn(name="game_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    protected $game;
+
+    /**
      * @var \PageBundle\Entity\Page
      *
      * @ORM\ManyToOne(targetEntity="PageBundle\Entity\Page")
@@ -135,6 +143,21 @@ class Menu
     public function __toString()
     {
         return (string) $this->getTitle();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function title()
+    {
+        $title = $this->getTitle();
+
+        if (empty($title) && $this->getGame()) {
+            $title = $this->getGame()->getName();
+        };
+
+        return (string) $title;
+
     }
 
     /**
@@ -440,5 +463,29 @@ class Menu
     public function getPage()
     {
         return $this->page;
+    }
+
+    /**
+     * Get game
+     *
+     * @return \GameBundle\Entity\Game
+     */
+    public function getGame()
+    {
+        return $this->game;
+    }
+
+    /**
+     * Set game
+     *
+     * @param \GameBundle\Entity\Game|null $game
+     *
+     * @return $this
+     */
+    public function setGame(\GameBundle\Entity\Game $game = null)
+    {
+        $this->game = $game;
+
+        return $this;
     }
 }

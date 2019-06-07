@@ -9,9 +9,12 @@
 
 {% block children %}
     {% set currentItem = item %}
-    {% set currentLocale = app.request.locale %}
-
     {% for item in currentItem.children %}
+        {%- set linkAttributes = item.linkAttributes -%}
+        {%- if matcher.isCurrent(item) or matcher.isAncestor(item, options.matchingDepth) %}
+            {%- set linkAttributes = linkAttributes|merge({'class': 'active'}) -%}
+        {%- endif %}
+
         {{ block('item') }}
     {% endfor %}
 {% endblock %}
@@ -19,6 +22,7 @@
 {% block item %}
     {% import 'knp_menu.html.twig' as macros %}
     {%- if item.displayed and item.uri is not empty %}
+        {%- set finalUri = '://' in item.uri ? item.uri : (item.uri) -%}
         {{ block('linkElement') }}
     {%- endif %}
 {% endblock %}
@@ -26,22 +30,16 @@
 {% block linkElement %}
     {% import 'knp_menu.html.twig' as macros %}
 
-    {%- set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
-    {%- if matcher.isCurrent(item) %}
-        {%- set classes = classes|merge([options.currentClass]) %}
-    {%- endif %}
+    <li {{ macros.attributes(linkAttributes) }}>
+        <a href="{{ finalUri }}">{{ block('label') }}</a>
 
-    {%- set activeClass = null %}
-    {%- if item.uri == item.parent.isCurrent or classes is not empty and ('active' in classes|join(' ')) %}
-        {%- set activeClass = 'active' %}
-    {%- endif %}
-
-    {%- set itemClass = item.getExtra('itemClass') -%}
-
-    {#{% set finalUri = '://' in item.uri ? item.uri : ('/'~currentLocale|replace({'uk':'ua'})~item.uri) %}#}
-    <li class="{{ activeClass~' '~itemClass }}">
-        <a href="{{ item.uri }}"
-                {{ macros.attributes(item.linkAttributes) }}>{{ block('label') }}
-        </a>
+        {% if item.children is not empty and item.children|length > 0 %}
+            <ul class="submenu">
+                {% set currentItem = item %}
+                {% for item in currentItem.children %}
+                    {{ block('item') }}
+                {% endfor %}
+            </ul>
+        {% endif %}
     </li>
 {% endblock %}

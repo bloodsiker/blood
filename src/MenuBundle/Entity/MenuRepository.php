@@ -21,14 +21,15 @@ class MenuRepository extends EntityRepository
         $expr = $queryBuilder->expr();
 
         $and = $expr->andX();
-        $and->add($expr->isNull('m.parent'));
+//        $and->add($expr->isNull('m.parent'));
         $and->add($expr->eq('m.isActive', true));
         $and->add($expr->eq('m.type', ':type'));
 
         $queryBuilder
-            ->select('m', 'p')
+            ->select('m', 'p', 'g')
             ->from('MenuBundle:Menu', 'm')
             ->leftJoin('m.page', 'p')
+            ->leftJoin('m.game', 'g')
             ->where($and)
             ->orderBy('m.parent, m.orderNum, m.id', 'ASC')
             ->setParameter('type', $type)

@@ -47,8 +47,6 @@
         {{ knp_menu_render('header', {'template': 'AppBundle:Menu:main_menu.html.twig'}) }}
     </div>
 
-    {{ block('wrap_bg') }}
-
 {% endblock %}
 
 {% block wrap_bg %}
@@ -61,6 +59,8 @@
 {% endblock %}
 
 {% block content %}
+    {{ block('wrap_bg') }}
+
     <section class="main-body">
         {{ parent() }}
     </section>
@@ -122,9 +122,9 @@
 {% block modals %}
     <div class="modal fade" id="modal-cart" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
 
-    </div><!-- /.modal -->
+    </div>
 
     <div class="modal fade default-modal container-add-cart" id="modal-add-cart" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
 
-    </div><!-- /.modal -->
+    </div>
 {% endblock %}

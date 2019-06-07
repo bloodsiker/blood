@@ -1,4 +1,4 @@
-{% if(field_description.options.field == 'parent') %}
+{% if field_description.options.field == 'parent' %}
     {% if object.getparent and object.getparent.getgame is empty %}
         {% set object = object.getparent %}
         {% set value = attribute(object, 'gettitle') %}
@@ -8,16 +8,16 @@
     {% else %}
         {% set value = '' %}
     {% endif %}
-{% elseif(field_description.options.field == 'title' and object.game) %}
+{% elseif field_description.options.field == 'title' and object.game %}
     {% set value = attribute(object.game, 'getname') %}
-{% elseif(field_description.options.field == 'page' and object.page) %}
+{% elseif field_description.options.field == 'page' and object.page %}
     {% set value = attribute(object.page, field_description.name) %}
 
-{#    {% if object.game %}#}
-{#        {% set value = value|replace({#}
-{#            '{slug}': object.game ? object.game.slug : ''#}
-{#        }) %}#}
-{#    {% endif %}#}
+    {% if object.game %}
+        {% set value = value|replace({
+            '{slug}': object.game ? object.game.slug : ''
+        }) %}
+    {% endif %}
 
 {% endif %}
 

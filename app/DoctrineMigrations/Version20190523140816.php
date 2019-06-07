@@ -45,6 +45,7 @@ final class Version20190523140816 extends AbstractMigration implements Container
         $menu = $schema->createTable('menu_menu');
         $menu->addColumn('id', 'integer', array('unsigned' => true, 'notnull' => true, 'autoincrement' => true));
         $menu->addColumn('parent_id', 'integer', array('unsigned' => true, 'notnull' => false));
+        $menu->addColumn('game_id', 'integer', array('unsigned' => true, 'notnull' => false));
         $menu->addColumn('title', 'string', array('length' => 64, 'notnull' => false));
         $menu->addColumn('url', 'string', array('length' => 300, 'notnull' => false));
         $menu->addColumn('page', 'integer', array('unsigned' => true, 'notnull' => false));
@@ -57,6 +58,7 @@ final class Version20190523140816 extends AbstractMigration implements Container
         $menu->addColumn('order_num', 'integer', array('notnull' => true, 'default' => 0, 'notnull' => true));
         $menu->setPrimaryKey(array('id'));
         $menu->addIndex(array('is_active'));
+        $menu->addForeignKeyConstraint($schema->getTable('game_game'), array('game_id'), array('id'), array('onDelete' => 'set null'));
         $menu->addForeignKeyConstraint($schema->getTable('menu_menu'), array('parent_id'), array('id'), array('onDelete' => 'set null'));
         $menu->addForeignKeyConstraint($schema->getTable('page_page'), array('page'), array('id'), array('onDelete' => 'set null'));
         $menu->addForeignKeyConstraint($schema->getTable('user_users'), array('created_by'), array('id'), array('onDelete' => 'set null'));

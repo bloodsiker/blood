@@ -54,12 +54,26 @@ class Builder
 
         $currentUri = $this->getCurrentUri($requestStack);
         $menu = $this->factory->createItem('header');
-        $menu->setCurrent($currentUri);
+//        $menu->setCurrent($currentUri);
 
         foreach ($items as $item) {
-            $menu->addChild($item->getTitle(), $this->getParams($item))
-                ->setExtra('itemClass', $item->getItemClass())
-            ;
+            if (!$item->getParent()) {
+                $parent = $menu->addChild($item->title(), $this->getParams($item))
+                    ->setExtra('itemClass', $item->getItemClass())
+                ;
+
+                $parent->setCurrent(
+                    $this->checkCurrentMenu($parent->getUri(), $currentUri)
+                );
+
+            } else {
+                $child = $menu[$item->getParent()->title()]->addChild(
+                    $item->title($item),
+                    $this->getParams($item)
+                );
+
+                $child->setCurrent($this->checkCurrentMenu($child->getUri(), $currentUri));
+            }
         }
 
         return $menu;
@@ -95,7 +109,21 @@ class Builder
     private function getParams(Menu $item)
     {
         if (!$item->getUrl() && ($item->getPage() && $item->getPage()->getId())) {
-            $params = ['uri' => $item->getPage()->getUrl()];
+
+            $uri = $item->getPage()->getUrl();
+            $uri = str_replace('{page}', '', $uri);
+
+            if (!$item->getGame()) {
+                $params = ['uri' => $uri];
+            } else {
+                $params = [
+                    'route' => $item->getPage()->getRouteName(),
+                    'routeParameters' => [
+                        'slug'  => $item->getGame()->getSlug(),
+                    ],
+                ];
+            }
+
         } else {
             $params = ['uri' => $item->getUrl()];
         }
@@ -120,9 +148,26 @@ class Builder
             '/'.($request->getLocale() === 'uk' ? 'ua' : $request->getLocale()) => '',
         ]);
 
-        $pathParts = explode('/', trim($pathInfo, '/'));
-        $currentPage = reset($pathParts);
+//        $pathParts = explode('/', trim($pathInfo, '/'));
+//        $currentPage = reset($pathParts);
 
-        return '/'.$currentPage;
+        return $pathInfo;
+    }
+
+    /**
+     * @param string $menuUri
+     * @param string $currentUri
+     *
+     * @return bool
+     */
+    private function checkCurrentMenu($menuUri, $currentUri)
+    {
+        $selected = ($menuUri === $currentUri);
+        if (!$selected && $parts = explode('/', $currentUri)) {
+            $subUri = implode('/', array_slice($parts, 0, -1));
+            $selected = ($menuUri === $subUri);
+        }
+
+        return $selected;
     }
 }

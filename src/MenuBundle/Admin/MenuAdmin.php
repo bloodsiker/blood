@@ -136,6 +136,8 @@ class MenuAdmin extends Admin
         $listMapper
             ->addIdentifier('title', null, [
                 'label' => 'menu.fields.title',
+                'field' => 'title',
+                'template' => 'MenuBundle:Admin:translatable.html.twig',
             ])
             ->add('url', null, [
                 'label' => 'menu.fields.url',
@@ -207,7 +209,7 @@ class MenuAdmin extends Admin
             ->with('menu_form_group.basic', ['class' => 'col-md-4', 'label' => false])
                 ->add('title', TextType::class, [
                     'label'     => 'menu.fields.title',
-                    'required'  => true,
+                    'required'  => false,
                 ])
                 ->add('url', TextType::class, [
                     'label'     => 'menu.fields.url',
@@ -215,6 +217,11 @@ class MenuAdmin extends Admin
                 ])
             ->end()
             ->with('menu_form_group.styles', ['class' => 'col-md-4', 'label' => false])
+                ->add('type', ChoiceType::class, [
+                    'label'     => 'menu.fields.type',
+                    'choices'   => $this->getMenuTypes(),
+                    'required'  => true,
+                ])
                 ->add('orderNum', IntegerType::class, [
                     'label' => 'menu.fields.order_num',
                     'required' => false,
@@ -236,11 +243,6 @@ class MenuAdmin extends Admin
                 ])
             ->end()
             ->with('menu_form_group.additional', ['class' => 'col-md-4', 'label' => false])
-                ->add('type', ChoiceType::class, [
-                    'label'     => 'menu.fields.type',
-                    'choices'   => $this->getMenuTypes(),
-                    'required'  => true,
-                ])
                 ->add('parent', ModelListType::class, [
                     'label' => 'menu.fields.parent',
                     'required' => false,
@@ -248,6 +250,10 @@ class MenuAdmin extends Admin
                     'link_parameters' => [
                         'filter[type][value]' => $type !== null ? (int) $type : $this->getSubject()->getType(),
                     ],
+                ])
+                ->add('game', ModelListType::class, [
+                    'label' => 'menu.fields.game',
+                    'required' => false,
                 ])
                 ->add('page', ModelListType::class, [
                     'label'     => 'menu.fields.page',
