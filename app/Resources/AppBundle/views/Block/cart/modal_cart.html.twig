@@ -56,11 +56,17 @@
                                         <input type="button" class="quantity-controls quantity-minus">
                                     </span>
                             </div>
-                            <div class="cart-quantity-price pull-right">
-                                {% set price =  mProduct.item.discount ?: mProduct.item.price  %}
-                                <span>${{ price|number_format(2, ',') }}</span>
+                            <div class="cart-quantity-price {% if discount %}price-old{% endif %} pull-right">
+                                {% if discount %}
+                                    <span class="old">${{ mProduct.item.price|number_format(2, ',') }}</span>
+                                    <span class="new">${{ mProduct.item.discount|number_format(2, ',') }}</span>
+                                {% else %}
+                                    <span>${{ mProduct.item.price|number_format(2, ',') }}</span>
+                                {% endif %}
                             </div>
                         </div>
+
+                        {% set price =  mProduct.item.discount ?: mProduct.item.price  %}
                         <div class="col-md-2">
                             <div class="cart-price text-right">
                                 <span>${{ (price * mProduct.count)|number_format(2, ',') }}</span>
@@ -85,7 +91,7 @@
                                 </div>
                                 <div class="cart-item-name">
                                     <h6>Path of Excile</h6>
-                                    <h4>Discount Pack - 1000 Chaos Orb and 1000 Orb of Fusing
+                                    <h4>{{ mDiscount.item.name }}
                                         {% set discount = mDiscount.item.discount ? ((mDiscount.item.price - mDiscount.item.discount) * 100) / mDiscount.item.price  : null %}
                                         {% if discount %}
                                             <span class="label-discount">-{{ discount|round }}%</span>
@@ -109,11 +115,17 @@
                                         <input type="button" class="quantity-controls quantity-minus">
                                     </span>
                             </div>
-                            <div class="cart-quantity-price pull-right">
-                                {% set price =  mDiscount.item.discount ?: mDiscount.item.price  %}
-                                <span>${{ price|number_format(2, ',') }}</span>
+                            <div class="cart-quantity-price {% if discount %}price-old{% endif %} pull-right">
+                                {% if discount %}
+                                    <span class="old">${{ mDiscount.item.price|number_format(2, ',') }}</span>
+                                    <span class="new">${{ mDiscount.item.discount|number_format(2, ',') }}</span>
+                                {% else %}
+                                    <span>${{ mDiscount.item.price|number_format(2, ',') }}</span>
+                                {% endif %}
                             </div>
                         </div>
+
+                        {% set price =  mDiscount.item.discount ?: mDiscount.item.price  %}
                         <div class="col-md-2">
                             <div class="cart-price text-right">
                                 <span>${{ (price * mDiscount.count)|number_format(2, ',') }}</span>

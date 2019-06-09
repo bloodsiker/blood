@@ -1065,6 +1065,18 @@ span.PricesalesPrice {
     padding-top: 15px;
     font-size: 12px;
 }
+.default-modal .modal-body .price-old {
+    padding-top: 5px;
+}
+.default-modal .modal-body .cart-quantity-price .old {
+    text-decoration: line-through;
+    display: block;
+    opacity: 0.5;
+}
+.default-modal .modal-body .cart-quantity-price .new {
+    font-size: 13px;
+    display: block;
+}
 .default-modal .modal-body .cart-price {
     padding-top: 15px;
     font-size: 12px;
