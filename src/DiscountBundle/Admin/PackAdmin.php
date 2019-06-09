@@ -9,7 +9,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\CoreBundle\Form\Type\DateTimePickerType;
 use Sonata\CoreBundle\Form\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Valid;
@@ -27,6 +27,20 @@ class PackAdmin extends Admin
     ];
 
     /**
+     * @param ErrorElement $errorElement
+     * @param object       $object
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        if (empty($object->getServer())) {
+            $errorElement
+                ->with('server')
+                    ->addViolation($this->translator->trans('form_valid.not_empty', [], $this->translationDomain))
+                ->end();
+        }
+    }
+
+    /**
      * @param ListMapper $listMapper
      */
     protected function configureListFields(ListMapper $listMapper)
@@ -37,6 +51,9 @@ class PackAdmin extends Admin
             ])
             ->addIdentifier('name', null, [
                 'label' => 'pack.fields.name',
+            ])
+            ->add('server', null, [
+                'label' => 'pack.fields.server',
             ])
             ->add('price', null, [
                 'label' => 'pack.fields.price',
@@ -57,6 +74,9 @@ class PackAdmin extends Admin
         $datagridMapper
             ->add('name', null, [
                 'label' => 'pack.fields.name',
+            ])
+            ->add('server', null, [
+                'label' => 'pack.fields.server',
             ])
             ->add('createdAt', null, [
                 'label' => 'pack.fields.created_at',
@@ -89,6 +109,10 @@ class PackAdmin extends Admin
                 ])
             ->end()
             ->with('form_group.additional', ['class' => 'col-md-4', 'name' => false])
+                ->add('server', ModelListType::class, [
+                    'label' => 'pack.fields.server',
+                    'required' => true,
+                ])
                 ->add('price', MoneyType::class, [
                     'label' => 'pack.fields.price',
                     'currency' => 'usd',

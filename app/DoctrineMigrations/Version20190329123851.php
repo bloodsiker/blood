@@ -31,7 +31,9 @@ final class Version20190329123851 extends AbstractMigration
         $pack->addColumn('price', 'decimal', ['precision' => 6, 'scale' => 2, 'unsigned' => true, 'notnull' => true, 'default' => 0]);
         $pack->addColumn('discount', 'decimal', ['unsigned' => true, 'notnull' => false]);
         $pack->addColumn('created_at', 'datetime', ['notnull' => true]);
+        $pack->addColumn('server_id', 'integer', ['unsigned' => true, 'notnull' => false]);
         $pack->setPrimaryKey(['id']);
+        $pack->addForeignKeyConstraint($schema->getTable('game_server'), ['server_id'], ['id']);
 
         $packHasItem = $schema->createTable('discount_pack_has_item');
         $packHasItem->addColumn('id', 'integer', ['unsigned' => true, 'notnull' => true, 'autoincrement' => true]);

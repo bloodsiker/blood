@@ -52,6 +52,14 @@ class Pack
     protected $createdAt;
 
     /**
+     * @var \GameBundle\Entity\Server
+     *
+     * @ORM\ManyToOne(targetEntity="GameBundle\Entity\Server")
+     * @ORM\JoinColumn(name="server_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    protected $server;
+
+    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="DiscountBundle\Entity\PackHasItem",
@@ -223,5 +231,29 @@ class Pack
     public function getPackHasItems()
     {
         return $this->packHasItems;
+    }
+
+    /**
+     * Get server
+     *
+     * @return \GameBundle\Entity\Server
+     */
+    public function getServer()
+    {
+        return $this->server;
+    }
+
+    /**
+     * Set server
+     *
+     * @param \GameBundle\Entity\Server $server
+     *
+     * @return $this
+     */
+    public function setServer(\GameBundle\Entity\Server $server)
+    {
+        $this->server = $server;
+
+        return $this;
     }
 }

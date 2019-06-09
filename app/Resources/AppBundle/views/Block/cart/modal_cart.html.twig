@@ -90,7 +90,7 @@
                                     </a>
                                 </div>
                                 <div class="cart-item-name">
-                                    <h6>Path of Excile</h6>
+                                    <h6>{{ mDiscount.item.server.game.name }}</h6>
                                     <h4>{{ mDiscount.item.name }}
                                         {% set discount = mDiscount.item.discount ? ((mDiscount.item.price - mDiscount.item.discount) * 100) / mDiscount.item.price  : null %}
                                         {% if discount %}
@@ -102,7 +102,7 @@
                         </div>
                         <div class="col-md-2">
                             <div class="cart-server">
-                                <span>Synthesis - Softcore</span>
+                                <span>{{ mDiscount.item.server.name }}</span>
                             </div>
                         </div>
                         <div class="col-md-2">

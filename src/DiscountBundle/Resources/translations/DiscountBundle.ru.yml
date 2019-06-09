@@ -13,6 +13,9 @@ group:
     discount_editor: Скидки
     pack_editor: Пакеты товаров
 
+form_valid:
+    not_empty: Не может быть пустым
+
 discount:
     fields:
         id: ID
@@ -40,6 +43,7 @@ pack:
         has_item: Товары в пакете
         price: Цена
         discount: Цена со скидкой
+        server: Сервер/Платформа
         created_at: Создано
 
 pack_has_item:
