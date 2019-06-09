@@ -52,16 +52,19 @@
                                 </div>
                             {% endfor %}
 
+                            {% set pack_one = discountP.packs[0].pack %}
                             <div class="item-padding col-lg-12 col-sm-12 col-xs-12">
                                 <ul class="discount-price text-center">
-                                    <li><span class="PricesalesPrice">$90</span></li>
-                                    <li><span class="PricebasePrice">$115</span></li>
+                                    {% if pack_one.discount %}
+                                        <li><span class="PricesalesPrice">${{ pack_one.discount|number_format(2, ',') }}</span></li>
+                                    {% endif %}
+                                    <li><span class="{% if pack_one.discount %}PricebasePrice{% endif %}">${{ pack_one.price|number_format(2, ',')  }}</span></li>
                                 </ul>
                                 {{
                                 sonata_block_render(
                                     { 'type': 'app.block.service.cart' },
                                     {
-                                        'product': discountP.packs[0].pack,
+                                        'product': pack_one,
                                         'template': constant('AppBundle\\Block\\CartBlockService::TEMPLATE_BUTTON_IN_DISCOUNT_PACK')
                                     }
                                 )
@@ -129,17 +132,20 @@
                                 </div>
                             {% endfor %}
 
+                            {% set pack_two = discountP.packs[1].pack %}
                             <div class="item-padding col-lg-12 col-sm-12 col-xs-12">
                                 <ul class="discount-price text-center">
-                                    <li><span class="PricesalesPrice">$90</span></li>
-                                    <li><span class="PricebasePrice">$115</span></li>
+                                    {% if pack_two.discount %}
+                                        <li><span class="PricesalesPrice">${{ pack_two.discount|number_format(2, ',') }}</span></li>
+                                    {% endif %}
+                                    <li><span class="{% if pack_two.discount %}PricebasePrice{% endif %}">${{ pack_two.price|number_format(2, ',')  }}</span></li>
                                 </ul>
 
                                 {{
                                 sonata_block_render(
                                     { 'type': 'app.block.service.cart' },
                                     {
-                                        'product': discountP.packs[1].pack,
+                                        'product': pack_two,
                                         'template': constant('AppBundle\\Block\\CartBlockService::TEMPLATE_BUTTON_IN_DISCOUNT_PACK')
                                     }
                                 )

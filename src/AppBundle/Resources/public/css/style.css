@@ -767,6 +767,8 @@ span.PricesalesPrice {
 .spacer .addtocart-bar .quantity-controls input.quantity-minus:active,
 .spacer .addtocart-bar button.addtocart-button:active,
 .default-modal .modal-body button.addtocart-button:active,
+.default-modal .modal-body .quantity-controls input.quantity-plus:active,
+.default-modal .modal-body .quantity-controls input.quantity-minus:active,
 .btn-cart:active{
     top: .1em;
 }
@@ -993,7 +995,147 @@ span.PricesalesPrice {
     padding: 10px 10px 10px 16px;
 }
 
-
+/* Modal cart */
+.modal-body-head {
+    margin-bottom: 10px;
+    background-color: #182027;
+    padding: 5px 0;
+}
+.default-modal .modal-body .cart-item-discount .cart-item-image:first-child {
+    position: relative;
+    margin-right: 25px;
+}
+.default-modal .modal-body .cart-item-discount .cart-item-image:first-child:after {
+    position: absolute;
+    top: 22px;
+    left: 79px;
+    content: "+";
+}
+.default-modal .modal-body .cart-item-image {
+    display: table;
+    width: 70px;
+    height: 70px;
+    background: rgba(255, 254, 254, 0.20);
+    margin-right: 10px;
+}
+.default-modal .modal-body .cart-item-image img {
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0 auto;
+    max-width: 70px;
+    max-height: 70px;
+}
+.default-modal .modal-body .cart-item-name > h6 {
+    font-family: "rubikmedium",arial,tahoma;
+    font-size: 9px;
+    line-height: 12px;
+    text-transform: uppercase;
+    color: #18c75d;
+    margin-top: 5px;
+    margin-bottom: 1px;
+    font-weight: 600;
+}
+.default-modal .modal-body .cart-item-name > h4 {
+    margin-top: 5px;
+    font-size: 15px;
+}
+.default-modal .modal-body .cart-item-name > h4 > .label-hot {
+    display: inline-block;
+    background-color: #f6470a;
+    padding: 2px 4px;
+    font-size: 8px;
+    text-transform: uppercase;
+    vertical-align: 5px;
+}
+.default-modal .modal-body .cart-item-name > h4 > .label-discount {
+    display: inline-block;
+    background-color: #f68b00;
+    padding: 2px 4px;
+    font-size: 8px;
+    text-transform: uppercase;
+    vertical-align: 5px;
+}
+.default-modal .modal-body .cart-server {
+    padding-top: 15px;
+}
+.default-modal .modal-body .cart-server span {
+    font-size: 12px;
+}
+.default-modal .modal-body .cart-quantity-price {
+    padding-top: 15px;
+    font-size: 12px;
+}
+.default-modal .modal-body .cart-price {
+    padding-top: 15px;
+    font-size: 12px;
+}
+.default-modal .modal-body .cart-total-price {
+    padding: 5px;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+}
+.default-modal .modal-body .cart-total-price span {
+    text-transform: uppercase;
+    color: #18c75d;
+}
+.default-modal .modal-body .quantity-wrap {
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 3px;
+    margin-left: 15px;
+    margin-top: 3px;
+}
+.default-modal .modal-body .quantity-box {
+    border-right: 1px solid rgba(255,255,255,0.1);
+    float: left;
+    display: inline-block;
+    vertical-align: middle;
+}
+.default-modal .modal-body .quantity-box .quantity-input {
+    box-shadow: none;
+    height: 34px;
+    width: 34px;
+    padding: 0;
+    background: rgba(0,0,0,0.1);
+    background: transparent \9;
+    border: 0;
+    border-radius: 0;
+    color: #ffffff;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+.default-modal .modal-body .quantity-controls {
+    float: left;
+    margin: 0;
+    width: 17px;
+    font-size: 13px;
+    color: #666;
+    display: inline-block;
+    vertical-align: middle;
+}
+.default-modal .modal-body .quantity-controls input.quantity-plus {
+    position: relative;
+    background: url(../assets/images/icons/ico-plus.png) no-repeat center center rgba(0,0,0,0.3);
+    background-color: transparent \9;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    height: 16px;
+    padding: 0;
+    width: 16px;
+}
+.default-modal .modal-body .quantity-controls input.quantity-minus {
+    position: relative;
+    background: url(../assets/images/icons/ico-minus.png) no-repeat center center rgba(0,0,0,0.3);
+    background-color: transparent \9;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 0;
+    height: 16px;
+    padding: 0;
+    width: 16px;
+}
 
 
 

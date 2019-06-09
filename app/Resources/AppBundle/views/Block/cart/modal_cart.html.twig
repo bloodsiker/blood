@@ -1,38 +1,138 @@
-<div class="modal-dialog" role="document">
+<div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="gridSystemModalLabel">Modal title</h4>
+            <h4 class="modal-title">Cart</h4>
         </div>
         <div class="modal-body">
-            <div class="row">
-                <div class="col-md-4">.col-md-4</div>
-                <div class="col-md-4 col-md-offset-4">.col-md-4 .col-md-offset-4</div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 col-md-offset-3">.col-md-3 .col-md-offset-3</div>
-                <div class="col-md-2 col-md-offset-4">.col-md-2 .col-md-offset-4</div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3">.col-md-6 .col-md-offset-3</div>
-            </div>
-            <div class="row">
-                <div class="col-sm-9">
-                    Level 1: .col-sm-9
-                    <div class="row">
-                        <div class="col-xs-8 col-sm-6">
-                            Level 2: .col-xs-8 .col-sm-6
+            {% if products.product is not empty or products.discount is not empty %}
+                <div class="row modal-body-head">
+                    <div class="col-md-6">
+                        <span>Item</span>
+                    </div>
+                    <div class="col-md-2">
+                        <span>Platform / Server</span>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <span>Price / Quantity</span>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <span>Total</span>
+                    </div>
+                </div>
+                {% for mProduct in products.product %}
+                    <div class="row" style="margin-bottom: 10px">
+                        <div class="col-md-6">
+                            <div class="cart-item-image pull-left">
+                                <a href="">
+                                    <img src="{{ asset(mProduct.item.getItem().image.getPath()) }}" alt="{{ mProduct.item.getItem().name }}">
+                                </a>
+                            </div>
+                            <div class="cart-item-name">
+                                <h6>{{ mProduct.item.server.game.name }}</h6>
+                                <h4>{{ mProduct.item.getItem().name }}
+                                    {% if mProduct.item.isHot %}
+                                        <span class="label-hot">hot</span>
+                                    {% endif %}
+                                    {% set discount = mProduct.item.discount ? ((mProduct.item.price - mProduct.item.discount) * 100) / mProduct.item.price  : null %}
+                                    {% if discount %}
+                                        <span class="label-discount">-{{ discount|round }}%</span>
+                                    {% endif %}
+                                </h4>
+                            </div>
                         </div>
-                        <div class="col-xs-4 col-sm-6">
-                            Level 2: .col-xs-4 .col-sm-6
+                        <div class="col-md-2">
+                            <div class="cart-server">
+                                <span>{{ mProduct.item.server.name }} </span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="quantity-wrap pull-right">
+                                    <span class="quantity-box">
+                                        <input type="text" class="quantity-input js-recalculate" name="quantity[]" value="{{ mProduct.count }}" step="1">
+                                    </span>
+                                <span class="quantity-controls js-recalculate">
+                                        <input type="button" class="quantity-controls quantity-plus">
+                                        <input type="button" class="quantity-controls quantity-minus">
+                                    </span>
+                            </div>
+                            <div class="cart-quantity-price pull-right">
+                                {% set price =  mProduct.item.discount ?: mProduct.item.price  %}
+                                <span>${{ price|number_format(2, ',') }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="cart-price text-right">
+                                <span>${{ (price * mProduct.count)|number_format(2, ',') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                {% for mDiscount in products.discount %}
+                    <div class="row" style="margin-bottom: 10px">
+                        <div class="col-md-6">
+                            <div class="cart-item-discount">
+                                <div class="cart-item-image pull-left">
+                                    <a href="">
+                                        <img src="bundles/app/assets/images/product/737.png" alt="">
+                                    </a>
+                                </div>
+                                <div class="cart-item-image pull-left">
+                                    <a href="">
+                                        <img src="bundles/app/assets/images/product/730.png" alt="">
+                                    </a>
+                                </div>
+                                <div class="cart-item-name">
+                                    <h6>Path of Excile</h6>
+                                    <h4>Discount Pack - 1000 Chaos Orb and 1000 Orb of Fusing
+                                        {% set discount = mDiscount.item.discount ? ((mDiscount.item.price - mDiscount.item.discount) * 100) / mDiscount.item.price  : null %}
+                                        {% if discount %}
+                                            <span class="label-discount">-{{ discount|round }}%</span>
+                                        {% endif %}
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="cart-server">
+                                <span>Synthesis - Softcore</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="quantity-wrap pull-right">
+                                    <span class="quantity-box">
+                                        <input type="text" class="quantity-input js-recalculate" name="quantity[]" value="{{ mDiscount.count }}" step="1">
+                                    </span>
+                                <span class="quantity-controls js-recalculate">
+                                        <input type="button" class="quantity-controls quantity-plus">
+                                        <input type="button" class="quantity-controls quantity-minus">
+                                    </span>
+                            </div>
+                            <div class="cart-quantity-price pull-right">
+                                {% set price =  mDiscount.item.discount ?: mDiscount.item.price  %}
+                                <span>${{ price|number_format(2, ',') }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="cart-price text-right">
+                                <span>${{ (price * mDiscount.count)|number_format(2, ',') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="row" style="margin-bottom: 10px">
+                    <div class="col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9">
+                        <div class="cart-total-price text-right">
+                            <span>$444.33</span>
                         </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-default">Checkout</button>
         </div>
-    </div>
-</div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
