@@ -21,7 +21,8 @@ $(document).on('click', function (e) {
     }
 });
 
-$('.row').on('click', '.btn-recalculate', function () {
+/* Modal cart recalculate */
+$('.row, .default-modal').on('click', '.btn-recalculate', function () {
     let _this = $(this),
         operator = _this.data('operator');
 
@@ -36,6 +37,29 @@ $('.row').on('click', '.btn-recalculate', function () {
     } else if ('+' === operator) {
         quantityInput.val(++quantity)
     }
+
+    if (quantityInput.is('.input-recalculate')) {
+        let item_id = quantityInput.data('id'),
+            url = quantityInput.data('url'),
+            action = quantityInput.data('action'),
+            product_type = quantityInput.data('product-type'),
+            quantity = quantityInput.val();
+
+        let filter = { action: action, item_id: item_id, product_type: product_type, quantity: quantity };
+        getAjaxProduct(url, filter, '#modal-cart');
+    }
+});
+
+$('.default-modal').on('input','.input-recalculate', function () {
+    let _this = $(this),
+        item_id = _this.data('id'),
+        url = _this.data('url'),
+        action = _this.data('action'),
+        product_type = _this.data('product-type'),
+        quantity = _this.val();
+
+    let filter = { action: action, item_id: item_id, product_type: product_type, quantity: quantity };
+    getAjaxProduct(url, filter, '#modal-cart');
 });
 
 /* Cart modal */
@@ -130,16 +154,16 @@ $('.filter-category').on('select2:select', function (e) {
         game = $('.filter-game').val(),
         filter = {category: category, game: game};
 
-    getAjaxProduct(url, filter);
+    getAjaxProduct(url, filter, '#container-product');
 });
 
-let getAjaxProduct = function (url, filter) {
+let getAjaxProduct = function (url, filter, htmlContainer) {
     $.ajax({
         type: 'POST',
         url: url,
         data: filter,
         success: function (response) {
-            let container = $('#container-product');
+            let container = $(htmlContainer);
             container.html(response);
         }
     });

@@ -8,12 +8,27 @@
         <div class="modal-body">
             {% for sPrice in priceInServer %}
                 <div class="row modal-line">
-                    <div class="col-md-8">
-                        <div class="name-server">{{ sPrice.server.name }}</div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="price-server">${{ sPrice.price|number_format(2, ',') }}</div>
-                    </div>
+                    {% if sPrice.discount %}
+                        <div class="col-md-6">
+                            <div class="name-server">{{ sPrice.server.name }}</div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="price-server old">${{ sPrice.price|number_format(2, ',') }}</div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="price-server">${{ sPrice.discount|number_format(2, ',') }}</div>
+                        </div>
+                    {% else %}
+                        <div class="col-md-8">
+                            <div class="name-server">{{ sPrice.server.name }}</div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="price-server">${{ sPrice.price|number_format(2, ',') }}</div>
+                        </div>
+                    {% endif %}
                     <div class="col-md-2">
                         <button class="add-to-cart addtocart-button"
                                 data-id="{{ sPrice.id }}"

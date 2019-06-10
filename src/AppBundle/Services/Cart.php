@@ -118,9 +118,34 @@ class Cart
         return $productsInfo;
     }
 
-    public function recalculateCart()
+    /**
+     * Recalculate product in cart
+     *
+     * @param string $type
+     * @param int    $id
+     * @param int    $count
+     *
+     * @return bool
+     */
+    public function recalculateCart($type, int $id, int $count)
     {
+        $productsInCart = $this->getProductInCart() ?: [];
 
+        $count = $count < 1 ? 1 : $count;
+
+        if (array_key_exists($type, $productsInCart)) {
+            if (array_key_exists($id, $productsInCart[$type])) {
+                $productsInCart[$type][$id] = $count;
+            } else {
+                $productsInCart[$type][$id] = $count;
+            }
+        } else {
+            $productsInCart[$type][$id] = $count;
+        }
+
+        $this->setCart($productsInCart);
+
+        return true;
     }
 
     /**
@@ -151,6 +176,35 @@ class Cart
     }
 
     /**
+     * Get total price in Cart
+     *
+     * @return int
+     */
+    public function getTotalPrice()
+    {
+        $productsInCart = $this->getProductsInfo();
+        $totalPrice = 0;
+
+        if ($productsInCart && is_array($productsInCart)) {
+            if (array_key_exists(self::TYPE_PRODUCT, $productsInCart)) {
+                foreach ($productsInCart[self::TYPE_PRODUCT] as $product) {
+                    $item = $product['item'];
+                    $totalPrice += $product['count'] * ($item->getDiscount() ?: $item->getPrice());
+                }
+            }
+
+            if (array_key_exists(self::TYPE_DISCOUNT, $productsInCart)) {
+                foreach ($productsInCart[self::TYPE_DISCOUNT] as $product) {
+                    $item = $product['item'];
+                    $totalPrice += $product['count'] * ($item->getDiscount() ?: $item->getPrice());
+                }
+            }
+        }
+
+        return $totalPrice;
+    }
+
+    /**
      * Remove product in cart
      *
      * @param string $type
@@ -166,7 +220,7 @@ class Cart
 
         $this->setCart($productsInCart);
 
-        return true;
+        return $this->countItems();
     }
 
     /**

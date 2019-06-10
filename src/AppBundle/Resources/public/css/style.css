@@ -991,6 +991,10 @@ span.PricesalesPrice {
     border: 1px solid rgba(255,255,255,0.1);
     padding: 8px;
 }
+.default-modal .modal-body .price-server.old {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
 .default-modal .modal-footer {
     padding: 10px 10px 10px 16px;
 }
