@@ -46,7 +46,7 @@ $('.row, .default-modal').on('click', '.btn-recalculate', function () {
             quantity = quantityInput.val();
 
         let filter = { action: action, item_id: item_id, product_type: product_type, quantity: quantity };
-        getAjaxProduct(url, filter, '#modal-cart');
+        getAjax(url, filter, '#modal-cart', true);
     }
 });
 
@@ -59,8 +59,29 @@ $('.default-modal').on('input','.input-recalculate', function () {
         quantity = _this.val();
 
     let filter = { action: action, item_id: item_id, product_type: product_type, quantity: quantity };
-    getAjaxProduct(url, filter, '#modal-cart');
+    getAjax(url, filter, '#modal-cart', true);
 });
+
+/* Clear cart */
+$('.default-modal').on('click','#clear-cart', function () {
+    let _this = $(this),
+        action = _this.data('action'),
+        url = _this.data('url');
+
+    let filter = { action: action };
+    getAjax(url, filter, '#modal-cart', true);
+    alertify.success('Cart successfully cleared');
+});
+
+/* Rewrite count product in cart */
+let rewriteCartCountProduct = function () {
+    let container = $('#modal-cart'),
+        label_count = $('#show-head-cart > .total-product');
+
+    let count = container.find('[data-count-cart]').data('count-cart');
+    console.log(count);
+    label_count.text(count);
+};
 
 /* Cart modal */
 $('#show-head-cart').on('click', function () {
@@ -144,7 +165,7 @@ $('.filter-game').on('select2:select', function (e) {
         game = e.params.data.id,
         filter = {game: game, category: category};
 
-    getAjaxProduct(url, filter);
+    getAjax(url, filter, '#container-product');
 });
 
 $('.filter-category').on('select2:select', function (e) {
@@ -154,10 +175,10 @@ $('.filter-category').on('select2:select', function (e) {
         game = $('.filter-game').val(),
         filter = {category: category, game: game};
 
-    getAjaxProduct(url, filter, '#container-product');
+    getAjax(url, filter, '#container-product');
 });
 
-let getAjaxProduct = function (url, filter, htmlContainer) {
+let getAjax = function (url, filter, htmlContainer, rewriteCount = false) {
     $.ajax({
         type: 'POST',
         url: url,
@@ -165,6 +186,9 @@ let getAjaxProduct = function (url, filter, htmlContainer) {
         success: function (response) {
             let container = $(htmlContainer);
             container.html(response);
+            if (rewriteCount) {
+                rewriteCartCountProduct();
+            }
         }
     });
 };
